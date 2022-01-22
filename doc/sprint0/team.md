@@ -5,7 +5,7 @@
 |  Sahib Nanda  | nandasah | 1006013216 |  sahib.nanda@mail.utoronto.ca  | 6475239466 | Sama#7163 |
 | Dale Rodrigues| rodri856|1005947077 | dale.rodrigues@mail.utoronto.ca | 6473320727| DRelite#7277|
 | Litao Chen | chenlita | 1004545842 | litao.chen@mail.utoronto.ca | 6474641224 | JacobC#6269 |
-| | | | | | |
+| Ahmed Al-Mandalawi| mandalaw| 1001019729| al.mandalawi@mail.utoronto.ca| 6477848222| SlurpyNoodle#0992|
 
 
 **Discord Chat/Server Invite :** https://discord.gg/6McAphDPfs
