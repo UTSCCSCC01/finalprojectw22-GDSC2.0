@@ -8,7 +8,7 @@
     <li><a href="https://www.google.ca/forms/about/"/>Google Forms</a> provides an interface for users to setup free surveys and view/process inputted data</li>
     <li>Google forms is a competitor for our integrated student portal</li>
     <li>Our integrated student portal is a better alternative for users filling out the form as it allows for a more customizable UI which is more aesthetically pleasing, thus it can attract more students</li>
-    <li>Our integrated student portal is a better alternative for admins viewing the submitted forms as it allows for more customizable backend functionality such as approving/rejecting. custom admin UI and a centralized interface for all admin functionality, as opposed to google forms</li>
+    <li>Our integrated student portal is a better alternative for admins viewing the submitted forms as it allows for more customizable backend functionality such as approving/rejecting, custom admin UI and a centralized interface for all admin functionality, as opposed to google forms</li>
     <li>We believe that Google forms did not focus on adding the customizability that we intend to have as they hoped to produce a generic survey platform that is usable by as many people as possibe. Adding more custom features would be either unnecessary or could take away from the product reaching more people </li>
     <li>If Google forms wanted to add a more customizable interface, they would have to implement many more customizable components of the form, such as using a custom domain, animations etc. </li>
 </ul>
