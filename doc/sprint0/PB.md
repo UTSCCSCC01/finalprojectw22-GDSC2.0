@@ -87,13 +87,6 @@
         <li>Members can change their preferences</li>
     </ul>
     </li>
-    <br>
-    <li>As a site admin, I can send email to all candidates, so I can give them updated information about the projects.
-    <ul>
-        <li>Admins can view a list of candidates (approved applicants).</li>
-        <li>Admins can click a button and select all candidates as email reciepiants.</li>
-    </ul>
-    </li>
 </details>
 <br>
 <details open>
@@ -104,7 +97,7 @@
     </ul>
     </li>
     <br>
-    <li>As a site admin, I want to format an acceptance email, so I can send that email to all applicants once they are accepted.
+    <li>As a site admin, I want to format an acceptance email template, so I can send that email to all applicants once they are accepted.
     <ul>
         <li>An interface allow site admins to modify the email format which will be sent to a group of users.</li>
     </ul>
@@ -149,20 +142,6 @@
         <li>Email is sent to the members once changes are made.</li>
     </ul>
     </li>
-    <br>
-    <li>As a mentor, I can submit a contingency form to site admins, in order to address some issues in my team, so site admins can resolve those issues.
-    <ul>
-        <li>In mentors' view of the project that he is part of, a contingency button is placed in project page.</li>
-        <li>Provides an interface after clicking on the contingency button that allows mentors to send message to admins.</li>
-    </ul>
-    </li>
-    <br>
-    <li>As a member (student and mentor) in a project, I can post resources relevant to the project in the project section, so people in my team can use the resources.
-    <ul>
-        <li>A section in the project page designated for sharing resources and everyone in the team can edit it.</li>
-        <li>Records of editing are stored and showing up on mentors' and admins' view.</li>
-    </ul>
-    </li>
 </details>
 <br>
 <details open>
@@ -193,13 +172,6 @@
         <li>Admin can export the past event's setting and description in order to use in creating new events.</li>
     </ul>
     </li>
-    <br>
-    <li>As a user (visitor, student or mentor), I can add events to my google calendar, so I can get notifications for those events.
-    <ul>
-        <li>An export button in event section allows users to export event to their calendar.</li>
-    </ul>
-    </li>
-    <br>
 </details>
 <br>
 </ol>
