@@ -2,13 +2,11 @@
 
 <br />
 <div align="center">
-  <p align="center" style="font-size:4em;">GDSC Website</p>
-  <img align = "center" src="./readme_src/home_page.jpg" style="cover:fit;width: 40vw">
+  <h3 align="center">Google Developer Student Club Website</h3>
   <p align="center">
     <div>Put Description Here</div>
     <br />
     <a href="https://github.com/UTSCCSCC01/finalprojectw22-gdscutm/issues">Report Bug</a>
-    ·
     <a href="https://github.com/UTSCCSCC01/finalprojectw22-gdscutm/issues">Request Feature</a>
     <br/>
     <br/>
@@ -17,9 +15,9 @@
   <hr>
 </div>
 
-<details open style="padding-top: 5vh;padding-bottom:5vh;">
+<details open>
   <summary>Table of Contents</summary>
-  <ol>
+  <ul>
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
@@ -36,20 +34,20 @@
     </li>
     <li><a href="#contribution">Contribution</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
-  </ol>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
 </details>
 
-#### Sprint Shortcut
-
-<ul style="display:flex;padding-bottom:5vh">
-    <li style="flex-grow:1"><a href="">sprint0</a></li>
-    <li style="flex-grow:1"><a href="">sprint1</a></li>
-    <li style="flex-grow:1"><a href="">sprint2</a></li>
-    <li style="flex-grow:1"><a href="">sprint3</a></li>
-    <li style="flex-grow:1"><a href="">sprint4</a></li>
-</ul>
-<hr>
+<details open>
+  <summary>Sprint Shortcut</summary>
+  <ul>
+    <li><a href="">sprint0</a></li>
+    <li><a href="">sprint1</a></li>
+    <li><a href="">sprint2</a></li>
+    <li><a href="">sprint3</a></li>
+    <li><a href="">sprint4</a></li>
+  </ul>
+</detials>
 
 ## About The Project
 
