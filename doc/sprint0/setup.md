@@ -2,7 +2,7 @@
 
 1. Ensure [Node.js](https://nodejs.org/en/) is installed locally
 
-2. Add .env file in root dir with the following (port to run api on and mongoDB connection uri:
+2. Add .env file in root directory with the following (port to run api on and mongoDB connection uri):
 
     ```
     PORT=5000
@@ -28,4 +28,4 @@
     npm run dev
     ```
 
-6. Open localhost:3000 in any web browser (web server)
+6. Open localhost:3000 (web server) in any web browser 
