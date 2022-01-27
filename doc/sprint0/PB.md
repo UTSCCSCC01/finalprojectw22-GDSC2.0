@@ -6,7 +6,7 @@
     <li>As a visitor, I can register an account , so I can become a member in the club.
     <ul>
         <li>Visitor can register an account by providing email and password.</li>
-        <li>Email verification is required</li>
+        <li>Email verification is required.</li>
     </ul>
     <br>
     <li>As a member (student or mentor), I can log in using my email and password, so I can view the website in a member's view.
@@ -18,21 +18,21 @@
     </ul>
     <li>As a member (student or mentor), I can reset my password via email verification, so I don't lose my account.
     <ul>
-        <li>A forget password link is available in login apge</li>
-        <li>Reset password action is executed after recieving a correct and registered email address.</li>
+        <li>A 'forget password' link is available in login page</li>
+        <li>Reset password action is executed after receiving a correct and registered email address.</li>
     </ul>
     </li>
     <br>
-    <li>As a member (student or mentor), I can fill out common information in the profile page, so I don't need to fill out those infomation again in the application.
+    <li>As a member (student or mentor), I can fill out common information in the profile page, so I don't need to fill out those information again in the application.
     <ul>
         <li>User have an editable profile page.</li>
-        <li>Once an applcation is initiated by a member, the server scans the profile of that member and fill in some sections in the application form based on the member's profile.</li>
+        <li>Once an application is initiated by a member, the server scans the profile of that member and fill in some sections in the application form based on the member's profile.</li>
     </ul>
     </li>
     <br>
     <li>As a member (student or mentor), I can link my github and linkedin page in my profile, so I can showcase my experience.
     <ul>
-        <li>Desinated and integrated section for github and linkedin link</li>
+        <li>A section in profile page for github and linkedin link</li>
     </ul>
     </li>
     <br>
@@ -63,7 +63,7 @@
 <summary><strong>Project Initiatives Portal</strong></summary>
     <li>As a site admin, I can create project initiatives, so I can show projects initiatives to candidates.
     <ul>
-        <li>A designated interface for admins to add or delete project initiatives</li>
+        <li>A designated interface for admins to add or delete project initiatives.</li>
     </ul>
     </li>
     <br>
@@ -75,16 +75,16 @@
     <br>
     <li>As a member (student or mentor), I can click on the project initiatives and it brings me to a page or a pop up window, so I get to know more details about the project.
     <ul>
-        <li>Clicking on the active project intiatives redirect the user to a page that contains the details about the project intiative.</li>
+        <li>Clicking on the active project initiatives redirect the user to a page that contains the details about the project initiative.</li>
         <li>Each active project initiatives have a page.</li>
     </ul>
     </li>
     <br>
     <li>As a member (student or mentor), I can add preferences to the existing project initiatives, so I can show admins or mentors my preferences.
     <ul>
-        <li>A preference icon at the top right corner of a project initiative in the project listing page.</li>
+        <li>A preference icon in the top right corner of a project initiative in the project listing page.</li>
         <li>Default for all project preference of a user is no-preference.</li>
-        <li>Members can change their preferences</li>
+        <li>Members can change their preferences.</li>
     </ul>
     </li>
 </details>
@@ -93,7 +93,7 @@
 <summary><strong>Project Application</strong></summary>
     <li>As a member (student or mentor), I want to get an email notification when my application status has been updated, so I can start to view project initiatives or prepare to apply in the next term.
     <ul>
-        <li>Application accept button aliasing with a email sending action,which email is sent to the email address provied in the application.</li>
+        <li>Application accept button aliasing with a email sending action, which email is sent to the email address provided in the application.</li>
     </ul>
     </li>
     <br>
@@ -106,7 +106,7 @@
     <li>As a site admin or mentor, I can see a list of pending applications and a list of approved applicants, so I can view their application information and profiles.
     <ul>
         <li>A list of pending applications.</li>
-        <li>Clicking on the application pops up of window containing application details and a accept button at the bottom of the popup window.</li>
+        <li>Clicking on the application pops up of window containing application details and an accept button at the bottom of the popup window.</li>
         <li>A list of approved applicants.</li>
         <li>Clicking on the approved applicants redirects to their profile pages.</li>
     </ul>
@@ -146,9 +146,9 @@
 <br>
 <details open>
 <summary><strong>Events</strong></summary>
-    <li>As a site admin, I can publish events,so new events will be posted on the website.
+    <li>As a site admin, I can publish events, so new events will be posted on the website.
     <ul>
-        <li>In admins view of the event page, there is an add event button.</li>
+        <li>In admins view of the event page, there is an 'add event' button.</li>
         <li>A request of event is submitted after required fields are filled in add event page.</li>
         <li>Events are published once head admin approves.</li>
     </ul>
