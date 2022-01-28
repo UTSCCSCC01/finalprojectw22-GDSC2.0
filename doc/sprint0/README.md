@@ -62,7 +62,7 @@ Our team is responsible for developing a full-stack website for the club from sc
 
 The purpose of CSC301 is to let us get used to the agile development cycle and experience the engineering process in a practical environment, so we decided to collaborate with GDSC, in order to fully simulate a real-world environment. In this case, we have to push ourselves to learn new technologies and satisfy stakeholders' requirements in a timely manner.
 
-Learning new knowledge and turning the knowledge into our tangile asset is what we are all passionated at, which both can be done in this course. Beside our gain from this course, we sincerely hope GDSC can take benefits from our collaboration as well. So our ultimate goal is to build a fully functional, user-friendly and easy manipulating web application, which can be deployed with minimal modifications required, for GDSC to use our product.
+Learning new knowledge and turning the knowledge into our tangible asset is what we are all passionated about, which both can be done in this course. Beside our gain from this course, we sincerely hope GDSC can take benefits from our collaboration as well. So our ultimate goal is to build a fully functional, user-friendly and easy manipulating web application, which can be deployed with minimal modifications required, for GDSC to use our product.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
