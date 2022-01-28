@@ -108,8 +108,8 @@ All of our teammembers agreed on using git flow during development.
 
 We name our branches based on the content we are working in the specific branch:
   <ul>
-    <li>If the content will <strong>less</strong> likely be re-visited in later sprints, we will name it as same as the file name or its functionality.</li>
-    <li>If the content will <strong>most</strong> likely be re-visited in later sprints, we will name it as same as the file name or its functionality <strong>with a prefix of sprint number</strong>.</li>
+    <li>If the content is <strong>less</strong> likely be re-visited in later sprints, we will name it as same as the file name or its functionality.</li>
+    <li>If the content is <strong>most</strong> likely be re-visited in later sprints, we will name it as same as the file name or its functionality <strong>with a prefix of sprint number</strong>.</li>
   </ul>
 
 Our github issues feature is designated for users who are not in our team. We mainly communicate via discord about bugs or issues, as well as the comments in pull request, because pull request is mandatory for each update in development and main branch.
