@@ -1,0 +1,28 @@
+**<span style="text-decoration:underline;">Process: process.md </span>**
+
+
+
+* **How did you organize the team? Which tools did you use, if any?**
+    * Tools Used
+        * **Piazza → Utor Emails → Discord → GitHub → Jira**
+    * The group initially was assembled through the “Search for Teammates!” post on Piazza (CSC301 Q/A forums page). Once connections were made through our email addresses found on Piazza, we agreed to create a Discord (communication platform) server. By exchanging our Discord IDs we were able to move onto a newly made Discord server which was created using the template provided by CSC301 course instructors. Finally, this Discord server became our main source of online communication. 
+    * Initially, only a group of  four members was created on Discord and after discussing what courses we shared as well as our goals, we were able to define which of our mutual coding skills and shared experiences should be utilized for this project. We were then able to agree on what our project should be based on and which approach we would be able to take. It was decided on what type of members should be recruited, which were contacted through piazza ”Search for Teammates!” post then two more members were recruited as time went on.
+    * From there, using the Discord server created, we could all communicate using various threads dedicated for different sprints and deliverables such as s0-summary (the thread for sprint0’s summary file).
+    * We were all active members of the CSC301 Discord channel, therefore we were all up to date on the newest announcements made, which came in handy for when we were the first (and only group) in the GDSC Q&A.
+    * Discord also facilitated group meetings, where we could coordinate, and plan for everything that needed to be done for a specific sprint or to make sure that everyone was set up and up to date on GitClassroom/Jira/etc.
+*  **How did you make decisions?**
+    * As a group:
+        * Questions were posed in our text channels/in meetings on our Discord server, and decisions were made based on a vote where the majority agreed/disagreed.
+        * The decision to make our project be the GDSC proposal was unanimous. All group members were in favour of the decision to take the GDSC project opportunity. 
+* **How did you define the priority and/or points of user stories? How many rounds of voting (on average) did you need to come to a consensus for the point estimate?**
+    * To prioritize our user stories we mainly used the planning poker technique and it took 3-4 rounds to come to a consensus. For each user story, the creator reads the agile user story or describes the new proposed feature to the rest of the group members. Each group member is holding a deck of cards with a sequence of values [0, 1, 2, 3, 5, 8, 13, 20, 40, 100]. Once the user story / new feature has been fully discussed and explained, each group member not including the “creator” privately selects one card to represent his or her estimate. Once all the members make their selection all cards are then revealed at the same time.
+    * The poker planning process is repeated until consensus is reached or until further proceed with the approval by our Product Owner in our case it is GDSC mentors/teaching assistance. 
+    * Once we ranked every user story / new feature we then sorted them by rank from highest to lowest.
+    * We then reviewed the user stories and made sure that they are small enough to fit into a sprint timeframe. If they are too large, they will be difficult to be deliverable within one sprint as we must split them into smaller deliverables to have a deliverable working product at the end of each sprint. As in the early stages of the project, some of the user stories may be left as large features that contain many stories.
+    * Once it is decided that a large feature can be worked by all members based on its poker card rank as well as further discussions amongst the members. Finally, to utilize all the members, the sprint can then be broken down into smaller deliverable stories for each sprint.
+* **How frequently did you meet?**
+    * Video/voice call group meetings done<span style="text-decoration:underline;"> Bi-weekly</span>.
+    * The group meetings are scheduled bi-weekly typically at the beginning of each sprint, <span style="text-decoration:underline;">communication is key</span> if subsets of the group feel the need to meet to discuss different smaller tasks that they’re assigned, those subsets can also meet as many times they need. Additionally, there is a Discord voice lounge available for everyone to meet online and hang out while they’re working on their tasks for the project.
+* **What lessons should you take forward to the next phase**
+    * One lesson to take forward is to recognize when group members have other assignments/evaluations that are due so that we can set our expectations on when work will be realistically submitted. We aim to get things done way ahead of deadlines (at least 48 before) to avoid any complications that might arise. Specifically, when complex code is involved, we understand that it is important to have a uniform layout and have extra time for further final debugging or minor fixes/changes. 
+    * For example, in our team contract, we generally aim for two days before the deadline as our submission date, however, this may not always be realistic for different reasons (a task may take longer than expected, a group member has an evaluation earlier in the week which delays their work, etc.) With constant communication to better manage that we are all on the same page on delivering an acceptable working product by the end of each sprint.
