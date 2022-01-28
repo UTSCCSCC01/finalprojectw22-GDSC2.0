@@ -91,6 +91,13 @@
 <br>
 <details open>
 <summary><strong>Project Application</strong></summary>
+    <li>As a member (student or mentor), I can fill out application form on the club website, so I don't need to be redirected to external site.
+    <ul>
+        <li>An application portal for users.</li>
+        <li>Student application page allows users to apply for a student role in upcoming semester.</li>
+        <li>Mentor application page allows users to apply for a mentor role in upcoming semester.</li>
+    </ul>
+    </li>
     <li>As a member (student or mentor), I want to get an email notification when my application status has been updated, so I can start to view project initiatives or prepare to apply in the next term.
     <ul>
         <li>Application accept button aliasing with a email sending action, which email is sent to the email address provided in the application.</li>
