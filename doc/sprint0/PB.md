@@ -15,27 +15,6 @@
     </ul>
     </li>
     <br>
-    </ul>
-    <li>As a member (student or mentor), I can reset my password via email verification, so I don't lose my account.
-    <ul>
-        <li>A 'forget password' link is available in login page</li>
-        <li>Reset password action is executed after receiving a correct and registered email address.</li>
-    </ul>
-    </li>
-    <br>
-    <li>As a member (student or mentor), I can fill out common information in the profile page, so I don't need to fill out those information again in the application.
-    <ul>
-        <li>User have an editable profile page.</li>
-        <li>Once an application is initiated by a member, the server scans the profile of that member and fill in some sections in the application form based on the member's profile.</li>
-    </ul>
-    </li>
-    <br>
-    <li>As a member (student or mentor), I can link my github and linkedin page in my profile, so I can showcase my experience.
-    <ul>
-        <li>A section in profile page for github and linkedin link</li>
-    </ul>
-    </li>
-    <br>
     <li>As a member (student or mentor), I can view my past projects, so I can revisit the projects and provide projects' information to other people.
     <ul>
         <li>A project tab show up after clicking on the account icon.</li>
@@ -57,97 +36,96 @@
         <li>An interface designated for admins to add past project.</li>
     </ul>
     </li>
-</details>
-<br>
-<details open>
-<summary><strong>Project Initiatives Portal</strong></summary>
-    <li>As a site admin, I can create project initiatives, so I can show projects initiatives to candidates.
-    <ul>
-        <li>A designated interface for admins to add or delete project initiatives.</li>
-    </ul>
-    </li>
     <br>
-    <li>As a member (student or mentor), I can scroll through a listing of active project initiatives, so I can see if there is any project that I am interested in.
+    <li>As a site admin, I want issues or bugs to be reported via email, so I can be aware of those issues.
     <ul>
-        <li>A page with a listing of active project.</li>
-    </ul>
-    </li>
-    <br>
-    <li>As a member (student or mentor), I can click on the project initiatives and it brings me to a page or a pop up window, so I get to know more details about the project.
-    <ul>
-        <li>Clicking on the active project initiatives redirect the user to a page that contains the details about the project initiative.</li>
-        <li>Each active project initiatives have a page.</li>
-    </ul>
-    </li>
-    <br>
-    <li>As a member (student or mentor), I can add preferences to the existing project initiatives, so I can show admins or mentors my preferences.
-    <ul>
-        <li>A preference icon in the top right corner of a project initiative in the project listing page.</li>
-        <li>Default for all project preference of a user is no-preference.</li>
-        <li>Members can change their preferences.</li>
+        <li>Club contact information placed at the bottom of a page.</li>
     </ul>
     </li>
 </details>
 <br>
 <details open>
-<summary><strong>Project Application</strong></summary>
-    <li>As a member (student or mentor), I can fill in application form on the club website, so I don't need to be redirected to external site.
+<summary><strong>Project Application Portal</strong></summary>
+    <li>As a registered user (student or mentor), I can fill in application form, so that I can apply for participating project in upcoming semester.
     <ul>
-        <li>An application portal for users.</li>
-        <li>Student application page allows users to apply for a student role in upcoming semester.</li>
-        <li>Mentor application page allows users to apply for a mentor role in upcoming semester.</li>
+        <li>Having an application portal.</li>
+        <li>Users can choose to fill in either student or mentor application.</li>
+    </ul>
+    <br>
+    <li>As a site admin, I can activate the application portal and deactivate the portal, so I decide when the application portal will be open.
+    <ul>
+        <li>Admin have a application portal management section.</li>
+        <li>Admin can set the start time and end time for either or both of student and mentor application portals.</li>
     </ul>
     </li>
     <br>
-    <li>As a member (student or mentor), I want to get an email notification when my application status has been updated, so I can start to view project initiatives or prepare to apply in the next term.
+    <li>As an applicant (student or mentor), I can check my application status, so I can keep track of the application process.
     <ul>
-        <li>Application accept button aliasing with a email sending action, which email is sent to the email address provided in the application.</li>
+        <li>Having a section indicates the application status of the user.</li>
     </ul>
     </li>
     <br>
-    <li>As a site admin, I want to format an acceptance email template, so I can send that email to all applicants once they are accepted.
+    <li>As a site admin, I can view application information and choose to accept or reject, so I don't notify them by email.
     <ul>
-        <li>An interface allow site admins to modify the email format which will be sent to a group of users.</li>
+        <li>An application info pop up window when selecting an application.</li>
+        <li>An 'accept' button, when clicked, moves the application to next stage. A 'reject' button, when clicked, remove application from the list.</li>
     </ul>
     </li>
     <br>
-    <li>As a site admin or mentor, I can see a list of pending applications and a list of approved applicants, so I can view their application information and profiles.
+    <li>As a site admin, I want application stored in multiple sections, based on application stages and number of members in a team, so I can view their application information clearly.
     <ul>
-        <li>A list of pending applications.</li>
-        <li>Clicking on the application pops up of window containing application details and an accept button at the bottom of the popup window.</li>
-        <li>A list of approved applicants.</li>
-        <li>Clicking on the approved applicants redirects to their profile pages.</li>
+        <li>An application page.</li>
+        <li>Category tabs that indicates type of applications.</li>
+        <li>Applications stored correctly in categories.</li>
+        <li>A number beside the category tabs indicating number of pending applications in that section.</li>
     </ul>
-    </li>
     <br>
-    <li>As a a site admin or mentor, I can sort or filter applicants based on common information, like cgpa, etc, so I can spend less time on seeking potential candidates.
+    <li>As a a site admin, I can sort or filter applications based on common information, like cgpa, etc, so I can spend less time on seeking potential candidates.
     <ul>
-        <li>A filter and sort section built in pending applications page.</li>
-        <li>Filter and sort section allows admin or mentor to sort and filter based on specific criteria.</li>
+        <li>A filter and sort section built in pending application page.</li>
+        <li>Filter and sort section allows admin to sort and filter based on specific criteria.</li>
     </ul>
     </li>
     <br>
 </details>
-<br>
 <details open>
 <summary><strong>Project</strong></summary>
-    <li>As a member in a project , I want a page of the project for my team, so I can view my project details.
+    <li>As a site admin, I can search participant's account by their information provided in application.
     <ul>
-        <li>Each project in progress has a page with project details.</li>
+        <li>An application is owned by a user.</li>
+        <li>Approved applications are recorded.</li>
+        <li>Use the unique key in application information to find a participant.</li>
     </ul>
     </li>
     <br>
-    <li>As a member (student and mentor) in a project, I can view a listing of project partners in the same project, so I can contact them and know their information.
+    <li> As a site admin, I can create teams for participants, so they know they are in a group.
     <ul>
-        <li>Each member in the same projects has ownership to the project. Their user IDs are included in project profile.</li>
-        <li>Member profile links are listed in the project page.</li>
+        <li>Site admin can add tags to current participants.</li>
+        <li>Candidates tagged by same name are in the same team.</li>
     </ul>
     </li>
     <br>
-    <li>As a site admin, I can remove candidates from or add candidates to an existing project team, so the team formation can be flexible.
+    <li>As a group of participants in the same team, we have a team page, so we can describe our project and submit outline and elevator pitch.
     <ul>
-        <li>An project interface for site admins that allows admins to modify the formation of a group.</li>
-        <li>Email is sent to the members once changes are made.</li>
+        <li>An editable page for each team.</li>
+        <li>A submission drop box for project information and elevator pitch.</li>
+    </ul>
+    </li>
+</details>
+<br>
+<details open>
+<summary><strong>Resources</strong></summary>
+    <li>As a site admin, I can post resources, so I can share with users.
+    <ul>
+        <li>A page of resources that admins can add or remove resources.</li>
+        <li>Admins can edit the content of the resource page.</li>
+    </ul>
+    </li>
+    <br>
+    <li>As a site admin, I want resources organized by their categories, so I can easily organize the page.
+    <ul>
+        <li>Site admin can create and delete categories.</li>
+        <li>Resources belong to the same category are placed together.</li>
     </ul>
     </li>
 </details>
@@ -170,14 +148,7 @@
     <br>
     <li>As a user (visitor, student or mentor), I can view the past events and event descriptions, so I can make prediction of the events in the future.
     <ul>
-        <li>A page of listing of past events which allows all users to see</li>
-    </ul>
-    </li>
-    <br>
-    <li>As a site admin, I can pull all the information of past events, so I don't need to re-write everything for similar events.
-    <ul>
-        <li>A page of listing of past events which allows all users to see and click on.</li>
-        <li>Admin can export the past event's setting and description in order to use in creating new events.</li>
+        <li>A page of listing of past events which allows all users to see.</li>
     </ul>
     </li>
 </details>
