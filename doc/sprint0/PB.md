@@ -71,8 +71,24 @@
         <li>An 'accept' button, when clicked, moves the application to next stage. A 'reject' button, when clicked, remove application from the list.</li>
     </ul>
     </li>
+<<<<<<< HEAD
     <br>
     <li>As a site admin, I want application stored in multiple sections, based on application stages and number of members in a team, so I can view their application information clearly.
+=======
+</details>
+<br>
+<details open>
+<summary><strong>Project Application</strong></summary>
+    <li>As a member (student or mentor), I can fill in application form on the club website, so I don't need to be redirected to external site.
+    <ul>
+        <li>An application portal for users.</li>
+        <li>Student application page allows users to apply for a student role in upcoming semester.</li>
+        <li>Mentor application page allows users to apply for a mentor role in upcoming semester.</li>
+    </ul>
+    </li>
+    <br>
+    <li>As a member (student or mentor), I want to get an email notification when my application status has been updated, so I can start to view project initiatives or prepare to apply in the next term.
+>>>>>>> sprint0
     <ul>
         <li>An application page.</li>
         <li>Category tabs that indicates type of applications.</li>
