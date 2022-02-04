@@ -16,7 +16,7 @@ services:
       - "5000:5000"
     depends_on:
       - mongo
-    env_file: ./backend/.env
+    env_file: .env
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
@@ -24,6 +24,7 @@ services:
       - app-network
   mongo:
     image: mongo
+    container_name: gdsc-server
     volumes:
       - data-volume:/data/db
     ports:
