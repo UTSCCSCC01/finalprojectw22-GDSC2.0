@@ -16,7 +16,9 @@ Since we changed the file architecture, we have had isolated environment for our
 The connection is established by the ```client:links``` in [docker-compose.yml](./docker-compose.yml).
 
 To see the source code, [here](https://github.com/docker/awesome-compose/tree/master/react-express-mongodb)
+
 ## Prerequisites
+
 * Ensure [Node.js](https://nodejs.org/en/) is installed locally
 
 * Download [Docker Desktop](https://docs.docker.com/get-docker/) (recommended), or download Docker Engine.
