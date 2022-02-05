@@ -1,10 +1,14 @@
 import React from "react";
 import "./Initial.css";
 // import Button from '@mui/material/Button';
+import { useNavigate, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 // import Button from "../common/Button";
 
 const Initial = () => {
+  let nav = useNavigate();
+  let { id } = useParams();
   return (
     <>
       <style type="text/css">
@@ -16,17 +20,26 @@ const Initial = () => {
     
     `}
       </style>
-      <div class="container">
-        <h1>Welcome [Name of User]...</h1>
-        <div class="sub">
-          <Button size="large" variant="outline-success">
+      <div className="container">
+        <h1>Welcome {id}</h1>
+        <div className="sub">
+          <Button
+            onClick={() => nav("student/app")}
+            size="large"
+            variant="outline-success"
+          >
             Student Application
           </Button>
-          <div class="vl"></div>
-          <Button size="large" variant="outline-danger">
+          <div className="vl"></div>
+          <Button
+            onClick={() => nav("mentor/app")}
+            size="large"
+            variant="outline-danger"
+          >
             Mentor Application
           </Button>
         </div>
+        <Outlet />
       </div>
     </>
   );
