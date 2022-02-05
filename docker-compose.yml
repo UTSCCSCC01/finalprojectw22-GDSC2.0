@@ -24,7 +24,7 @@ services:
       - app-network
   mongo:
     image: mongo
-    container_name: gdsc-server
+    container_name: mongo
     volumes:
       - data-volume:/data/db
     ports:
