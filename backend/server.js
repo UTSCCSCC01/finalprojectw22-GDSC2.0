@@ -5,6 +5,9 @@ const connDB = require("./config/db");
 const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 
+//answerModel
+const answerModel = require("./models/answerModel");
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,6 +35,23 @@ app.post("/", (req, res) => {
   });
   res.send("inserted");
 });
+
+
+//connect the endpoints for answerModel
+app.get("/getAnswers", (req, res) => {
+    answerModel
+      .find({})
+      .then((data) => res.json(data))
+      .catch((e) => console.log(e));
+  });
+  
+// app.post("/", (req, res) => {
+//     console.log(req.body.test);
+//     answerModel.create({ name: req.body.test }).then((id) => {
+//         console.log(`inserted: ${id}`);
+//     });
+//     res.send("inserted");
+// });
 
 app.listen(
   process.env.PORT,
