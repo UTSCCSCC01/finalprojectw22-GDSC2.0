@@ -24,17 +24,17 @@ const Initial = () => {
         <h1>Welcome {id}</h1>
         <div className="sub">
           <Button
-            onClick={() => nav("student/app")}
+            onClick={() => nav(`/portal/student/app/${id}`)}
             size="large"
-            variant="outline-success"
+            variant="outline-primary"
           >
             Student Application
           </Button>
           <div className="vl"></div>
           <Button
-            onClick={() => nav("mentor/app")}
+            onClick={() => nav(`/portal/mentor/app/${id}`)}
             size="large"
-            variant="outline-danger"
+            variant="outline-warning"
           >
             Mentor Application
           </Button>

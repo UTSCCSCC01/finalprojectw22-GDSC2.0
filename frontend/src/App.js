@@ -6,6 +6,7 @@ import axios from "axios";
 import Initial from "./components/application/Initial/Initial";
 import "bootstrap/dist/css/bootstrap.min.css";
 import StudentForm from "./components/application/forms/StudentForm";
+import MentorForm from "./components/application/forms/MentorForm";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 const App = () => {
@@ -20,8 +21,8 @@ const App = () => {
         <Route path="team" element />
         <Route path="subscribe" element />
         <Route path="portal/:id" element={<Initial />} />
-        <Route path="portal/:id/student/app" element={<StudentForm />} />
-        {/* <Route path="portal/mentor/app" element={<MentorForm />} /> */}
+        {/* <Route path="portal/student/app/:id" element={<StudentForm />} /> */}
+        <Route path="portal/mentor/app/:id" element={<MentorForm />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
