@@ -31,3 +31,6 @@ a{
     margin-left: 5vw;
     margin-right: 5vw;
 }
+.container_width{
+    min-width: 900px;
+}

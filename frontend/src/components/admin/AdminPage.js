@@ -22,9 +22,9 @@ export default function AdminPage(){
                 </h1>
             </div>
             <div className="d-flex">
-                <Nav variant="tabs" activeKey={itemKey} onSelect={handleActive} className={`flex-column ${AdminStyle.admin_nav} ${AdminStyle.nav_tabs}`}>
+                <Nav variant="tabs" activeKey={itemKey} onSelect={handleActive} className={`flex-column pt-5 ${AdminStyle.admin_nav} ${AdminStyle.nav_tabs}`}>
                     <Nav.Item>
-                        <Nav.Link eventKey="1" href="#" className={AdminStyle.nav_border}>
+                        <Nav.Link eventKey="1" href="#">
                         Applications
                         </Nav.Link>
                     </Nav.Item>
@@ -44,9 +44,9 @@ export default function AdminPage(){
                         </Nav.Link>
                     </Nav.Item>
                 </Nav>
-                <Accordion className={`w-100 ${AdminStyle.info_sec}`} defaultActiveKey = {itemKey} activeKey = {itemKey}>
+                <Accordion className={`w-100 ${AdminStyle.info_sec}`} activeKey = {itemKey}>
                     <Accordion.Collapse eventKey = "1">
-                        <Card>
+                        <Card className={AdminStyle.container_width}>
                             <Card.Header>
                                 Applications
                             </Card.Header>
@@ -56,7 +56,7 @@ export default function AdminPage(){
                         </Card>
                     </Accordion.Collapse>
                     <Accordion.Collapse eventKey = "2">
-                        <Card>
+                        <Card className={AdminStyle.container_width}>
                             <Card.Header>
                                 Resources
                             </Card.Header>
@@ -64,7 +64,7 @@ export default function AdminPage(){
                         </Card>
                     </Accordion.Collapse>
                     <Accordion.Collapse eventKey = "3">
-                        <Card>
+                        <Card className={AdminStyle.container_width}>
                             <Card.Header>
                                 Events
                             </Card.Header>
@@ -72,7 +72,7 @@ export default function AdminPage(){
                         </Card>
                     </Accordion.Collapse>
                     <Accordion.Collapse eventKey = "4">
-                        <Card>
+                        <Card className={AdminStyle.container_width}>
                             <Card.Header>
                                 Past Projects
                             </Card.Header>
