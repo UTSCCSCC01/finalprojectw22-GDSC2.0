@@ -1,50 +1,34 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Navbarmenu from "./components/Navbarmenu/Navbarmenu";
+import Homepage from "./components/Homepage/Homepage"
+import About from "./components/About/About"
+import Subscribe from "./components/Subscribe/Subscribe"
+import ContactUs from "./components/ContactUs/ContactUs"
+import Team from "./components/Team/Team"
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const App = () => {
-  const [test, setTest] = useState("");
-  const [input, setInput] = useState("");
-
-  const submit = async () => {
-    await axios.post("/", { test: input });
-    // console.log(a);
-
-    getData();
-  };
-
-  const getData = async () => {
-    const db = await axios.get("/data");
-    console.log(db.data);
-    let display = "";
-    for (var i = 0; i < db.data.length; i++) {
-      display += db.data[i].name + ", ";
-    }
-    console.log(display);
-    setTest(display);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
-    <div className="App">
-      <input
-        onChange={(event) => setInput(event.target.value)}
-        type="text"
-        id="test"
-        name="test"
-      />
-      <button onClick={submit} type="submit">
-        click me to add to test model in DB
-      </button>
-
-      <div>
-        <b>Test Database Data: </b>
-        {test}
-      </div>
-    </div>
+    <>
+      <Navbarmenu />
+        <Router>
+          <Routes>
+            <Route path="/" element={ <Homepage/> } />
+            <Route path="/projects" element />
+            <Route path="/resources" element />
+            <Route path="/events" element />
+            <Route path="/portal" element />
+            <Route path="/team" element={ <Team />} />
+            <Route path="/subscribe" element={ <Subscribe/>} />
+            <Route path="/about" element={ <About/>} />
+            <Route path="/contactUs" element={ <ContactUs/>} />
+            <Route path="/applications" element />
+          </Routes>
+        </Router>
+    </>
   );
 };
 
