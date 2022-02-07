@@ -1,50 +1,31 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import Navbar from "./components/Navbar";
 import axios from "axios";
+import Initial from "./components/application/Initial/Initial";
+import "bootstrap/dist/css/bootstrap.min.css";
+import StudentForm from "./components/application/forms/StudentForm";
+import MentorForm from "./components/application/forms/MentorForm";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 const App = () => {
-  const [test, setTest] = useState("");
-  const [input, setInput] = useState("");
-
-  const submit = async () => {
-    await axios.post("/", { test: input });
-    // console.log(a);
-
-    getData();
-  };
-
-  const getData = async () => {
-    const db = await axios.get("/data");
-    console.log(db.data);
-    let display = "";
-    for (var i = 0; i < db.data.length; i++) {
-      display += db.data[i].name + ", ";
-    }
-    console.log(display);
-    setTest(display);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
-    <div className="App">
-      <input
-        onChange={(event) => setInput(event.target.value)}
-        type="text"
-        id="test"
-        name="test"
-      />
-      <button onClick={submit} type="submit">
-        click me to add to test model in DB
-      </button>
+    <Router>
+      <Routes>
+        <Route path="/" element />
+        <Route path="projects" element />
+        <Route path="resources" element />
+        <Route path="events" element />
 
-      <div>
-        <b>Test Database Data: </b>
-        {test}
-      </div>
-    </div>
+        <Route path="team" element />
+        <Route path="subscribe" element />
+        <Route path="portal/:id" element={<Initial />} />
+        <Route path="portal/:id/student/app/" element={<StudentForm />} />
+        <Route path="portal/:id/mentor/app/" element={<MentorForm />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </Router>
   );
 };
 
