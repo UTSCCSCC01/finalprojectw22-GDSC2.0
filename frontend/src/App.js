@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Login from "./components/Login"
 
 const App = () => {
   const [test, setTest] = useState("");
@@ -30,7 +31,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <input
+      <Login />
+      {/* <input
         onChange={(event) => setInput(event.target.value)}
         type="text"
         id="test"
@@ -43,7 +45,7 @@ const App = () => {
       <div>
         <b>Test Database Data: </b>
         {test}
-      </div>
+      </div> */}
     </div>
   );
 };
