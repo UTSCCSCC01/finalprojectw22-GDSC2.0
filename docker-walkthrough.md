@@ -47,7 +47,7 @@ docker-compose down
 At root directory, build and run compose file
 
 ```sh
-docker-compose -f docker-compose.dev.yml -d up --build
+docker-compose -f docker-compose.dev.yml up -d --build
 ```
 
 Then, enable Mongo Shell
