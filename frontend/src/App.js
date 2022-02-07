@@ -2,7 +2,6 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbarmenu from "./components/Navbarmenu/Navbarmenu";
 import Homepage from "./components/Homepage/Homepage";
 import About from "./components/About/About";
@@ -37,7 +36,6 @@ const App = () => {
         </Routes>
       </Router>
     </>
-
   );
 };
 
