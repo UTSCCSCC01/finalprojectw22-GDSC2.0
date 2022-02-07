@@ -1,16 +1,16 @@
-.app-div {
+.app-container {
   width: 50%;
   justify-content: center;
   align-items: center;
   margin: auto;
 }
 
-.mentor-form {
+.common-form {
   /* border: 1px solid rgb(192, 186, 186); */
-  border-top: 3px solid #0f9d38;
-  border-bottom: 3px solid #db4437;
-  border-right: 3px solid #f4b400;
-  border-left: 3px solid #4285f4;
+  border-top: 5px solid #0f9d38;
+  border-bottom: 5px solid #db4410;
+  border-right: 5px solid #f4b400;
+  border-left: 5px solid #4285f4;
   padding: 30px;
   margin-bottom: 40px;
   border-radius: 10px;

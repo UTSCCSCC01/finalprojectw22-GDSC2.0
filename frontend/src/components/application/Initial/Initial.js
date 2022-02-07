@@ -4,6 +4,7 @@ import "./Initial.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import ProgressBar from "react-bootstrap/ProgressBar";
 // import Button from "../common/Button";
 
 const Initial = () => {
@@ -20,26 +21,32 @@ const Initial = () => {
     
     `}
       </style>
-      <div className="container">
+      <div className="initial-header">
         <h1>Welcome {id}</h1>
-        <div className="sub">
+      </div>
+      <div className="initial-container">
+        <div className="initial-child">
           <Button
-            onClick={() => nav(`/portal/student/app/${id}`)}
+            onClick={() => nav(`student/app`)}
             size="large"
             variant="outline-primary"
           >
             Student Application
           </Button>
-          <div className="vl"></div>
+          <ProgressBar animated variant="info" now={45} />
+        </div>
+
+        <div className="vl"></div>
+        <div className="initial-child">
           <Button
-            onClick={() => nav(`/portal/mentor/app/${id}`)}
+            onClick={() => nav(`mentor/app`)}
             size="large"
             variant="outline-warning"
           >
             Mentor Application
           </Button>
+          <ProgressBar animated variant="success" now={75} />
         </div>
-        <Outlet />
       </div>
     </>
   );

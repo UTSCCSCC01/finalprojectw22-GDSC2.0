@@ -21,8 +21,8 @@ const App = () => {
         <Route path="team" element />
         <Route path="subscribe" element />
         <Route path="portal/:id" element={<Initial />} />
-        {/* <Route path="portal/student/app/:id" element={<StudentForm />} /> */}
-        <Route path="portal/mentor/app/:id" element={<MentorForm />} />
+        <Route path="portal/:id/student/app/" element={<StudentForm />} />
+        <Route path="portal/:id/mentor/app/" element={<MentorForm />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>

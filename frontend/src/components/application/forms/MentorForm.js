@@ -43,9 +43,9 @@ const MentorForm = () => {
   return (
     <>
       <h1 className="app-header">Mentor Application</h1>
-      <div className="app-div">
-        <Form className="mentor-form">
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+      <Form className="app-container">
+        <div className="common-form">
+          <Form.Group as={Row} className="mb-3" controlId="full-name">
             <Col style={{ textAlign: "center" }} sm={20}>
               <h3>Individual Information</h3>
             </Col>
@@ -59,11 +59,7 @@ const MentorForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="stud-num">
             <Col>
               <Form.Label column sm={10}>
                 Student Number
@@ -73,11 +69,7 @@ const MentorForm = () => {
               <Form.Control type="number" placeholder="Student Number" />
             </Col>
           </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="email">
             <Col>
               <Form.Label column sm={10}>
                 UofT email Address
@@ -88,11 +80,7 @@ const MentorForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="cgpa">
             <Col>
               <Form.Label column sm={10}>
                 CGPA
@@ -103,11 +91,7 @@ const MentorForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="POST">
             <Col>
               <Form.Label column sm={10}>
                 Program of Study
@@ -146,11 +130,7 @@ const MentorForm = () => {
             </Form.Group>
           </fieldset>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="resume">
             <Col>
               <Form.Label column sm={10}>
                 Resume
@@ -160,9 +140,9 @@ const MentorForm = () => {
               <Form.Control type="file" placeholder="Your answer" />
             </Col>
           </Form.Group>
-        </Form>
+        </div>
 
-        <Form className="mentor-form">
+        <div className="common-form">
           <fieldset>
             <Form.Group as={Row} className="mb-3">
               <Col style={{ textAlign: "center" }} sm={20}>
@@ -188,11 +168,7 @@ const MentorForm = () => {
             </Form.Group>
           </fieldset>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="intern-exp">
             <Col>
               <Form.Label column sm={10}>
                 Tell us about your past/current Internship Experience(s)!
@@ -203,11 +179,7 @@ const MentorForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="exp">
             <Col>
               <Form.Label column sm={10}>
                 Tell us about your past/current Extra-Curricular and/or
@@ -218,11 +190,7 @@ const MentorForm = () => {
               <Form.Control as="textarea" placeholder="Your answer" />
             </Col>
           </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="projects">
             <Col>
               <Form.Label column sm={10}>
                 Tell us about any software related projects you may have!
@@ -233,11 +201,7 @@ const MentorForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="attach-proj">
             <Col>
               <Form.Label column sm={10}>
                 Feel free to attach any of your projects here!
@@ -247,14 +211,10 @@ const MentorForm = () => {
               <Form.Control type="file" multiple placeholder="Your answer" />
             </Col>
           </Form.Group>
-        </Form>
+        </div>
 
-        <Form className="mentor-form">
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+        <div className="common-form">
+          <Form.Group as={Row} className="mb-3" controlId="languages">
             <Col style={{ textAlign: "center" }} sm={20}>
               <h3>Technological Experience</h3>
             </Col>
@@ -267,14 +227,20 @@ const MentorForm = () => {
               <Form.Control as="textarea" placeholder="Your answer" />
             </Col>
           </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="languages">
             <Col>
               <Form.Label column sm={10}>
                 Which Frameworks have you worked with?
+              </Form.Label>
+            </Col>
+            <Col sm={15}>
+              <Form.Control as="textarea" placeholder="Your answer" />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="frameworks">
+            <Col>
+              <Form.Label column sm={10}>
+                What databases have you used?
               </Form.Label>
             </Col>
             <Col sm={15}>
@@ -282,11 +248,7 @@ const MentorForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="platforms">
             <Col>
               <Form.Label column sm={10}>
                 What Platforms are you familiar with
@@ -297,11 +259,7 @@ const MentorForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+          <Form.Group as={Row} className="mb-3" controlId="links">
             <Col>
               <Form.Label column sm={10}>
                 Provide us with your Github, Devpost, Portfolio, etc. links
@@ -311,14 +269,10 @@ const MentorForm = () => {
               <Form.Control as="textarea" placeholder="Your answer" />
             </Col>
           </Form.Group>
-        </Form>
+        </div>
 
-        <Form className="mentor-form">
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
+        <div className="common-form">
+          <Form.Group as={Row} className="mb-3" controlId="additional-info">
             <Col style={{ textAlign: "center" }} sm={20}>
               <h3>Additional Information</h3>
             </Col>
@@ -337,7 +291,7 @@ const MentorForm = () => {
               <Form.Check label="Remember me" />
             </Col>
           </Form.Group> */}
-        </Form>
+        </div>
 
         <Form.Group as={Row} className="mb-3">
           <Col sm={{ span: 10, offset: 5 }}>
@@ -351,7 +305,7 @@ const MentorForm = () => {
             </Button>
           </Col>
         </Form.Group>
-      </div>
+      </Form>
     </>
   );
 };
