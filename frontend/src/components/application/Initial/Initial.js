@@ -33,7 +33,7 @@ const Initial = () => {
           >
             Student Application
           </Button>
-          <ProgressBar animated variant="info" now={45} />
+          <ProgressBar animated variant="info" label={`45%`} now={45} />
         </div>
 
         <div className="vl"></div>
@@ -45,7 +45,7 @@ const Initial = () => {
           >
             Mentor Application
           </Button>
-          <ProgressBar animated variant="success" now={75} />
+          <ProgressBar animated variant="success" label={`75%`} now={75} />
         </div>
       </div>
     </>

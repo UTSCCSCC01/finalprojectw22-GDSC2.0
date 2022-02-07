@@ -232,7 +232,7 @@ const StudentForm = () => {
         </div>
 
         <div className="common-form">
-          <Form.Group as={Row} className="mb-3" controlId="additional-info">
+          <Form.Group as={Row} className="mb-3" controlId="radio-idea">
             <Col style={{ textAlign: "center" }} sm={20}>
               <h3>Project Ideas</h3>
             </Col>
@@ -256,7 +256,7 @@ const StudentForm = () => {
               />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="additional-info">
+          <Form.Group as={Row} className="mb-3" controlId="idea">
             <Col>
               <Form.Label column sm={10}>
                 If yes, please describe your idea below
