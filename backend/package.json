@@ -1,0 +1,37 @@
+{
+  "name": "final-project-letsgame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "client": "npm start --prefix ../frontend",
+    "dev": "concurrently \"npm start\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UTMCSC301/final-project-letsgame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UTMCSC301/final-project-letsgame/issues"
+  },
+  "homepage": "https://github.com/UTMCSC301/final-project-letsgame#readme",
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "dotenv": "^14.2.0",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7",
+    "cors": "^2.8.5",
+    "nodemon": "^2.0.15"
+  }
+}
