@@ -1,14 +1,35 @@
-import React from "react";
+import { React, useState } from "react";
 import { useFormik } from "formik";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import InputGroup from "react-bootstrap/InputGroup";
 import Container from "react-bootstrap/Container";
+import Multiselect from "multiselect-react-dropdown";
 import "./MentorForm.css";
 // import FormGroup from "react-bootstrap/esm/FormGroup";
 
 const MentorForm = () => {
+  const dbOptions = [
+    { value: "SQL (PostgreSQL, MySQL etc.)" },
+    { value: "noSQL (MongoDB, Firestore, DynamoDB etc.)" },
+    { value: "Graph Databases (Neo4j)" },
+    { value: "None" },
+  ];
+  const platOptions = [
+    { value: "AWS" },
+    { value: "Google cloud Platform" },
+    { value: "Firebase" },
+    { value: "Heroku" },
+    { value: "Netlify" },
+    { value: "Azure" },
+    { value: "None" },
+  ];
+
+  const [db, setDB] = useState(dbOptions);
+  const [plat, setPlat] = useState(platOptions);
+  // ];
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
   const formik = useFormik({
@@ -21,10 +42,13 @@ const MentorForm = () => {
   });
   return (
     <>
-      <h1 className="sapp">Mentor Application</h1>
-      <div className="sapp-div">
-        <Form className="student-form">
+      <h1 className="app-header">Mentor Application</h1>
+      <div className="app-div">
+        <Form className="mentor-form">
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+            <Col style={{ textAlign: "center" }} sm={20}>
+              <h3>Individual Information</h3>
+            </Col>
             <Col>
               <Form.Label column sm={10}>
                 Full Name
@@ -46,7 +70,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="password" placeholder="Student Number" />
+              <Form.Control type="number" placeholder="Student Number" />
             </Col>
           </Form.Group>
           <Form.Group
@@ -60,7 +84,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="password" placeholder="UofT email address" />
+              <Form.Control type="email" placeholder="UofT email address" />
             </Col>
           </Form.Group>
 
@@ -75,7 +99,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="password" placeholder="CGPA" />
+              <Form.Control type="number" placeholder="CGPA" />
             </Col>
           </Form.Group>
 
@@ -90,14 +114,14 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control type="text" placeholder="Program of Study" />
             </Col>
           </Form.Group>
 
           <fieldset>
             <Form.Group as={Row} className="mb-3">
-              <Form.Label as="legend" column sm={2}>
-                Year
+              <Form.Label as="legend" column sm={10}>
+                What year of study will you be as of Winter 2021
               </Form.Label>
               <Col sm={10}>
                 <Form.Check
@@ -136,9 +160,14 @@ const MentorForm = () => {
               <Form.Control type="file" placeholder="Your answer" />
             </Col>
           </Form.Group>
+        </Form>
 
+        <Form className="mentor-form">
           <fieldset>
             <Form.Group as={Row} className="mb-3">
+              <Col style={{ textAlign: "center" }} sm={20}>
+                <h3>Experience</h3>
+              </Col>
               <Form.Label as="legend" column sm={10}>
                 Have you completed a PEY term?
               </Form.Label>
@@ -215,15 +244,20 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="file" placeholder="Your answer" />
+              <Form.Control type="file" multiple placeholder="Your answer" />
             </Col>
           </Form.Group>
+        </Form>
 
+        <Form className="mentor-form">
           <Form.Group
             as={Row}
             className="mb-3"
             controlId="foémHorizontalPassword"
           >
+            <Col style={{ textAlign: "center" }} sm={20}>
+              <h3>Technological Experience</h3>
+            </Col>
             <Col>
               <Form.Label column sm={10}>
                 What programming languages have you worked with
@@ -244,22 +278,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
-            </Col>
-          </Form.Group>
-
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="foémHorizontalPassword"
-          >
-            <Col>
-              <Form.Label column sm={10}>
-                What Databases have you used
-              </Form.Label>
-            </Col>
-            <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Multiselect options={db} displayValue="value" />
             </Col>
           </Form.Group>
 
@@ -274,7 +293,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Multiselect options={plat} displayValue="value" />
             </Col>
           </Form.Group>
 
@@ -292,12 +311,17 @@ const MentorForm = () => {
               <Form.Control as="textarea" placeholder="Your answer" />
             </Col>
           </Form.Group>
+        </Form>
 
+        <Form className="mentor-form">
           <Form.Group
             as={Row}
             className="mb-3"
             controlId="foémHorizontalPassword"
           >
+            <Col style={{ textAlign: "center" }} sm={20}>
+              <h3>Additional Information</h3>
+            </Col>
             <Col>
               <Form.Label column sm={10}>
                 Is there anything else you'd like us to know
@@ -313,15 +337,20 @@ const MentorForm = () => {
               <Form.Check label="Remember me" />
             </Col>
           </Form.Group> */}
-
-          <Form.Group as={Row} className="mb-3">
-            <Col sm={{ span: 10, offset: 5 }}>
-              <Button variant="outline-success" size="lg" type="submit">
-                Apply!{" "}
-              </Button>
-            </Col>
-          </Form.Group>
         </Form>
+
+        <Form.Group as={Row} className="mb-3">
+          <Col sm={{ span: 10, offset: 5 }}>
+            <Button
+              className="submit"
+              variant="outline-success"
+              size="lg"
+              type="submit"
+            >
+              Apply!
+            </Button>
+          </Col>
+        </Form.Group>
       </div>
     </>
   );
