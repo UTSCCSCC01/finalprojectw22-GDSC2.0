@@ -4,7 +4,7 @@ import { Nav, Navbar, Container } from "react-bootstrap";
 
 const Navbarmenu = () => {
   return (
-    <Navbar collapseOnSelect expand="lg">
+    <Navbar collapseOnSelect expand="lg" top="fixed">
       <Container>
         <Nav.Link href="/">
           <img src={dsclogo} alt="dsc_logo" height="30px" />
