@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
+import Login from "./components/Login"
 import Navbarmenu from "./components/Navbarmenu/Navbarmenu";
 import Homepage from "./components/Homepage/Homepage";
 import About from "./components/About/About";
@@ -24,11 +25,11 @@ const App = () => {
           <Route path="/projects" element />
           <Route path="/resources" element />
           <Route path="/events" element />
-          <Route path="/portal" element />
           <Route path="/team" element={<Team />} />
           <Route path="/subscribe" element={<Subscribe />} />
           <Route path="/about" element={<About />} />
           <Route path="/contactUs" element={<ContactUs />} />
+          <Route path="/portal" element={<Login />} />
           <Route path="portal/:id" element={<Initial />} />
           <Route path="portal/:id/student/app/" element={<StudentForm />} />
           <Route path="portal/:id/mentor/app/" element={<MentorForm />} />
@@ -36,6 +37,7 @@ const App = () => {
         </Routes>
       </Router>
     </>
+
   );
 };
 
