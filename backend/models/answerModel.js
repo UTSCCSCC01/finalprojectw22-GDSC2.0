@@ -5,7 +5,7 @@ const answerSchema = new mongoose.Schema({
         required: true,
     },
     yearofstudy: {
-        type: Date,
+        type: String,
         required: true,
     },
     interests: { 

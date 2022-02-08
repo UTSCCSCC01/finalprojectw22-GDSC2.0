@@ -45,13 +45,24 @@ app.get("/getAnswers", (req, res) => {
       .catch((e) => console.log(e));
   });
   
-// app.post("/", (req, res) => {
-//     console.log(req.body.test);
-//     answerModel.create({ name: req.body.test }).then((id) => {
-//         console.log(`inserted: ${id}`);
-//     });
-//     res.send("inserted");
-// });
+app.post("/createAnswers", (req, res) => {
+    console.log(req.body.test);
+    answerModel
+        .create({ 
+            uid: req.body.uid,
+            yearofstudy: req.body.yearofstudy,
+            interests: req.body.interests,
+            experience: req.body.experience,
+            courses: req.body.courses,
+            optional: req.body.optional
+         })
+        .then((id) => {
+      console.log(`inserted: ${id}`);
+    })
+        .catch((e) => console.log(e));
+    res.send("inserted");
+});
+//End of endpoints 
 
 app.listen(
   process.env.PORT,
