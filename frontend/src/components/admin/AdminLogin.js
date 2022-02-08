@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import LoginStyle from "../../css/admin/AdminLogin.module.css";
-import dsc_utm from "../../img/dsc_utm.png";
+import dsc_utm from "../../images/dsc_utm.png";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/esm/Button";
-import banner from "../../img/banner.png";
+import banner from "../../images/banner.png";
 export default function AdminLogin(){
     // reference: https://gdscutm.com/
     const [loginInfo,setLoginInfo] = useState(

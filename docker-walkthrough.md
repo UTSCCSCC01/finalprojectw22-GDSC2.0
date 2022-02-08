@@ -47,7 +47,7 @@ docker-compose down
 At root directory, build and run compose file
 
 ```sh
-docker-compose -f docker-compose.dev.yml -d up --build
+docker-compose -f docker-compose.dev.yml up -d --build
 ```
 
 Then, enable Mongo Shell
@@ -73,7 +73,7 @@ For now, when only mongo is dockerized, you can view docker as a VM.
 ## Run Back-end Only
 Make sure you are in ```/backend```
 ```sh
-docker build -t server
+docker build -t server .
 ```
 ```sh
 docker run -p 5000:5000 server
@@ -83,7 +83,7 @@ docker run -p 5000:5000 server
 ## Run Back-end Only
 Make sure you are in ```/frontend```
 ```sh
-docker build -t react-app
+docker build -t react-app .
 ```
 ```sh
 docker run -p 3000:3000 react-app
