@@ -7,7 +7,7 @@ import AdminStyle from "../../css/admin/AdminPage.module.css";
 import AdminApplication from "./AdminApplications"
 export default function AdminPage(){
     // reference: https://gdscutm.com
-    const [itemKey, setActive] = useState(1);
+    const [itemKey, setActive] = useState("1");
 
     const handleActive = (e) => {
         setActive(e);
@@ -44,7 +44,7 @@ export default function AdminPage(){
                         </Nav.Link>
                     </Nav.Item>
                 </Nav>
-                <Accordion className={`w-100 ${AdminStyle.info_sec}`} activeKey = {itemKey}>
+                <Accordion className={`w-100 ${AdminStyle.info_sec} mb-5`} defaultActiveKey = {itemKey} activeKey = {itemKey}>
                     <Accordion.Collapse eventKey = "1">
                         <Card className={AdminStyle.container_width}>
                             <Card.Header>

@@ -25,3 +25,12 @@
 .two_columns{
     columns:50% 2;
 }
+.dialog_width{
+    max-width: 50%;
+    min-width: 500px;
+}
+.resume_button{
+    position: relative;
+    padding: 0.5rem;
+    margin: auto 1rem auto auto;
+}
