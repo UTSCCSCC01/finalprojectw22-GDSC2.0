@@ -13,6 +13,8 @@ import Initial from "./components/application/Initial/Initial";
 import "bootstrap/dist/css/bootstrap.min.css";
 import StudentForm from "./components/application/forms/StudentForm";
 import MentorForm from "./components/application/forms/MentorForm";
+import AdminPage from "./components/admin/AdminPage";
+import AdminLogin from "./components/admin/AdminLogin";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 const App = () => {
@@ -33,6 +35,8 @@ const App = () => {
           <Route path="portal/:id" element={<Initial />} />
           <Route path="portal/:id/student/app/" element={<StudentForm />} />
           <Route path="portal/:id/mentor/app/" element={<MentorForm />} />
+          <Route path="/admin/log" element={<AdminLogin />} />
+          <Route path="/admin/main" element={<AdminPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
