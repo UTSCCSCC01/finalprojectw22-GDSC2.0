@@ -8,6 +8,8 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container"
 import Modal from "react-bootstrap/Modal"
 import {BsDownload} from 'react-icons/bs'
+
+// example student object to display in main page of interface
 const student_sample = {
     name:"Litao Chen",
     role: "Student",
@@ -16,6 +18,7 @@ const student_sample = {
     cgpa:4.5,
     project_idea:"Yes"
 }
+// example mentor object to display in main page of interface
 const mentor_sample = {
     name:"Litao Chen",
     role: "Mentor",
@@ -24,8 +27,9 @@ const mentor_sample = {
     cgpa:4.5,
     PEY:"Yes"
 }
+// array of samples
 const samples = [];
-
+// example of student application information
 const student_info = {
     name: "Litao Chen",
     role: "Student",
@@ -46,6 +50,7 @@ const student_info = {
     project_description: "A very long text",
     additional_info: "I don't know why I am applying for this."
 }
+// exampple of mentor application information
 const mentor_info = {
     name: "Litao Chen",
     role: "Mentor",
@@ -67,6 +72,7 @@ const mentor_info = {
     profile_link: "some url",
     additional_info: "I don't know why I am applying for this."
 }
+// an application with all null value to reset data and avoid undefined 
 const init_info = {
     name: null,
     student_number: null,
@@ -87,6 +93,7 @@ const init_info = {
     additional_info: null
 }
 
+// main container of application page
 export default function AdminApplication (){
     return (
         <div className="d-flex">
@@ -95,6 +102,7 @@ export default function AdminApplication (){
         </div>
     );
 }
+// checks the or of the applicant, display message accordingly
 function GroupOrPEY (props){
     return (props.student.role === "Student")?(
         <Row xs={1} md={2} className="g-4 ms-2 mt-1">
@@ -106,14 +114,19 @@ function GroupOrPEY (props){
         </Row>
     )
 }
-
+// show a list of applicants and enables modal to show detailed information of a selected student
 function Applicants(){
+    // store the information to show in modal
     const [studentInfo, setInfo] = useState(init_info);
+    // show modal when state is true
     const [showModal, setShowModal] = useState(false);
+    // close modal and reset student info
     const handleShowModal = ()=>{
         setShowModal(false);
         setInfo(init_info);
     }
+    // when clicked, passing the applicant info as argument
+    // and display different format according to his/her role
     const handleClick= (student)=>{
         if (student.role === "Student"){
             setInfo(student_info)
@@ -121,32 +134,37 @@ function Applicants(){
             setInfo(mentor_info)
         }
     }
+    // show modal after student info is updated, and avoid initial render update
     useEffect(()=>{
         if (studentInfo.name){
             setShowModal(true);
         }
     },[studentInfo])
+    // a groupt of information will be shown in the same format
     const text_group = {
         program_language: "Program Language",
         frameworks: "Frameworks",
         database: "Databases",
         cloud_platform: "Cloud Platforms"
     }
-
+    // create many example data
     for (let i = 0; i < 5; i++){
         samples[i] = {...student_sample,id:i};
     }
     for (let i = 5; i < 10; i++){
         samples[i] = {...mentor_sample,id:i+5};
     }
+    // show specific info in general applicants page for students
     const student_card = (key)=>{
         return ((key === "year") || (key === "group") || (key === "cgpa") || (key === "project_idea"))
     }
+    // show specific info in general applicants page for mentors
     const mentor_card = (key)=>{
         return ((key === "year") || (key === "group") || (key === "cgpa") || (key === "PEY"))
     }
     return (
         <Container fluid>
+            {/* show all student info in the sample*/}
             <Row xs={1} md={2} className="g-4 ms-2">
                 {samples.map((student) => (
                     <Col key={student.id} className={AppModule.card_fit_content}>
@@ -168,6 +186,7 @@ function Applicants(){
                     </Col>
                 ))}
             </Row>
+            {/* detailed information of a selected applicant shown in modal*/}
             <Modal show={showModal} onHide={handleShowModal} className = "d-flex flex=column " dialogClassName={`${AppModule.dialog_width}` }>
                 <Modal.Header closeButton>
                     <Modal.Title>Applicant Information</Modal.Title>
@@ -234,11 +253,13 @@ function Applicants(){
 }
 
 function Filter(){
+    // initial states for storing filtering values
     const [disablePEY, setDisablePEY] = useState(true);
     const [year,setYear] = useState(null);
     const [checkPEY,setCheckPEY] = useState([false,false]);
     const [databases,addDatabases] = useState([]);
     const [cloudPlat,addCloudPlat] = useState([]);
+    // disable PEY section when role is not mentor
     const handleDisablePEY = (e)=>{
         if (e.target.id==='Mentor'){
             setDisablePEY(false);
@@ -247,6 +268,7 @@ function Filter(){
             setCheckPEY([false,false]);
         }
     }
+    // add selected database to state and remove when unselected
     const handleDatabase=(e)=>{
         let id;
         id = e.target.id;
@@ -257,6 +279,7 @@ function Filter(){
             addDatabases([...databases,id]);
         }
     }
+    // add selected cloud platforms to state and remove when unselected
     const handleCloudPlat=(e)=>{
         let id;
         id = e.target.id;

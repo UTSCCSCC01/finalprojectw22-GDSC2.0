@@ -17,6 +17,7 @@ export default function AdminLogin(){
     const submitButton=()=>{
         console.log(loginInfo);
     }
+    // background styles
     const styles = {
         container: {
             backgroundImage: `url(${banner})`,

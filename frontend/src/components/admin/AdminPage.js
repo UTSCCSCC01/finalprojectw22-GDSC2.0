@@ -13,7 +13,8 @@ export default function AdminPage(){
         setActive(e);
     };
 
-    
+    // main frame of admin interface
+    // includes nav bar and designated area to show content.
     return (
         <div>
             <div className={AdminStyle.admin_logo_box}>
