@@ -1,3 +1,12 @@
+/*
+* This code handles the server endpoints for the backend MongoDB models.
+* Models:
+* <testModel>: a sample test model
+* <users>: the user model
+* <answerModel>: the application answers model
+* <teams>: the team members model
+*/
+
 // required frameworks/modules
 require("dotenv").config();
 const express = require("express");
