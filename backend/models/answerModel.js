@@ -1,3 +1,13 @@
+/*
+* This code defines the answer model in the MongoDB backend.
+* Attributes:
+* <uid>: user ID
+* <yearofstudy>: year of study
+* <experience>: listed experience
+* <courses>: listed courses
+* <optional>: optional submitted comments
+*/
+
 const mongoose = require("mongoose");
 const answerSchema = new mongoose.Schema({
     uid: {
