@@ -29,7 +29,8 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#run-app-npm">Run App (npm)</a></li>
+        <li><a href="#run-app-docker">Run App (docker)</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
@@ -40,10 +41,10 @@
 </details>
 
 <details open>
-  <summary>Sprint Shortcut</summary>
+  <summary>Sprint Docs Shortcut</summary>
   <ul>
     <li><a href="https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/doc/sprint0">sprint0</a></li>
-    <li><a href=""></a>sprint1</li>
+    <li><a href="https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/doc/sprint1">sprint1</a></li>
     <li><a href=""></a>sprint2</li>
     <li><a href=""></a>sprint3</li>
     <li><a href=""></a>sprint4</li>
@@ -74,12 +75,37 @@ While this product is still in development, these following steps are recommende
 
 * npm
   ```sh
-  npm install npm@latest -g
+  > npm install npm@latest -g
   ```
 
-### Installation
+### Run App (npm)
 
-To be added during sprint 1
+Run the following command to clean up the `node_modules` and install dependencies in `root`, `backend` and `frontend`,
+
+```sh
+> chmod +x build.sh
+> ./build.sh
+```
+
+Or manually run npm install in `root`, backend` and `frontend` respectively.
+
+To run the app as a whole after installing dependencies, make sure you are in the root directory,
+
+```sh
+> npm start
+```
+
+To run the frontend only or backend only, make sure you are in the specific directory,
+
+then run,
+
+```sh
+> npm start
+```
+
+### Run App (docker)
+
+Detailed instructions are in [docker-walkthrough.md](https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/docker-walkthrough.md).
 
 ### Built With
 
@@ -97,6 +123,8 @@ To be added during sprint 1
   <summary><strong>Others</strong></summary>
   <ul>
     <li><a href="https://github.com/axios/axios">Axios</a> (Front-End Request Framework)</li>
+    <li><a href="https://getbootstrap.com">Bootstrap</a> (Front-End Styling Kit)</li>
+    <li><a href="https://react-bootstrap.github.io">React-Bootstrap</a> (Front-End Styling Kit Dedicated for React)</li>
   </ul>
 </details>
 
