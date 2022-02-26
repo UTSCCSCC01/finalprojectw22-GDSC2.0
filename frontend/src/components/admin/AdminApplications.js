@@ -162,6 +162,8 @@ function Applicants(){
     const mentor_card = (key)=>{
         return ((key === "year") || (key === "group") || (key === "cgpa") || (key === "PEY"))
     }
+    // submit form
+    
     return (
         <Container fluid>
             {/* show all student info in the sample*/}
@@ -254,96 +256,123 @@ function Applicants(){
 
 function Filter(){
     // initial states for storing filtering values
-    const [disablePEY, setDisablePEY] = useState(true);
-    const [year,setYear] = useState(null);
-    const [checkPEY,setCheckPEY] = useState([false,false]);
-    const [databases,addDatabases] = useState([]);
-    const [cloudPlat,addCloudPlat] = useState([]);
+    const init_filter = {
+        'role':null,
+        'disablePEY': true,
+        'year': null,
+        'checkPEY': [false,false],
+        'databases': [],
+        'cloudPlat': [],
+        'cgpa' : ''
+    }
+    const [filter,setFilter] = useState(
+        init_filter
+    )
+    const handleClearFilter = (e)=>{
+        setFilter(init_filter)
+    }
     // disable PEY section when role is not mentor
     const handleDisablePEY = (e)=>{
         if (e.target.id==='Mentor'){
-            setDisablePEY(false);
+            setFilter({...filter, 'disablePEY':false,'role':e.target.id});
         }else{
-            setDisablePEY(true);
-            setCheckPEY([false,false]);
+            setFilter({...filter, 'disablePEY':true,'checkPEY':[false,false],'role':e.target.id});
+            console.log(filter);
         }
     }
     // add selected database to state and remove when unselected
     const handleDatabase=(e)=>{
         let id;
         id = e.target.id;
-        if (databases.includes(id)){
-            addDatabases(databases.filter((ele)=>(ele!==id)));
+        if (filter['databases'].includes(id)){
+            setFilter({...filter, 'databases':filter['databases'].filter((ele)=>(ele!==id))})
         }
         else{
-            addDatabases([...databases,id]);
+            setFilter({...filter, 'databases':[...filter['databases'],id]})
         }
     }
     // add selected cloud platforms to state and remove when unselected
     const handleCloudPlat=(e)=>{
         let id;
         id = e.target.id;
-        if (cloudPlat.includes(id)){
-            addCloudPlat(cloudPlat.filter((ele)=>(ele!==id)));
+        if (filter['cloudPlat'].includes(id)){
+            setFilter({...filter,'cloudPlat':filter['cloudPlat'].filter((ele)=>(ele!==id))})
         }
         else{
-            addCloudPlat([...cloudPlat,id]);
+            setFilter({...filter, 'cloudPlat':[...filter['cloudPlat'],id]})
         }
+    }
+    // change state of year in filter
+    const handleYear=(e)=>{
+        setFilter({...filter,'year':e.target.id})
+    }
+    // chenge state of checkPEY in filter
+    const handleCheckPEY=(e)=>{
+        if (e.target.id === 'PEY_yes'){
+            setFilter({...filter,'checkPEY':[true,false]})
+        }else if(e.target.id === 'PEY_no'){
+            setFilter({...filter,'checkPEY':[false,true]})
+        }else{
+            console.error('Check PEY error');
+        }
+    }
+    const handleCGPA=(e)=>{
+        setFilter({...filter,'cgpa':e.target.value})
     }
     return (
         <div className={`d-flex flex-column ${AppModule.filter_container} `}>
             <div className="d-flex justify-content-center">
             <h4>Filter</h4>
             <div className={AppModule.align_end}>
-                <Button variant="secondary"> Clear </Button>
+                <Button variant="secondary" onClick={handleClearFilter}> Clear </Button>
             </div>
             </div>
             <hr></hr>
             <h5>Role</h5>
             <Form>
                 {["All","Student","Mentor"].map((type)=>(
-                    <Form.Check label={type} key={type} name="role" type="radio" id={type} onClick={handleDisablePEY}/>
+                    <Form.Check label={type} key={type} name="role" type="radio" id={type} checked={filter['role'] === type} onChange={handleDisablePEY}/>
                 ))}
             </Form>
             <hr></hr>
             <h5>Year of Study</h5>
             <Form>
                 {["All","Second","Third","Fourth"].map((year)=>(
-                    <Form.Check label={year} key={year} name="year" type="radio" id={year} onClick={()=>(setYear(year))}/>
+                    <Form.Check label={year} key={year} name="year" type="radio" id={year} checked={filter['year'] === year} onChange={handleYear}/>
                 ))}
             </Form>
             <hr></hr>
             <h5>Database</h5>
             <Form>
-                {["Any","SQL","NoSQL","Graph"].map((db)=>(
-                        <Form.Check label={db} key={db} name="database" type="checkbox" id={db} onClick={handleDatabase}/>
+                {["All","SQL","NoSQL","Graph"].map((db)=>(
+                        <Form.Check label={db} key={db} name="database" type="checkbox" id={db} checked={filter['databases'].includes(db)} onChange={handleDatabase}/>
                     ))}
             </Form>
             <hr></hr>
             <h5>Cloud Plat</h5>
             <Form>
-                {["Any","Google Cloud","Firebase","Heroku","Netlify","Azure"].map((plat)=>(
-                        <Form.Check label={plat} key={plat} name="plateform" type="checkbox" id={plat} onClick={handleCloudPlat}/>
+                {["All","Google Cloud","Firebase","Heroku","Netlify","Azure"].map((plat)=>(
+                        <Form.Check label={plat} key={plat} name="plateform" type="checkbox" id={plat} checked={filter['cloudPlat'].includes(plat)} onChange={handleCloudPlat}/>
                     ))}
             </Form>
             <hr></hr>
             <Form className="d-flex align-content-center">
-                <Form.Control name="cgpa" type="text" id="cgpa" className={AppModule.text_input}/>
-                <Form.Label htmlFor="cgpa" className="mt-auto mb-auto ms-2">CGPA</Form.Label>
+                <Form.Label htmlFor="cgpa" className="mt-auto mb-auto me-2">CGPA {'>='} </Form.Label>
+                <Form.Control name="cgpa" type="text" id="cgpa" className={AppModule.text_input} value={filter['cgpa']} onChange={handleCGPA}/>
             </Form>
             <hr></hr>
             <h5>PEY</h5>
             <Form className="d-flex flex-column align-content-center" >
                 <div className="form-check">
-                    <input className="form-check-input" type="radio" name = "PEY" id = "PEY_yes" checked={checkPEY[0]} disabled = {disablePEY}
-                    onClick={()=>(setCheckPEY([true,false]))}/>
+                    <input className="form-check-input" type="radio" name = "PEY" id = "PEY_yes" checked={filter['checkPEY'][0]} disabled = {filter['disablePEY']}
+                    onClick={handleCheckPEY}/>
                     <label className="form-check-label" htmlFor="PEY_yes">
                     Yes
                     </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="radio" name = "PEY" id = "PEY_no" checked={checkPEY[1]} disabled = {disablePEY}
-                    onClick={()=>(setCheckPEY([false,true]))}/>
+                    <input className="form-check-input" type="radio" name = "PEY" id = "PEY_no" checked={filter['checkPEY'][1]} disabled = {filter['disablePEY']}
+                    onClick={handleCheckPEY}/>
                     <label className="form-check-label" htmlFor="PEY_no">
                     No
                     </label>
