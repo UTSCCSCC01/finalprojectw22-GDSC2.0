@@ -1,0 +1,3 @@
+.bugReportForm,::placeholder, input, select, textarea {
+    color: rgba(0, 0, 0, 0.55) !important;
+}

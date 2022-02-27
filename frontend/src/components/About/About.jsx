@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Container, Col, Row } from "react-bootstrap"
 import infosesh from "../../images/infosession.jpg"
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 const About = () => {
+    const {mode, toggleMode} = useContext(DarkModeContext)
     return (
-        <div className='main'>
+        <div className={mode === true ? "main dark" : "main"}>
             <Container>
                 <Row className='row'>
                     <Col>

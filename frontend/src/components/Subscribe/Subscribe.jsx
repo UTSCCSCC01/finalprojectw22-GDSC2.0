@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Container, Col, Row, Form, Button } from "react-bootstrap"
 import "./Subscribe.css"
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
+
 
 const Subscribe = () => {
+    const {mode, toggleMode} = useContext(DarkModeContext)
   return (
-    <div className='main'>
+    <div className={mode === true ? "main dark" : "main"}>
         <Container>
             <Col>
                 <Row>

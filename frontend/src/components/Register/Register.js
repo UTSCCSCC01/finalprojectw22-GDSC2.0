@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Register.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import {v4 as uuidv4} from "uuid";
+import axios from "axios"
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 const Register = () => {
   const initialValues = {uid: "",firstName: "", lastName: "", username: "", email: "", password: "", confirmedPassword: ""};
@@ -11,19 +13,38 @@ const Register = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const {mode, toggleMode} = useContext(DarkModeContext)
+
   const uid = uuidv4();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value, uid});
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
 
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
+      try {
+        const res = await axios.post('/register', {
+          data: {
+            firstName: formValues.firstName,
+            lastName: formValues.lastName,
+            userName: formValues.username,
+            email: formValues.email,
+            password: formValues.password
+          }
+        })
+        if(res.status === 200) {
+          window.location.href="/"
+        }
+      }catch(err) {
+        window.location.href="/register"
+        console.log(err)
+
+      }
     }
   };
 
@@ -58,7 +79,7 @@ const Register = () => {
     return errors;
   };
   return (
-    <div className="main">
+    <div className={mode === true ? "main dark" : "main"}>
       <div className="container my-5">
         <div className="row justify-content-center">
           <div className="col-lg-5 col-md-7 col-sm-12">

@@ -7,3 +7,8 @@
     background-position: center;
     background-size: cover;
 }
+.dark {
+    background: #202020;
+    color: #fff;
+}
+

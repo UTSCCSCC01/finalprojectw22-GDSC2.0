@@ -1,7 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import axios from "axios";
 import Login from "./components/Login"
 import Register from "./components/Register/Register"
 import Navbarmenu from "./components/Navbarmenu/Navbarmenu";
@@ -17,10 +15,12 @@ import MentorForm from "./components/application/forms/MentorForm";
 import AdminPage from "./components/admin/AdminPage";
 import AdminLogin from "./components/admin/AdminLogin";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
-
+import BugReportForm from "./components/BugReport/BugReportForm";
+import DarkModeState from "./context/darkMode/DarkModeState"
 const App = () => {
   return (
     <>
+      <DarkModeState>
       <Navbarmenu />
       <Router>
         <Routes>
@@ -28,6 +28,7 @@ const App = () => {
           <Route path="/projects" element />
           <Route path="/resources" element />
           <Route path="/events" element />
+          <Route path="/reportBug" element={<BugReportForm />}/>
           <Route path="/team" element={<Team />} />
           <Route path="/subscribe" element={<Subscribe />} />
           <Route path="/about" element={<About />} />
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
+      </DarkModeState>
     </>
 
   );
