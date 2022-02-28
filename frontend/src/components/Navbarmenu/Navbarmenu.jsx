@@ -15,6 +15,7 @@ const Navbarmenu = () => {
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/portal">Applications</Nav.Link>
             <Nav.Link href="/team">Team</Nav.Link>
+            <Nav.Link href="/adminProfiles">Admins</Nav.Link>
             <Nav.Link href="/subscribe">Subscribe</Nav.Link>
             <Nav.Link href="/contactUs">Contact Us</Nav.Link>
           </Nav>
