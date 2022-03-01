@@ -17,6 +17,7 @@ import MentorForm from "./components/application/forms/MentorForm";
 import AdminPage from "./components/admin/AdminPage";
 import AdminLogin from "./components/admin/AdminLogin";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
+import GeneralPage from "./components/General/GeneralPage";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/portal" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="portal/:id" element={<Initial />} />
+          <Route path="/general/main" element={<GeneralPage />} />
           <Route path="portal/:id/student/app/" element={<StudentForm />} />
           <Route path="portal/:id/mentor/app/" element={<MentorForm />} />
           <Route path="/admin/log" element={<AdminLogin />} />
