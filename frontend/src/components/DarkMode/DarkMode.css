@@ -57,3 +57,14 @@
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .dark-mode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dark-mode .dark-icon,
+  .dark-mode .light-icon {
+    font-size: 25px;
+    margin-left: 10px;
+  }

@@ -14,7 +14,6 @@ const connDB = require("./config/db");
 const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const answerModel = require("./models/answerModel");
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,11 +24,13 @@ connDB();
 
 const loginRoute = require("./routes/login");
 const registerRoute = require("./routes/register")
+const sendMail = require("./routes/sendMail")
 //const getAnsRoute = require("./routes/getAnswers");
 //const createAnsRoute = require("./routes/createAnswers");
 
 app.use("/login", loginRoute);
 app.use('/register', registerRoute)
+app.use("/mail", sendMail)
 //app.use("/getAnswers", getAnsRoute);
 //app.use("/createAnswers", createAnsRoute);
 

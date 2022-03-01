@@ -96,11 +96,6 @@ const Login = () => {
                     {formErrors.password}
                   </p>
                 </div>
-                <div className="forgot-password">
-                  <a href="#">
-                    <i>forgot password</i>
-                  </a>
-                </div>
                 <button
                   type="submit"
                   className="btn btn-primary rounded w-100 p-2 login-btn"

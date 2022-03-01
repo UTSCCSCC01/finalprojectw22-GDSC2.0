@@ -1,11 +1,14 @@
-import React from "react";
+import React,{useContext}  from "react";
 import dsclogo from "../../images/dsclogo.png";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import DarkMode from "../DarkMode/DarkMode"
 import "../DarkMode/DarkMode.css"
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
+import "./Navbarmenu.css"
 const Navbarmenu = () => {
+  const {mode, toggleMode} = useContext(DarkModeContext)
   return (
-    <Navbar collapseOnSelect expand="lg" top="fixed">
+    <Navbar className={mode === true ? "dark" : ""} collapseOnSelect expand="lg" top="fixed">
       <Container>
         <Nav.Link href="/">
           <img src={dsclogo} alt="dsc_logo" height="30px" />

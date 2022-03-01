@@ -8,7 +8,7 @@ const Subscribe = () => {
     const {mode, toggleMode} = useContext(DarkModeContext)
   return (
     <div className={mode === true ? "main dark" : "main"}>
-        <Container>
+        <Container className="w-50 p-4 subscribe-form-wrap">
             <Col>
                 <Row>
                     <h3 className='labels'>Join the mailing list to stay updated!</h3>
