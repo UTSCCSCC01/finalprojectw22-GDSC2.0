@@ -8,7 +8,38 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container"
 import Modal from "react-bootstrap/Modal"
 import {BsDownload} from 'react-icons/bs'
+import {FaArrowLeft,FaArrowRight} from 'react-icons/fa'
 
+const NUM_DISPLAY = 20;
+
+const platformName = {
+    "aws": "AWS",
+    "google_cloud": "Google Cloud",
+    "firebase" : "Firebase",
+    "heroku" : 'Heroku',
+    "netlify": "Netlify",
+    "azure": "Azure",
+    "any" : "Any"
+}
+
+const databaseName = {
+    "sql": "SQL",
+    "nosql": "NoSQL",
+    "graph" : "Graph",
+    "any" : "Any"
+}
+
+const years = {
+    "all": "All",
+    "third" : "Third",
+    "fourth" : "Fourth"
+}
+
+const types = {
+    "all" : "All",
+    "student" : "Student",
+    "mentor" : "Mentor"
+}
 // example student object to display in main page of interface
 const student_sample = {
     name:"Litao Chen",
@@ -74,31 +105,64 @@ const mentor_info = {
 }
 // an application with all null value to reset data and avoid undefined 
 const init_info = {
-    name: null,
-    student_number: null,
-    ut_email : null,
-    cgpa : null,
-    program: null,
-    year: null,
-    resume: null,
-    group: null,
-    group_name: null,
-    program_language: null,
-    frameworks: null,
-    database: null,
-    cloud_platform: null,
-    profile_link: null,
-    project_idea: null,
-    project_description: null,
-    additional_info: null
+    name: '',
+    student_number: '',
+    ut_email : '',
+    cgpa : '',
+    program: '',
+    year: '',
+    resume: '',
+    group: '',
+    group_name: '',
+    program_language: '',
+    frameworks: '',
+    database: '',
+    cloud_platform: '',
+    profile_link: '',
+    project_idea: '',
+    project_description: '',
+    additional_info: ''
 }
 
 // main container of application page
 export default function AdminApplication (){
+    const [num_match, setNumMatch] = useState(0)
+    const [page_num, setPageNum] = useState(1)
+    const handlePageNum = (e)=>{
+        if (e.target.id === "page_l"){
+            if (page_num-1 > 1){
+                setPageNum(page_num-1)
+            }
+        }else if (e.target.id === "page_r"){
+            if (page_num*NUM_DISPLAY < num_match){
+                setPageNum(page_num+1)
+            }
+        }
+    }
+    useEffect(()=>{
+
+    },[])
     return (
-        <div className="d-flex">
-            <Filter/>
-            <Applicants/>
+        <div className="d-flex flex-column">
+            <Card.Header className="d-flex">
+                <div>
+                    Application
+                </div>
+                <div className="ms-auto me-2">
+                    {(page_num-1)*NUM_DISPLAY+1 > num_match?num_match:(page_num-1)*NUM_DISPLAY+1} - {page_num*NUM_DISPLAY > num_match?num_match:page_num*NUM_DISPLAY } matches (total {num_match})
+                </div>
+            </Card.Header>
+            <Card.Body className = "d-flex">
+                <Filter/>
+                <Applicants/>
+            </Card.Body>
+            <Card.Footer className="d-flex justify-content-center">
+                <Form className="d-flex align-content-center">
+                    <Button className="me-3 border-0 bg-transparent h-auto text-dark" id = "page_l" onClick={handlePageNum}><FaArrowLeft></FaArrowLeft></Button>
+                    <p className = "mt-auto mb-auto">{page_num}</p>
+                    <Button className="ms-3 border-0 bg-transparent h-auto text-dark"  id = "page_r" onClick={handlePageNum}><FaArrowRight></FaArrowRight></Button>
+                </Form>
+            </Card.Footer>
         </div>
     );
 }
@@ -254,29 +318,73 @@ function Applicants(){
     );
 }
 
+/**
+ * {
+        'role':'All', this should be deleted in sanitizatioon
+        'disablePEY': true, this should not appear
+        'year': 2,
+        'complete_pey': false
+        'databases': {  only has true value
+            'sql': false,
+            'nosql': false,
+            'graph': false,
+            'any': true     any must present
+        },
+        'cloudPlat': { only has true value
+            'aws': false,
+            'google_cloud':false,
+            'firebase':false,
+            'heroku': false,
+            'netlify':false,
+            'azure':false,
+            'any':true      any must present
+        },
+        'cgpa' : float,
+        'num_display' : 20,
+        'num_page' : int
+    }
+ */
+
 function Filter(){
     // initial states for storing filtering values
     const init_filter = {
-        'role':null,
+        'role':'all',
         'disablePEY': true,
-        'year': null,
-        'checkPEY': [false,false],
-        'databases': [],
-        'cloudPlat': [],
+        'year': 'all',
+        'complete_pey': false,
+        'databases': {
+            'sql': false,
+            'nosql': false,
+            'graph': false,
+            'any': true
+        },
+        'cloudPlat': {
+            'aws': false,
+            'google_cloud':false,
+            'firebase':false,
+            'heroku': false,
+            'netlify':false,
+            'azure':false,
+            'any':true
+        },
         'cgpa' : ''
     }
+    const [cur_filter,setCurFilter] = useState(
+        init_filter
+    )
     const [filter,setFilter] = useState(
         init_filter
     )
     const handleClearFilter = (e)=>{
         setFilter(init_filter)
+        setCurFilter(init_filter)
     }
     // disable PEY section when role is not mentor
     const handleDisablePEY = (e)=>{
-        if (e.target.id==='Mentor'){
+        if (e.target.id==='mentor'){
             setFilter({...filter, 'disablePEY':false,'role':e.target.id});
         }else{
-            setFilter({...filter, 'disablePEY':true,'checkPEY':[false,false],'role':e.target.id});
+            setFilter({...filter, 'disablePEY':true,'complete_pey':false,'role':e.target.id});
             console.log(filter);
         }
     }
@@ -284,40 +392,29 @@ function Filter(){
     const handleDatabase=(e)=>{
         let id;
         id = e.target.id;
-        if (filter['databases'].includes(id)){
-            setFilter({...filter, 'databases':filter['databases'].filter((ele)=>(ele!==id))})
-        }
-        else{
-            setFilter({...filter, 'databases':[...filter['databases'],id]})
-        }
+        filter['databases'][id] = !filter['databases'][id]
+        setFilter({...filter,'databases':filter['databases']})
     }
     // add selected cloud platforms to state and remove when unselected
     const handleCloudPlat=(e)=>{
         let id;
         id = e.target.id;
-        if (filter['cloudPlat'].includes(id)){
-            setFilter({...filter,'cloudPlat':filter['cloudPlat'].filter((ele)=>(ele!==id))})
-        }
-        else{
-            setFilter({...filter, 'cloudPlat':[...filter['cloudPlat'],id]})
-        }
+        filter['cloudPlat'][id] = !filter['cloudPlat'][id]
+        setFilter({...filter,'cloudPlat':filter['cloudPlat']})
     }
     // change state of year in filter
     const handleYear=(e)=>{
         setFilter({...filter,'year':e.target.id})
     }
-    // chenge state of checkPEY in filter
+    // chenge state of complete_pey in filter
     const handleCheckPEY=(e)=>{
-        if (e.target.id === 'PEY_yes'){
-            setFilter({...filter,'checkPEY':[true,false]})
-        }else if(e.target.id === 'PEY_no'){
-            setFilter({...filter,'checkPEY':[false,true]})
-        }else{
-            console.error('Check PEY error');
-        }
+        setFilter({...filter,'complete_pey':!filter.complete_pey})
     }
     const handleCGPA=(e)=>{
         setFilter({...filter,'cgpa':e.target.value})
+    }
+    const handleApply=(e)=>{
+        setCurFilter(filter)
     }
     return (
         <div className={`d-flex flex-column ${AppModule.filter_container} `}>
@@ -330,29 +427,29 @@ function Filter(){
             <hr></hr>
             <h5>Role</h5>
             <Form>
-                {["All","Student","Mentor"].map((type)=>(
-                    <Form.Check label={type} key={type} name="role" type="radio" id={type} checked={filter['role'] === type} onChange={handleDisablePEY}/>
+                {["all","student","mentor"].map((type)=>(
+                    <Form.Check label={types[type]} key={type} name="role" type="radio" id={type} checked={filter['role'] === type} onChange={handleDisablePEY}/>
                 ))}
             </Form>
             <hr></hr>
             <h5>Year of Study</h5>
             <Form>
-                {["All","Second","Third","Fourth"].map((year)=>(
-                    <Form.Check label={year} key={year} name="year" type="radio" id={year} checked={filter['year'] === year} onChange={handleYear}/>
+                {["all","third","fourth"].map((year)=>(
+                    <Form.Check label={years[year]} key={year} name="year" type="radio" id={year} checked={filter['year'] === year} onChange={handleYear}/>
                 ))}
             </Form>
             <hr></hr>
             <h5>Database</h5>
             <Form>
-                {["All","SQL","NoSQL","Graph"].map((db)=>(
-                        <Form.Check label={db} key={db} name="database" type="checkbox" id={db} checked={filter['databases'].includes(db)} onChange={handleDatabase}/>
+                {["any","sql","nosql","graph"].map((db)=>(
+                        <Form.Check label={databaseName[db]} key={db} name="database" type="checkbox" id={db} checked={filter['databases'][db]} onChange={handleDatabase}/>
                     ))}
             </Form>
             <hr></hr>
             <h5>Cloud Plat</h5>
             <Form>
-                {["All","Google Cloud","Firebase","Heroku","Netlify","Azure"].map((plat)=>(
-                        <Form.Check label={plat} key={plat} name="plateform" type="checkbox" id={plat} checked={filter['cloudPlat'].includes(plat)} onChange={handleCloudPlat}/>
+                {["any","google_cloud","firebase","heroku","netlify","azure"].map((plat)=>(
+                        <Form.Check label={platformName[plat]} key={plat} name="plateform" type="checkbox" id={plat} checked={filter['cloudPlat'][plat]} onChange={handleCloudPlat}/>
                     ))}
             </Form>
             <hr></hr>
@@ -364,23 +461,16 @@ function Filter(){
             <h5>PEY</h5>
             <Form className="d-flex flex-column align-content-center" >
                 <div className="form-check">
-                    <input className="form-check-input" type="radio" name = "PEY" id = "PEY_yes" checked={filter['checkPEY'][0]} disabled = {filter['disablePEY']}
-                    onClick={handleCheckPEY}/>
-                    <label className="form-check-label" htmlFor="PEY_yes">
-                    Yes
-                    </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="radio" name = "PEY" id = "PEY_no" checked={filter['checkPEY'][1]} disabled = {filter['disablePEY']}
-                    onClick={handleCheckPEY}/>
-                    <label className="form-check-label" htmlFor="PEY_no">
-                    No
+                    <input className="form-check-input" type="checkbox" name = "completePEY" id = "PEY" checked={filter['complete_pey']} disabled = {filter['disablePEY']}
+                    onChange={handleCheckPEY}/>
+                    <label className="form-check-label" htmlFor="PEY">
+                    Complete PEY
                     </label>
                 </div>
             </Form>
             <hr></hr>
             <div className="d-flex">
-            <Button className={AppModule.align_end}>Apply</Button>
+            <Button className={AppModule.align_end} onSubmit={handleApply}>Apply</Button>
             </div>
         </div>
     );

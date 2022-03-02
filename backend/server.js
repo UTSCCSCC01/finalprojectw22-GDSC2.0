@@ -13,7 +13,7 @@ const express = require("express");
 const connDB = require("./config/db");
 const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
-const answerModel = require("./models/answerModel");
+const applicationRoute = require("./routes/applications");
 
 const app = express();
 
@@ -31,7 +31,7 @@ const loginRoute = require("./routes/login");
 app.use("/login", loginRoute);
 //app.use("/getAnswers", getAnsRoute);
 //app.use("/createAnswers", createAnsRoute);
-
+app.use("/applications",applicationRoute);
 
 
 app.get("/", (req, res) => {
@@ -53,29 +53,7 @@ app.post("/", (req, res) => {
   res.send("inserted");
 });
 
-app.get("/getAnswers", (req, res) => {
-  answerModel
-    .find({})
-    .then((data) => res.json(data))
-    .catch((e) => console.log(e));
-});
-app.post("/createAnswers", (req, res) => {
-    console.log(req.body.test);
-    answerModel
-        .create({ 
-            uid: req.body.uid,
-            yearofstudy: req.body.yearofstudy,
-            interests: req.body.interests,
-            experience: req.body.experience,
-            courses: req.body.courses,
-            optional: req.body.optional
-         })
-        .then((id) => {
-      console.log(`inserted: ${id}`);
-    })
-        .catch((e) => console.log(e));
-    res.send("inserted");
-});
+
 //End of endpoints 
 
 app.listen(
@@ -83,3 +61,4 @@ app.listen(
   console.log(`listening on port ${process.env.PORT}`)
 );
 
+module.exports = app;

@@ -48,12 +48,7 @@ export default function AdminPage(){
                 <Accordion className={`w-100 ${AdminStyle.info_sec} mb-5`} defaultActiveKey = {itemKey} activeKey = {itemKey}>
                     <Accordion.Collapse eventKey = "1">
                         <Card className={AdminStyle.container_width}>
-                            <Card.Header>
-                                Applications
-                            </Card.Header>
-                            <Card.Body>
-                                <AdminApplication/>
-                            </Card.Body>
+                            <AdminApplication/>
                         </Card>
                     </Accordion.Collapse>
                     <Accordion.Collapse eventKey = "2">
