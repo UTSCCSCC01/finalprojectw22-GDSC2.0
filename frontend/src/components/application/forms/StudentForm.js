@@ -116,6 +116,7 @@ const StudentForm = () => {
 
   // 
   const handleCheckDatabases=(e)=>{
+    console.log("DATABASE HANDLER TRIGGERED");
     let id = e.target.id;
     student['databases'][id] = !student['databases'][id];
     setStudent({...student,'databases':student['databases']});
@@ -123,6 +124,7 @@ const StudentForm = () => {
 
   //
   const handleCheckPlat=(e)=>{
+    console.log("PLATFORM HANDLER TRIGGERED");
     let id = e.target.id;
     student['platforms'][id] = !student['platforms'][id];
     setStudent({...student,'platforms':student['platforms']});
@@ -351,7 +353,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Multiselect options={db} displayValue="value" id="student" value={student['databases']} onChange={handleCheckDatabases}/>
+              <Multiselect options={db} displayValue="value" id={db} value={student['databases'][db]} onChange={handleCheckDatabases}/>
             </Col>
           </Form.Group>
 
@@ -362,7 +364,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Multiselect options={plat} displayValue="value" id="student" value={student['platforms']} onChange={handleCheckPlat}/>
+              <Multiselect options={plat} displayValue="value" id={plat} value={student['platforms'][plat]} onChange={handleCheckPlat}/>
             </Col>
           </Form.Group>
 
