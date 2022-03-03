@@ -171,12 +171,13 @@ function Resources() {
 
             <Form.Group as={Row} className="mb-3" controlId="idea">
               <Col>
-                <Form.Label column sm={10}>
+                <Form.Label for="section" olumn sm={10}>
                   Section
                 </Form.Label>
               </Col>
               <Col sm={15}>
                 <Form.Control
+                  id="section"
                   value={formValues.section}
                   name="section"
                   onChange={handleChange}
@@ -188,7 +189,7 @@ function Resources() {
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="idea">
               <Col>
-                <Form.Label column sm={10}>
+                <Form.Label for="name" column sm={10}>
                   Name
                 </Form.Label>
               </Col>
@@ -196,6 +197,7 @@ function Resources() {
                 <Form.Control
                   value={formValues.name}
                   name="name"
+                  id="name"
                   onChange={handleChange}
                   maxLength="15"
                   type="text"
@@ -205,7 +207,7 @@ function Resources() {
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="idea">
               <Col>
-                <Form.Label column sm={10}>
+                <Form.Label forcolumn sm={10}>
                   Link
                 </Form.Label>
               </Col>
@@ -221,12 +223,13 @@ function Resources() {
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="idea">
               <Col>
-                <Form.Label column sm={10}>
+                <Form.Label for="desc" column sm={10}>
                   Description
                 </Form.Label>
               </Col>
               <Col sm={15}>
                 <Form.Control
+                  id="desc"
                   value={formValues.description}
                   name="description"
                   as="textarea"
