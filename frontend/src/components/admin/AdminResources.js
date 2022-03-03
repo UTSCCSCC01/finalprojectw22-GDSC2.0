@@ -1,4 +1,12 @@
-import { Button, Container, Row, Col, Card, Modal } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  Card,
+  Modal,
+  Form,
+} from "react-bootstrap";
 import AppModule from "../../css/admin/Application.module.css";
 import React from "react";
 import { useState, useEffect } from "react";
@@ -50,10 +58,10 @@ function Resources() {
 
   const [resourcesState, setResourcesState] = useState(sample_resources);
   const initResourceInfo = {
-    section: null,
-    name: null,
-    link: null,
-    description: null,
+    section: "",
+    name: "",
+    link: "",
+    description: "",
   };
 
   // list of resources to display
@@ -73,43 +81,60 @@ function Resources() {
     let sections = new Set();
 
     for (var i = 0; i < resourcesState.length; i++) {
-      sections.add(resourcesState[i].section);
+      sections.add(resourcesState[i].section.trim().toLowerCase());
     }
     console.log(sections);
     return sections;
   };
 
   let handleDelete = (resource) => {
-    console.log(resourcesState);
-    console.log(resource);
-    const newResources = resourcesState.filter((r) => {
-      return r.id !== resource;
-    });
-
-    setResourcesState(newResources);
+    setResourcesState((prev) =>
+      prev.filter((r) => {
+        return r.id !== resource;
+      })
+    );
   };
 
-  const [section, setSection] = useState("");
-  const [name, setName] = useState("");
-  const [link, setLink] = useState("");
-  const [desc, setDesc] = useState("");
+  const handleChange = (e) => {
+    setFormValues({
+      ...formValues,
+      // Trimming any whitespace
+      [e.target.name]: e.target.value.trim(),
+    });
+  };
+
+  const [formValues, setFormValues] = useState(initResourceInfo);
+
   const [AddResourceModal, setAddResourceModal] = useState(false);
+  const [formErrors, setFormErrors] = useState(false);
   const [id, setId] = useState(15);
 
   const handleAddResource = () => {
+    console.log(formValues);
+    if (
+      formValues.section == "" ||
+      formValues.name == "" ||
+      formValues.link == "" ||
+      formValues.description == ""
+    ) {
+      setFormErrors(true);
+      return;
+    }
     setResourcesState((prev) => [
       ...prev,
       {
         id: id,
-        section: section,
-        name: name,
-        link: link,
-        description: desc,
+        section: formValues.section.trim(),
+        name: formValues.name.trim(),
+        link: formValues.link.trim(),
+        description: formValues.description.trim(),
       },
     ]);
 
     setId((prev) => prev + 1);
     setAddResourceModal(false);
+    setFormValues(initResourceInfo);
+    setFormErrors(false);
   };
 
   return (
@@ -126,42 +151,92 @@ function Resources() {
           dialogClassName={`${AppModule.dialog_width}`}
         >
           <Modal.Header closeButton>
-            <Modal.Title>
-              <input
-                placeholder="Section"
-                onChange={(e) => setSection(e.target.value)}
-              />
-            </Modal.Title>
+            <Modal.Title>Add Resource</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="d-flex w-100">
-              <h1 className="ms-2 mt-auto">{}</h1>
-              <h4
-                className={`ms-3 mt-auto mb-auto ${AppModule.role_text_color}`}
-              >
-                <input
-                  placeholder="Name"
-                  onChange={(e) => setName(e.target.value)}
+            {formErrors && (
+              <h3 style={{ color: "red" }} className="text-center">
+                Missing Form
+              </h3>
+            )}
+
+            <Form.Group as={Row} className="mb-3" controlId="idea">
+              <Col>
+                <Form.Label column sm={10}>
+                  Section
+                </Form.Label>
+              </Col>
+              <Col sm={15}>
+                <Form.Control
+                  name="section"
+                  onChange={handleChange}
+                  type="text"
+                  maxLength="20"
+                  placeholder="Your answer"
                 />
-              </h4>
-            </div>
-            <hr></hr>
-            <Row xs={1} md={1} className="g-4 ms-2">
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="idea">
+              <Col>
+                <Form.Label column sm={10}>
+                  Name
+                </Form.Label>
+              </Col>
+              <Col sm={15}>
+                <Form.Control
+                  name="name"
+                  onChange={handleChange}
+                  maxLength="15"
+                  type="text"
+                  placeholder="Your answer"
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="idea">
+              <Col>
+                <Form.Label column sm={10}>
+                  Link
+                </Form.Label>
+              </Col>
+              <Col sm={15}>
+                <Form.Control
+                  name="link"
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="Your answer"
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="idea">
+              <Col>
+                <Form.Label column sm={10}>
+                  Description
+                </Form.Label>
+              </Col>
+              <Col sm={15}>
+                <Form.Control
+                  name="description"
+                  as="textarea"
+                  maxLength="60"
+                  placeholder="Your answer"
+                  onChange={handleChange}
+                />
+              </Col>
+            </Form.Group>
+            {/* <Row xs={1} md={1} className="g-4 ms-2">
               <div>
                 <b>Link :</b>{" "}
-                <input
-                  placeholder="Link"
-                  onChange={(e) => setLink(e.target.value)}
-                />
+                <input name="link" placeholder="Link" onChange={handleChange} />
               </div>
               <div>
                 <b>Description :</b>{" "}
                 <textarea
-                  onChange={(e) => setDesc(e.target.value)}
+                  name="description"
+                  onChange={handleChange}
                   placeholder="Description"
                 />
               </div>
-            </Row>
+            </Row> */}
             {/* <Row className="g-4 ms-2 mt-1">
               <div>
                 <b>UofT email :</b> {studentInfo.ut_email}
@@ -193,7 +268,7 @@ function Resources() {
                 {resourcesState
                   .filter((r) => {
                     console.log(r.name);
-                    return r.section === section;
+                    return r.section.toLowerCase() === section;
                   })
                   .map((r) => {
                     return (
