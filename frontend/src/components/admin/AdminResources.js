@@ -95,6 +95,11 @@ function Resources() {
     );
   };
 
+  let handleHide = () => {
+    setAddResourceModal(false);
+    setFormErrors(false);
+  };
+
   const handleChange = (e) => {
     setFormValues({
       ...formValues,
@@ -150,7 +155,7 @@ function Resources() {
 
         <Modal
           show={AddResourceModal}
-          onHide={() => setAddResourceModal(false)}
+          onHide={handleHide}
           className="d-flex flex=column "
           dialogClassName={`${AppModule.dialog_width}`}
         >
@@ -172,6 +177,7 @@ function Resources() {
               </Col>
               <Col sm={15}>
                 <Form.Control
+                  value={formValues.section}
                   name="section"
                   onChange={handleChange}
                   type="text"
@@ -188,6 +194,7 @@ function Resources() {
               </Col>
               <Col sm={15}>
                 <Form.Control
+                  value={formValues.name}
                   name="name"
                   onChange={handleChange}
                   maxLength="15"
@@ -204,6 +211,7 @@ function Resources() {
               </Col>
               <Col sm={15}>
                 <Form.Control
+                  value={formValues.link}
                   name="link"
                   onChange={handleChange}
                   type="text"
@@ -219,6 +227,7 @@ function Resources() {
               </Col>
               <Col sm={15}>
                 <Form.Control
+                  value={formValues.description}
                   name="description"
                   as="textarea"
                   maxLength="60"
