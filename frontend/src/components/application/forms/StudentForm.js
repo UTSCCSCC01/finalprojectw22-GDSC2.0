@@ -8,6 +8,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Container from "react-bootstrap/Container";
 import Multiselect from "multiselect-react-dropdown";
 import "./MentorForm.css";
+//const {postStudentApplication} = require("../../../axios.js");
+import Axios from "axios";
 // import FormGroup from "react-bootstrap/esm/FormGroup";
 
 const StudentForm = () => {
@@ -27,19 +29,106 @@ const StudentForm = () => {
     { value: "None" },
   ];
 
+  const init_student = {
+      "student_num": "1234567890",
+      "email": "sadsad@mail.utoronto.ca",
+      "cgpa": 1.8,
+      "full_name": "sdasdasdsa",
+      "program": "asdasd",
+      "year": 2,
+      "resume_path": "dasdasd",
+      "frameworks": "dasdsad",
+      "languages": "adasdsa",
+      "databases": {"sql":true},
+      "platforms": {"none":true},
+      "have_group": false,
+      "group_members": "",
+      "project_idea": false,
+      "idea_description": "",
+      "additional": "sadas"
+  }
+
   const [db, setDB] = useState(dbOptions);
   const [plat, setPlat] = useState(platOptions);
+  const [student, setStudent] = useState(init_student);
+
+  // 
+//   const handleCheckUserId=(e)=>{
+//     setStudent({...student,'user_id':e.target.value})
+//   }
+  // 
+  const handleCheckStudentNum=(e)=>{
+    setStudent({...student,'student_num':e.target.value});
+  }
+
+  // 
+  const handleCheckEmail=(e)=>{
+    setStudent({...student,'email':e.target.value});
+  }
+
+  // 
+  const handleCheckCGPA=(e)=>{
+    setStudent({...student,'cgpa':e.target.value});
+  }
+
+  // 
+  const handleCheckFullName=(e)=>{
+    setStudent({...student,'full_name':e.target.value});
+  }
+
+  // 
+  const handleCheckProgram=(e)=>{
+    setStudent({...student,'program':e.target.value});
+  }
+
+  // 
+  const handleCheckYear=(e)=>{
+    setStudent({...student,'year':e.target.value});
+  }
+
+  // 
+  const handleCheckResume=(e)=>{
+    setStudent({...student,'resume_path':e.target.value});
+  }
+
+  // 
+  const handleCheckFrameworks=(e)=>{
+    setStudent({...student,'frameworks':e.target.value});
+  }
+
+  // 
+  const handleCheckLanguages=(e)=>{
+    setStudent({...student,'languages':e.target.value});
+  }
+
+  // 
+  const handleCheckDatabases=(e)=>{
+    setStudent({...student,'databases':e.target.value});
+  }
+
   // ];
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
   const formik = useFormik({
     initialValues: {
-      email: "",
+      student_num: "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
+      console.log(values);
     },
   });
+
+  //http://localhost:5000
+  const createStudentApplication = (e) => {
+    console.log("SENDING STUDENT APPLICATION");
+    Axios.post("/applications/studentSubmit", student
+    ).then((response) => {
+        console.log(response);
+    });
+    e.preventDefault();
+  }
+
   return (
     <>
       <h1 className="app-header">Student Application</h1>
@@ -59,14 +148,14 @@ const StudentForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="stud-num">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 Student Number
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="number" placeholder="Student Number" />
+              <Form.Control type="number" placeholder="Student Number" id="student" value={student['student_num']} onChange={handleCheckStudentNum} />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="email">
@@ -297,6 +386,7 @@ const StudentForm = () => {
               variant="outline-success"
               size="lg"
               type="submit"
+              onClick={createStudentApplication}
             >
               Apply!
             </Button>

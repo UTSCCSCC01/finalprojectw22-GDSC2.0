@@ -42,6 +42,7 @@ exports.filterApplications = (async (req,res)=>{
 })
 /** Student Endpoints */
 exports.submitStudentForm = (async (req,res)=>{
+    console.log("GOT TO END ROUTE");
     studentAppModel.create(req.body)
     .then((id)=>{
         console.log(id);
@@ -121,6 +122,7 @@ exports.studentAppValidator =[
         body("databases","Please select at least one databases").not().isEmpty(),
         body("platforms","Please select at least one platforms").not().isEmpty(),
         (req,res,next)=>{
+            console.log("GOT TO VALIDATOR");
             let errors = validationResult(req);
             if (!errors.isEmpty()){
                 return res.status(400).json({'errors':errors.array()});
