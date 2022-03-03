@@ -1,15 +1,15 @@
 const express = require("express");
-const app = express.Router();
+const router = express.Router();
 
 const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(express.static("public"));
+router.use(bodyParser.json());
 
 
 const answerModel = require('../models/answerModel');
 
-app.post("/createAnswers", (req, res) => {
+router.post("/", (req, res) => {
     console.log(req.body.test);
     answerModel
         .create({ 
@@ -26,3 +26,4 @@ app.post("/createAnswers", (req, res) => {
         .catch((e) => console.log(e));
     res.send("inserted");
 });
+module.exports = router;

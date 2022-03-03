@@ -3,6 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import Axios from "axios";
+
+
 
 const Login = () => {
   const initialValues = { username: "", email: "", password: "" };
@@ -21,8 +24,9 @@ const Login = () => {
     setIsSubmit(true);
 
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
+      Axios.post("/portal", formValues).then((response) => response);
     }
+    
   };
 
   const validate = (values) => {

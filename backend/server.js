@@ -12,31 +12,36 @@ require("dotenv").config();
 const express = require("express");
 const connDB = require("./config/db");
 const testModel = require("./models/testModel");
-const bodyParser = require("body-parser");
-const answerModel = require("./models/answerModel");
+const cors = require('cors');
+
+//const bodyParser = require("body-parser");
+//const answerModel = require("./models/answerModel");
+
 
 const app = express();
+app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(express.static("public"));
+//app.use(bodyParser.json());
 
 // connect to database
 connDB();
 
 const loginRoute = require("./routes/login");
-//const getAnsRoute = require("./routes/getAnswers");
-//const createAnsRoute = require("./routes/createAnswers");
-
-app.use("/login", loginRoute);
-//app.use("/getAnswers", getAnsRoute);
-//app.use("/createAnswers", createAnsRoute);
-
-
+const getAnsRoute = require("./routes/getAnswers");
+const createAnsRoute = require("./routes/createAnswers");
 
 app.get("/", (req, res) => {
   res.send("API IS RUNNING...");
 });
+
+app.use("/portal", loginRoute);
+app.use("/getAnswers", getAnsRoute);
+app.use("/createAnswers", createAnsRoute);
+
+
+
 
 app.get("/data", (req, res) => {
   testModel
@@ -53,29 +58,7 @@ app.post("/", (req, res) => {
   res.send("inserted");
 });
 
-app.get("/getAnswers", (req, res) => {
-  answerModel
-    .find({})
-    .then((data) => res.json(data))
-    .catch((e) => console.log(e));
-});
-app.post("/createAnswers", (req, res) => {
-    console.log(req.body.test);
-    answerModel
-        .create({ 
-            uid: req.body.uid,
-            yearofstudy: req.body.yearofstudy,
-            interests: req.body.interests,
-            experience: req.body.experience,
-            courses: req.body.courses,
-            optional: req.body.optional
-         })
-        .then((id) => {
-      console.log(`inserted: ${id}`);
-    })
-        .catch((e) => console.log(e));
-    res.send("inserted");
-});
+
 //End of endpoints 
 
 app.listen(
