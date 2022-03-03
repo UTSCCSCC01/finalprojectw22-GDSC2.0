@@ -96,7 +96,7 @@ const StudentForm = () => {
 
   // 
   const handleCheckYear=(e)=>{
-    setStudent({...student,'year':e.target.id});
+    setStudent({...student,'year':e.target.value});
   }
 
   // 
@@ -169,6 +169,7 @@ const StudentForm = () => {
   //http://localhost:5000
   const createStudentApplication = (e) => {
     console.log("SENDING STUDENT APPLICATION");
+    console.log(student);
     Axios.post("/applications/studentSubmit", student
     ).then((response) => {
         console.log(response);
@@ -181,7 +182,7 @@ const StudentForm = () => {
       <h1 className="app-header">Student Application</h1>
       <Form className="app-container">
         <div className="common-form">
-          <Form.Group as={Row} className="mb-3" controlId="full-name">
+          <Form.Group as={Row} className="mb-3">
             <Col style={{ textAlign: "center" }} sm={20}>
               <h3>Individual Information</h3>
             </Col>
@@ -205,7 +206,7 @@ const StudentForm = () => {
               <Form.Control type="number" placeholder="Student Number" id="student" value={student['student_num']} onChange={handleCheckStudentNum}/>
             </Col>
           </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="email">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 UofT email Address
@@ -216,7 +217,7 @@ const StudentForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="cgpa">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 CGPA
@@ -227,7 +228,7 @@ const StudentForm = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="POST">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 Program of Study
@@ -249,7 +250,7 @@ const StudentForm = () => {
                   label="Second Year"
                   name="formHorizontalRadios"
                   id="student" 
-                  value={student['year']} 
+                  value="2" 
                   onChange={handleCheckYear}
                 />
                 <Form.Check
@@ -257,7 +258,7 @@ const StudentForm = () => {
                   label="Third Year"
                   name="formHorizontalRadios"
                   id="student" 
-                  value={student['year']} 
+                  value="3"
                   onChange={handleCheckYear}
                 />
                 <Form.Check
@@ -265,14 +266,14 @@ const StudentForm = () => {
                   label="Fourth Year or above"
                   name="formHorizontalRadios"
                   id="student" 
-                  value={student['year']} 
+                  value="4"
                   onChange={handleCheckYear}
                 />
               </Col>
             </Form.Group>
           </fieldset>
 
-          <Form.Group as={Row} className="mb-3" controlId="resume">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 Resume
@@ -291,31 +292,35 @@ const StudentForm = () => {
                 type="radio"
                 label="Yes"
                 name="formHorizontalRadios"
-                id="formHorizontalRadios1"
+                id="student" 
+                value={student['have_group']} 
+                onChange={handleCheckGroup}
               />
               <Form.Check
                 type="radio"
                 label="No"
                 name="formHorizontalRadios"
-                id="formHorizontalRadios2"
+                id="student" 
+                value={student['have_group']} 
+                onChange={handleCheckGroup}
               />
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="exp">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 Group member names
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Form.Control as="textarea" placeholder="Your answer" id="student" value={student['group_members']} onChange={handleCheckMembers}/>
             </Col>
           </Form.Group>
         </div>
 
         <div className="common-form">
-          <Form.Group as={Row} className="mb-3" controlId="languages">
+          <Form.Group as={Row} className="mb-3">
             <Col style={{ textAlign: "center" }} sm={20}>
               <h3>Technical Knowledge</h3>
             </Col>
@@ -325,43 +330,43 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Form.Control as="textarea" placeholder="Your answer" id="student" value={student['languages']} onChange={handleCheckLanguages}/>
             </Col>
           </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="framworks">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 Which Frameworks have you worked with?
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Form.Control as="textarea" placeholder="Your answer" id="student" value={student['frameworks']} onChange={handleCheckFrameworks}/>
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="frameworks">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 What databases have you used?
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Multiselect options={db} displayValue="value" />
+              <Multiselect options={db} displayValue="value" id="student" value={student['databases']} onChange={handleCheckDatabases}/>
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="platforms">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 What Platforms are you familiar with
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Multiselect options={plat} displayValue="value" />
+              <Multiselect options={plat} displayValue="value" id="student" value={student['platforms']} onChange={handleCheckPlat}/>
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="links">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 Provide us with your Github, Devpost, Portfolio, etc. links
@@ -374,7 +379,7 @@ const StudentForm = () => {
         </div>
 
         <div className="common-form">
-          <Form.Group as={Row} className="mb-3" controlId="radio-idea">
+          <Form.Group as={Row} className="mb-3">
             <Col style={{ textAlign: "center" }} sm={20}>
               <h3>Project Ideas</h3>
             </Col>
@@ -388,30 +393,34 @@ const StudentForm = () => {
                 type="radio"
                 label="Yes"
                 name="formHorizontalRadios"
-                id="formHorizontalRadios1"
+                id="student" 
+                value={student['project_idea']} 
+                onChange={handleCheckProject}
               />
               <Form.Check
                 type="radio"
                 label="No"
                 name="formHorizontalRadios"
-                id="formHorizontalRadios2"
+                id="student" 
+                value={student['project_idea']} 
+                onChange={handleCheckProject}
               />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="idea">
+          <Form.Group as={Row} className="mb-3">
             <Col>
               <Form.Label column sm={10}>
                 If yes, please describe your idea below
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Form.Control as="textarea" placeholder="Your answer" id="student" value={student['idea_description']} onChange={handleCheckIdea}/>
             </Col>
           </Form.Group>
         </div>
 
         <div className="common-form">
-          <Form.Group as={Row} className="mb-3" controlId="additional-info">
+          <Form.Group as={Row} className="mb-3">
             <Col style={{ textAlign: "center" }} sm={20}>
               <h3>Additional Information</h3>
             </Col>
@@ -421,7 +430,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Form.Control as="textarea" placeholder="Your answer" id="student" value={student['additional']} onChange={handleCheckAdditional}/>
             </Col>
           </Form.Group>
 
