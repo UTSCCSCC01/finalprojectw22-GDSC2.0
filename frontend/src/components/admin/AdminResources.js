@@ -139,8 +139,12 @@ function Resources() {
 
   return (
     <>
-      <div className="text-center mt-2">
-        <Button onClick={() => setAddResourceModal(true)} variant="success">
+      <div className="text-center mt-4">
+        <Button
+          size="lg"
+          onClick={() => setAddResourceModal(true)}
+          variant="success"
+        >
           Add Resource
         </Button>
 
