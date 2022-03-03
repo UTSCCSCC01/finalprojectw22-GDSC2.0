@@ -124,10 +124,12 @@ exports.studentAppValidator =[
         (req,res,next)=>{
             console.log("GOT TO VALIDATOR");
             let errors = validationResult(req);
+            console.log(errors);
             if (!errors.isEmpty()){
                 return res.status(400).json({'errors':errors.array()});
             }
             errors = studentDetailValidator(req.body);
+            console.log(errors);
             if (Object.keys(errors).length > 0){
                 return res.status(400).json({'errors':[errors]});
             }

@@ -30,22 +30,35 @@ const StudentForm = () => {
   ];
 
   const init_student = {
-      "student_num": "1234567890",
-      "email": "sadsad@mail.utoronto.ca",
+      "student_num": "",
+      "email": "",
       "cgpa": 1.8,
-      "full_name": "sdasdasdsa",
-      "program": "asdasd",
+      "full_name": "",
+      "program": "",
       "year": 2,
-      "resume_path": "dasdasd",
-      "frameworks": "dasdsad",
-      "languages": "adasdsa",
-      "databases": {"sql":true},
-      "platforms": {"none":true},
+      "resume_path": "",
+      "frameworks": "",
+      "languages": "",
+      "databases": {
+        "sql": false,
+        "nosql": false,
+        "graph": false,
+        "any": true
+      },
+      "platforms": {
+      'aws': false,
+      'google_cloud':false,
+      'firebase':false,
+      'heroku': false,
+      'netlify':false,
+      'azure':false,
+      'any':true
+      },
       "have_group": false,
       "group_members": "",
       "project_idea": false,
       "idea_description": "",
-      "additional": "sadas"
+      "additional": ""
   }
 
   const [db, setDB] = useState(dbOptions);
@@ -83,7 +96,7 @@ const StudentForm = () => {
 
   // 
   const handleCheckYear=(e)=>{
-    setStudent({...student,'year':e.target.value});
+    setStudent({...student,'year':e.target.id});
   }
 
   // 
@@ -103,7 +116,41 @@ const StudentForm = () => {
 
   // 
   const handleCheckDatabases=(e)=>{
-    setStudent({...student,'databases':e.target.value});
+    let id = e.target.id;
+    student['databases'][id] = !student['databases'][id];
+    setStudent({...student,'databases':student['databases']});
+  }
+
+  //
+  const handleCheckPlat=(e)=>{
+    let id = e.target.id;
+    student['platforms'][id] = !student['platforms'][id];
+    setStudent({...student,'platforms':student['platforms']});
+  }
+
+  //
+  const handleCheckGroup=(e)=>{
+    setStudent({...student,'have_group':!student.have_group});
+  }
+
+  // 
+  const handleCheckMembers=(e)=>{
+    setStudent({...student,'group_members':e.target.value});
+  }
+
+  //
+  const handleCheckProject=(e)=>{
+    setStudent({...student,'project_idea':!student.project_idea});
+  }
+
+  //
+  const handleCheckIdea=(e)=>{
+    setStudent({...student,'idea_description':e.target.value});
+  }
+
+  //
+  const handleCheckAdditional=(e)=>{
+    setStudent({...student,'additional':e.target.value});
   }
 
   // ];
@@ -144,7 +191,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="email" placeholder="Full Name" />
+              <Form.Control type="text" placeholder="Full Name" id="student" value={student['full_name']} onChange={handleCheckFullName}/>
             </Col>
           </Form.Group>
 
@@ -155,7 +202,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="number" placeholder="Student Number" id="student" value={student['student_num']} onChange={handleCheckStudentNum} />
+              <Form.Control type="number" placeholder="Student Number" id="student" value={student['student_num']} onChange={handleCheckStudentNum}/>
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="email">
@@ -165,7 +212,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="email" placeholder="UofT email address" />
+              <Form.Control type="email" placeholder="UofT email address" id="student" value={student['email']} onChange={handleCheckEmail}/>
             </Col>
           </Form.Group>
 
@@ -176,7 +223,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="number" placeholder="CGPA" />
+              <Form.Control type="number" placeholder="CGPA" id="student" value={student['cgpa']} onChange={handleCheckCGPA}/>
             </Col>
           </Form.Group>
 
@@ -187,7 +234,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="text" placeholder="Program of Study" />
+              <Form.Control type="text" placeholder="Program of Study" id="student" value={student['program']} onChange={handleCheckProgram}/>
             </Col>
           </Form.Group>
 
@@ -201,19 +248,25 @@ const StudentForm = () => {
                   type="radio"
                   label="Second Year"
                   name="formHorizontalRadios"
-                  id="formHorizontalRadios1"
+                  id="student" 
+                  value={student['year']} 
+                  onChange={handleCheckYear}
                 />
                 <Form.Check
                   type="radio"
                   label="Third Year"
                   name="formHorizontalRadios"
-                  id="formHorizontalRadios2"
+                  id="student" 
+                  value={student['year']} 
+                  onChange={handleCheckYear}
                 />
                 <Form.Check
                   type="radio"
                   label="Fourth Year or above"
                   name="formHorizontalRadios"
-                  id="formHorizontalRadios3"
+                  id="student" 
+                  value={student['year']} 
+                  onChange={handleCheckYear}
                 />
               </Col>
             </Form.Group>
@@ -226,7 +279,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="file" placeholder="Your answer" />
+              <Form.Control type="file" placeholder="Your answer" id="student" value={student['resume_path']} onChange={handleCheckResume}/>
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3">

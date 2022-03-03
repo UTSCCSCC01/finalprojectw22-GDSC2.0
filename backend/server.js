@@ -14,14 +14,13 @@ const connDB = require("./config/db");
 const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
-const cors = require("cors");
+
 
 const app = express();
-app.use(cors);
 
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.static("public"));
-// app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // connect to database
 connDB();
