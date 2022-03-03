@@ -12,14 +12,14 @@ require("dotenv").config();
 const express = require("express");
 const connDB = require("./config/db");
 const testModel = require("./models/testModel");
-const cors = require('cors');
+//const cors = require('cors');
 
 //const bodyParser = require("body-parser");
 //const answerModel = require("./models/answerModel");
 
 
 const app = express();
-app.use(cors());
+//app.use(cors());
 
 //app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(express.static("public"));
