@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Container } from "react-bootstrap"
 import "./Team.css"
 import ilir from "../../images/ilir.png"
@@ -15,11 +15,13 @@ import nitish from "../../images/Nitish.png"
 import nivy from "../../images/Nivy.png"
 import shahmeer from "../../images/Shahmeer.png"
 import shubh from "../../images/Shubh.png"
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 
 const Team = () => {
+    const {mode, toggleMode} = useContext(DarkModeContext)
     return (
-        <div className='main'>
+        <div className={mode === true ? "main dark" : "main"}>
             <Container>
                 <h3>Meet the Team</h3>
                 <br />
