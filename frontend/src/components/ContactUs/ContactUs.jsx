@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Container, Col, Row, Button } from "react-bootstrap"
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa"
 import { AiOutlineMail } from "react-icons/ai"
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 const ContactUs = () => {
+  const {mode, toggleMode} = useContext(DarkModeContext)
   return (
-      <div className='main'>
+      <div className={mode === true ? "main dark" : "main"}>
           <Container>
               <Row>
               <h3>Contact Us</h3>

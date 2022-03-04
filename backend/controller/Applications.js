@@ -56,24 +56,23 @@ exports.submitStudentForm = (async (req,res)=>{
 })
 
 exports.filterStudentApp = (async (req,res)=>{
-    const num_display = req.body.num_display
-    const num_page = req.body.num_page
-    delete req.body.num_page
-    delete req.body.num_display
-    const filters = req.body;
-    const filteredStudents = await studentAppModel.filter((student)=>{
-        return studentFilter(filters,student)}
-    ).sort({creation_time:1})
+    //.find(query).
+    console.log("Hello");
+    let query = buildQueryFitler(req.body);
+    const filteredStudents = await studentAppModel.find(query).where('year').gte(req.body.year)
+    .where('cgpa').gte(req.body.cgpa)
+    .sort({creation_time:1})
     length = filteredStudents.length
+    console.log(filteredStudents)
     let resStudents = null;
-    if ((num_page-1) * num_display > length || num_page<1){
+    if ((req.body.num_page-1) * req.body.num_display > length || req.body.num_page<1){
         res.status(400).json({
             error: "Index of page out of range"
         })
     }
     if (length > 0){
-        const tail = num_page*num_display>length?length:num_page*num_display
-        resStudents = filteredStudents.slice((num_page-1)*num_display-1,tail-1)
+        const tail = req.body.num_page*req.body.num_display>length?length:req.body.num_page*req.body.num_display;
+        resStudents = filteredStudents.slice((req.body.num_page-1)*req.body.num_display,tail);
     }
     res.send({
         total:length,
@@ -83,15 +82,13 @@ exports.filterStudentApp = (async (req,res)=>{
 /** Mentor Endpoints */
 
 exports.filterMentorApp = (async (req,res)=>{
-    const num_display = req.body.num_display
-    const num_page = req.body.num_page
-    delete req.body.num_page
-    delete req.body.num_display
-    const filters = req.body;
+    let query = buildQueryFitler(req.body);
     let length = 0;
-    const filteredMentors = await mentorAppModel.filter((mentor)=>{
-        return mentorFilter(filters,mentor)}
-    ).sort({creation_time:1})
+    const filteredMentors = await mentorAppModel.filter(query)
+    .where('year').gte(req.body.year)
+    .where('cgpa').gte(req.body.cgpa)
+    .sort({creation_time:1})
+    
     length = filteredMentors.length
     let resMentors = null;
     if ((num_page-1) * num_display > length || num_page<1){
@@ -120,15 +117,16 @@ exports.studentAppValidator =[
         body("have_group","Please let use know if you have a group").not().isEmpty().isBoolean(),
         body("project_idea","Please let use know if you have a project idea").not().isEmpty().isBoolean(),
         body("databases","Please select at least one databases").not().isEmpty(),
+
+        body("platforms","Please select at least one platforms").not().isEmpty(),
         (req,res,next)=>{
-            console.log("GOT TO VALIDATOR");
             let errors = validationResult(req);
-            console.log(errors);
+
             if (!errors.isEmpty()){
                 return res.status(400).json({'errors':errors.array()});
             }
             errors = studentDetailValidator(req.body);
-            console.log(errors);
+  
             if (Object.keys(errors).length > 0){
                 return res.status(400).json({'errors':[errors]});
             }
@@ -154,20 +152,17 @@ function studentDetailValidator(req_data){
         errors["database"] = "Please select at least one databases";
     }
     let platforms = req_data['platforms'];
-    let empty = true;
+
     if (!(platforms["none"] || (platforms['other'] !== ''))){
-        let pre_select = platforms['pre_select'];
+        let pre_select = platforms['pre-select'];
         if (pre_select){
             for (let i = 0; i < plats.length; i ++){
                 if (pre_select[plats[i]]){
-                    empty = false;
                     break;
                 }
             }
         }
-        if (empty){
-            errors["platforms"] = "Please select at least one platforms";
-        }
+        errors["platforms"] = "Please select at least one platforms";
     }
     if (req_data["have_group"]){
         if (!req_data["group_members"]){
@@ -229,17 +224,16 @@ exports.mentorQueryValidator =[
 
 const querySubValidator= (req_data)=>{
     const errors = {};
-    const dbs = req_data.databases
-    const plats = req_data.cloudPlat
-    for (key in dbs.keys){
-        console.log(typeof dbs.key);
-        if (!(pre_dbs.includes(key) && typeof(dbs.key) == "boolean")){
+    const dbs = req_data.databases;
+    const plats = req_data.cloudPlat;
+    for (let key in dbs){
+        if (!(pre_dbs.includes(key) && typeof(dbs[key]) == "boolean")){
             errors['databases'] = "databases has invalid input";
             break;
         }
     }
-    for (key in plats.keys){
-        if (!(pre_plats.includes(key) && typeof(plats.key) == "boolean")){
+    for (let key in plats){
+        if (!(pre_plats.includes(key) && typeof(plats[key]) == "boolean")){
             errors['databases'] = "databases has invalid input";
             break;
         }
@@ -315,4 +309,28 @@ const studentFilter = (filters,student) =>{
         }
     }
     return true;
+
+const buildQueryFitler = (req_body)=>{
+    var query = {};
+    if (!req_body.databases.any){
+        for (let key in req_body.databases){
+            if (key != "any"){
+                query["databases."+key] = req_body.databases[key]
+            }
+            query["databases.none"] = false;
+        }
+    }
+    if (!req_body.cloudPlat.any){
+        for (let key in req_body.cloudPlat){
+            if (key != 'any'){
+                query['platforms.pre_select'+key] = req_body.cloudPlat.key
+            }
+        }
+        query["platforms.none"] = false;
+    }
+    if (req_body['complete_pey']){
+        query['complete_pey'] = req_body['complete_pey'];
+    }
+    console.log(query)
+    return query;
 }

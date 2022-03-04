@@ -10,6 +10,7 @@ router.post("/", async (req,res) => {
     const newUser = new UserModel(user);
     await newUser.save();
     res.json(user);
-} );
+});
+
 
 module.exports = router;
