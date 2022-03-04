@@ -56,13 +56,11 @@ exports.submitStudentForm = (async (req,res)=>{
 
 exports.filterStudentApp = (async (req,res)=>{
     //.find(query).
-    console.log("Hello");
     let query = buildQueryFitler(req.body);
     const filteredStudents = await studentAppModel.find(query).where('year').gte(req.body.year)
     .where('cgpa').gte(req.body.cgpa)
     .sort({creation_time:1})
     length = filteredStudents.length
-    console.log(filteredStudents)
     let resStudents = null;
     if ((req.body.num_page-1) * req.body.num_display > length || req.body.num_page<1){
         res.status(400).json({
@@ -182,10 +180,12 @@ exports.studentQueryValidator =[
     body("num_page","Invalid Num Pagee").not().isEmpty().isInt(),
     (req,res,next)=>{
         let errors = validationResult(req);
+        console.log(errors);
         if (!errors.isEmpty()){
             return res.status(400).json({'errors':errors.array()});
         }
         errors = querySubValidator(req.body);
+        console.log(errors);
         if (Object.keys(errors).length > 0){
             return res.status(400).json({'errors':[errors]});
         }
