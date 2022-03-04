@@ -117,7 +117,7 @@ const studentAppSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
-    idea_desciption:{
+    idea_description:{
         type: String,
         required: function(){
             return this.project_idea;
