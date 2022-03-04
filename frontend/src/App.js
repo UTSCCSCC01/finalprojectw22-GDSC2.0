@@ -15,8 +15,10 @@ import MentorForm from "./components/application/forms/MentorForm";
 import AdminPage from "./components/admin/AdminPage";
 import AdminLogin from "./components/admin/AdminLogin";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
+import AdminProfiles from "./components/AdminProfiles/AdminProfiles";
 import BugReportForm from "./components/BugReport/BugReportForm";
 import DarkModeState from "./context/darkMode/DarkModeState"
+
 const App = () => {
   return (
     <>
@@ -41,6 +43,7 @@ const App = () => {
           <Route path="/admin/log" element={<AdminLogin />} />
           <Route path="/admin/main" element={<AdminPage />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/adminProfiles" element={<AdminProfiles />} />
         </Routes>
       </Router>
       </DarkModeState>
