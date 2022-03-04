@@ -42,6 +42,7 @@ exports.filterApplications = (async (req,res)=>{
 })
 /** Student Endpoints */
 exports.submitStudentForm = (async (req,res)=>{
+    console.log("GOT TO END ROUTE");
     studentAppModel.create(req.body)
     .then((id)=>{
         console.log(id);
@@ -87,6 +88,7 @@ exports.filterMentorApp = (async (req,res)=>{
     .where('year').gte(req.body.year)
     .where('cgpa').gte(req.body.cgpa)
     .sort({creation_time:1})
+    
     length = filteredMentors.length
     let resMentors = null;
     if ((num_page-1) * num_display > length || num_page<1){
@@ -115,13 +117,16 @@ exports.studentAppValidator =[
         body("have_group","Please let use know if you have a group").not().isEmpty().isBoolean(),
         body("project_idea","Please let use know if you have a project idea").not().isEmpty().isBoolean(),
         body("databases","Please select at least one databases").not().isEmpty(),
+
         body("platforms","Please select at least one platforms").not().isEmpty(),
         (req,res,next)=>{
             let errors = validationResult(req);
+
             if (!errors.isEmpty()){
                 return res.status(400).json({'errors':errors.array()});
             }
             errors = studentDetailValidator(req.body);
+  
             if (Object.keys(errors).length > 0){
                 return res.status(400).json({'errors':[errors]});
             }
@@ -147,6 +152,7 @@ function studentDetailValidator(req_data){
         errors["database"] = "Please select at least one databases";
     }
     let platforms = req_data['platforms'];
+
     if (!(platforms["none"] || (platforms['other'] !== ''))){
         let pre_select = platforms['pre-select'];
         if (pre_select){
@@ -235,6 +241,74 @@ const querySubValidator= (req_data)=>{
     return errors;
 }
 /** Query Helper */
+
+const mentorFilter = (filters,mentor) =>{
+    for (key in filters.keys){
+        // filter databases
+        if (key === 'year'){
+            if (mentor.year<filters.year){
+                return false;
+            }
+        }
+        if (key === 'cgpa'){
+            if (mentor.cgpa < filters.cgpa){
+                return false;
+            }
+        }
+        if (key === 'complete_pey' && filters.complete_pey){
+            if (!mentor.complete_pey){
+                return false;
+            }
+        }
+        if (key === 'databases' && !(filters.databases.any) && !(mentor.databases.none)){
+            for (db in filters.databases){
+                if (!mentor.databases.db){
+                    return false;
+                }
+            }
+        }
+        // filter cloudPlat
+        if (key === 'cloudPlat' && !(filters.cloudPlat.any) && !(mentor.platforms.none)){
+            for (plat in filters.cloudPlat.plat){
+                if (!mentor.platforms.plat){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+const studentFilter = (filters,student) =>{
+    for (key in filters.keys){
+        // filter databases
+        if (key === 'year'){
+            if (mentor.year<filters.year){
+                return false;
+            }
+        }
+        if (key === 'cgpa'){
+            if (mentor.cgpa < filters.cgpa){
+                return false;
+            }
+        }
+        if (key === 'databases' && !(filters.databases.any) && !(mentor.databases.none)){
+            for (db in filters.databases){
+                if (!mentor.databases.db){
+                    return false;
+                }
+            }
+        }
+        // filter cloudPlat
+        if (key === 'cloudPlat' && !(filters.cloudPlat.any) && !(mentor.platforms.none)){
+            for (plat in filters.cloudPlat.plat){
+                if (!mentor.platforms.plat){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
 
 const buildQueryFitler = (req_body)=>{
     var query = {};
