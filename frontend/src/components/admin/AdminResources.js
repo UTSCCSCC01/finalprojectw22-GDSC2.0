@@ -85,7 +85,6 @@ function Resources() {
 
     for (var i = 0; i < resourcesState.length; i++) {
       sections.add(resourcesState[i].section.trim().toLowerCase());
-
     }
     console.log(sections);
     return sections;
@@ -144,7 +143,6 @@ function Resources() {
     setAddResourceModal(false);
     setFormValues(initResourceInfo);
     setFormErrors(false);
-
   };
 
   return (

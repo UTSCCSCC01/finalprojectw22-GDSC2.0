@@ -7,6 +7,7 @@ import AdminStyle from "../../css/admin/AdminPage.module.css";
 import AdminApplication from "./AdminApplications"
 import {Button} from "react-bootstrap"
 import axios from "axios"
+
 export default function AdminPage(props){
     // reference: https://gdscutm.com
     const [itemKey, setActive] = useState("1");

@@ -22,6 +22,7 @@ import BugReportForm from "./components/BugReport/BugReportForm";
 import DarkModeState from "./context/darkMode/DarkModeState"
 
 
+
 const App = () => {
   const [portalActive,setPortalActive] = useState(false);
   useEffect(()=>{
