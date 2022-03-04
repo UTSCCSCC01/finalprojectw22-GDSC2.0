@@ -4,13 +4,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import InputGroup from "react-bootstrap/InputGroup";
-import Container from "react-bootstrap/Container";
+// import InputGroup from "react-bootstrap/InputGroup";
+// import Container from "react-bootstrap/Container";
 import Multiselect from "multiselect-react-dropdown";
 import "./MentorForm.css";
 //const {postStudentApplication} = require("../../../axios.js");
 import Axios from "axios";
-import { FaEyeDropper } from "react-icons/fa";
+// import { FaEyeDropper } from "react-icons/fa";
 // import FormGroup from "react-bootstrap/esm/FormGroup";
 
 const StudentForm = () => {
@@ -131,9 +131,6 @@ const StudentForm = () => {
   const handleCheckPlat=(e)=>{
     console.log("PLATFORM HANDLER TRIGGERED");
     setPlatEvent(e);
-    // let id = e[0].value;
-    // student['platforms'][id] = !student['platforms'][id];
-    // setStudent({...student,'platforms':student['platforms']});
   }
 
   //
@@ -161,7 +158,7 @@ const StudentForm = () => {
     setStudent({...student,'additional':e.target.value});
   }
 
-  // ];
+
   // Pass the useFormik() hook initial form values and a submit function that will
   // be called when the form is submitted
   const formik = useFormik({
@@ -174,14 +171,14 @@ const StudentForm = () => {
     },
   });
 
-  //http://localhost:5000
+  //Student Submit
   const createStudentApplication = (e) => {
     e.preventDefault();
     console.log("SENDING STUDENT APPLICATION");
 
     //set databases
     for(let i = 0; i < databaseEvent.length; i++){
-        if (databaseEvent[i].value != 'none'){
+        if (databaseEvent[i].value !== 'none'){
             student['databases']['none'] = false;
             student['databases'][databaseEvent[i].value] = !student['databases'][databaseEvent[i].value];
         }
@@ -189,10 +186,9 @@ const StudentForm = () => {
     }
     
     //set platforms
-    //console.log(platEvent);
     for(let i = 0; i < platEvent.length; i++){
         //console.log(platEvent[i].value);
-        if (platEvent[i].value != 'none'){
+        if (platEvent[i].value !== 'none'){
             student['platforms']['none'] = false;
             console.log(platEvent[i].value);
             console.log(student['platforms']['pre_select']['aws']);
