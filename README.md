@@ -45,7 +45,7 @@
   <ul>
     <li><a href="https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/doc/sprint0">sprint0</a></li>
     <li><a href="https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/doc/sprint1">sprint1</a></li>
-    <li><a href=""></a>sprint2</li>
+    <li><a href="https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/doc/sprint2">sprint2</a></li>
     <li><a href=""></a>sprint3</li>
     <li><a href=""></a>sprint4</li>
   </ul>
