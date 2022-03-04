@@ -4,10 +4,9 @@ import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import dsc_utm from "../../images/dsc_utm.png";
 import AdminStyle from "../../css/admin/AdminPage.module.css";
-import AdminApplication from "./AdminApplications";
-import AdminResources from "./AdminResources";
-// import AdminResources from "./AdminResources";
-export default function AdminPage() {
+import GeneralResources from "./GeneralResources/GeneralResources";
+
+export default function GeneralPage() {
   // reference: https://gdscutm.com
   const [itemKey, setActive] = useState("1");
 
@@ -61,7 +60,7 @@ export default function AdminPage() {
             <Card className={AdminStyle.container_width}>
               <Card.Header>Applications</Card.Header>
               <Card.Body>
-                <AdminApplication />
+                
               </Card.Body>
             </Card>
           </Accordion.Collapse>
@@ -69,7 +68,7 @@ export default function AdminPage() {
             <Card className={AdminStyle.container_width}>
               <Card.Header>Resources</Card.Header>
               <Card.Body>
-                <AdminResources />
+                <GeneralResources />
               </Card.Body>
             </Card>
           </Accordion.Collapse>
