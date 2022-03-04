@@ -1,3 +1,5 @@
+
+
 const mongoose = require("mongoose");
 const studentAppModel = require("../models/studentAppModel");
 const mentorAppModel = require("../models/mentorAppModel");
@@ -42,7 +44,6 @@ exports.filterApplications = (async (req,res)=>{
 })
 /** Student Endpoints */
 exports.submitStudentForm = (async (req,res)=>{
-    console.log("GOT TO END ROUTE");
     studentAppModel.create(req.body)
     .then((id)=>{
         console.log(id);
@@ -56,14 +57,11 @@ exports.submitStudentForm = (async (req,res)=>{
 })
 
 exports.filterStudentApp = (async (req,res)=>{
-    //.find(query).
-    console.log("Hello");
     let query = buildQueryFitler(req.body);
     const filteredStudents = await studentAppModel.find(query).where('year').gte(req.body.year)
     .where('cgpa').gte(req.body.cgpa)
     .sort({creation_time:1})
     length = filteredStudents.length
-    console.log(filteredStudents)
     let resStudents = null;
     if ((req.body.num_page-1) * req.body.num_display > length || req.body.num_page<1){
         res.status(400).json({
@@ -88,7 +86,6 @@ exports.filterMentorApp = (async (req,res)=>{
     .where('year').gte(req.body.year)
     .where('cgpa').gte(req.body.cgpa)
     .sort({creation_time:1})
-    
     length = filteredMentors.length
     let resMentors = null;
     if ((num_page-1) * num_display > length || num_page<1){
@@ -152,17 +149,20 @@ function studentDetailValidator(req_data){
         errors["database"] = "Please select at least one databases";
     }
     let platforms = req_data['platforms'];
-
+    let empty = true;
     if (!(platforms["none"] || (platforms['other'] !== ''))){
-        let pre_select = platforms['pre-select'];
+        let pre_select = platforms['pre_select'];
         if (pre_select){
             for (let i = 0; i < plats.length; i ++){
                 if (pre_select[plats[i]]){
+                    empty = false;
                     break;
                 }
             }
         }
-        errors["platforms"] = "Please select at least one platforms";
+        if (empty){
+            errors["platforms"] = "Please select at least one platforms";
+        }
     }
     if (req_data["have_group"]){
         if (!req_data["group_members"]){
@@ -309,6 +309,7 @@ const studentFilter = (filters,student) =>{
         }
     }
     return true;
+}
 
 const buildQueryFitler = (req_body)=>{
     var query = {};
@@ -331,6 +332,5 @@ const buildQueryFitler = (req_body)=>{
     if (req_body['complete_pey']){
         query['complete_pey'] = req_body['complete_pey'];
     }
-    console.log(query)
     return query;
 }
