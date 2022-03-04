@@ -8,39 +8,43 @@ const plats = ['aws','google_cloud','firebase','heroku','netlify','azure']
 const pre_dbs = ['sql','nosql','graph','any']
 const pre_plats = ['aws','google_cloud','firebase','heroku','netlify','azure','any']
 /** Gneral Endpoints */
-exports.filterApplications = (async (req,res)=>{
-    const num_display = req.body.num_display
-    const num_page = req.body.num_page
-    delete req.body.num_page
-    delete req.body.num_display
-    const filters = req.body;
-    let length = 0;
-    const filteredMentors = await mentorAppModel.filter((mentor)=>{
-        return mentorFilter(filters,mentor)}
-    ).sort({creation_time:1})
-    const filteredStudents = await studentAppModel.filter((student)=>{
-        return studentFilter(student_filter,student)}
-    ).sort({creation_time:1})
-    length = filteredMentors.length + filteredStudents.length
-    if ((num_page-1) * num_display > length || num_page<1){
-        res.status(400).json({
-            error: "Index of page out of range"
+
+/** Student Endpoints */
+
+exports.acceptStudentForm = (async (req,res)=>{
+    if (req.body.student_num){
+        console.log(req.body)
+        res.status(200).json({
+            status:"success"
+        })
+    }else{
+        res.status(404).json({
+            status: "Cannot find student with the corresponding student number"
         })
     }
-    let resAll = null;
-    if (length > 0){
-        // for simplicity, we compare the date value of the last index
-        // if one is greater, then that one (student or mentor) will have 3/4 of the application been sent
-        const tail = num_page*num_display>length?length:num_page*num_display
-        //let resStudents = filteredStudents.slice
-    }
-    res.send({
-        total:length,
-        data:resAll
-    });
-
 })
-/** Student Endpoints */
+
+exports.rejectStudentForm = (async (req,res)=>{
+    if (req.query["_id"]){
+        studentAppModel.deleteOne({
+            '_id': req.query._id
+        }).then(()=>{
+            res.status(200).json({
+                "status": "reject success"
+            })
+        }).catch((e)=>{
+            console.log(e);
+            res.status(400).json({
+                error: e
+            })
+        })
+    }else{
+        res.status(404).json({
+            status: "Cannot find student with the corresponding student number"
+        })
+    }
+})
+
 exports.submitStudentForm = (async (req,res)=>{
     studentAppModel.create(req.body)
     .then((id)=>{
@@ -76,6 +80,39 @@ exports.filterStudentApp = (async (req,res)=>{
     });
 })
 /** Mentor Endpoints */
+exports.acceptMentorForm = (async (req,res)=>{
+    if (req.body.student_num){
+        console.log(req.body)
+        res.status(200).json({
+            status:"success"
+        })
+    }else{
+        res.status(404).json({
+            status: "Cannot find student with the corresponding student number"
+        })
+    }
+})
+
+exports.rejectMentorForm = (async (req,res)=>{
+    if (req.query["_id"]){
+        mentorAppModel.deleteOne({
+            '_id': req.query['_id']
+        }).then(()=>{
+            res.status(200).json({
+                "status": "reject success"
+            })
+        }).catch((e)=>{
+            console.log(e);
+            res.status(400).json({
+                error: e
+            })
+        })
+    }else{
+        res.status(404).json({
+            status: "Cannot find student with the corresponding student number"
+        })
+    }
+})
 
 exports.filterMentorApp = (async (req,res)=>{
     let query = buildQueryFitler(req.body);

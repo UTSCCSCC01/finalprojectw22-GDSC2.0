@@ -20,7 +20,7 @@ import GeneralPage from "./components/General/GeneralPage";
 import AdminProfiles from "./components/AdminProfiles/AdminProfiles";
 import BugReportForm from "./components/BugReport/BugReportForm";
 import DarkModeState from "./context/darkMode/DarkModeState"
-
+import axios from "axios";
 
 
 const App = () => {

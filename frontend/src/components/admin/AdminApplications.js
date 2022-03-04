@@ -46,89 +46,6 @@ const req_years = {
     "third" : 3,
     "fourth" : 4
 }
-// example student object to display in main page of interface
-const student_sample = {
-    name:"Litao Chen",
-    role: "Student",
-    year:"5",
-    group:"Yes",
-    cgpa:4.5,
-    project_idea:"Yes"
-}
-// example mentor object to display in main page of interface
-const mentor_sample = {
-    name:"Litao Chen",
-    role: "Mentor",
-    year:"5",
-    group:"Yes",
-    cgpa:4.5,
-    PEY:"Yes"
-}
-// array of samples
-const samples = [];
-// example of student application information
-const student_info = {
-    name: "Litao Chen",
-    role: "Student",
-    student_number: "1000000000",
-    ut_email : "student@mail.utoronto.ca",
-    cgpa : "4.5",
-    program: "CS",
-    year: "5",
-    resume: "some url",
-    group: "yes",
-    group_name: "GDSC2.0",
-    program_language: "python,java,C,C#,html,css,java script,haskell, racket, assemblysbdhjasbvdjhbsdj",
-    frameworks: " Nodejs, React, Flask, Django, and Spring.",
-    database: "SQL,NOSQL,GRAPH",
-    cloud_platform: "AWS,heoku,google cloud,Azure",
-    profile_link: "some url",
-    project_idea: "yes",
-    project_description: "A very long text",
-    additional_info: "I don't know why I am applying for this."
-}
-// exampple of mentor application information
-const mentor_info = {
-    name: "Litao Chen",
-    role: "Mentor",
-    student_number: "1000000000",
-    ut_email : "student@mail.utoronto.ca",
-    cgpa : "4.5",
-    program: "CS",
-    year: "5",
-    resume: "some url",
-    complete_PEY: "no",
-    internship_exp: "I did nothing",
-    extra_curricular: "what is extra curricular",
-    projects: "no project",
-    project_link: "some url",
-    program_language: "python,java,C,C#,html,css,java script,haskell, racket, assemblysbdhjasbvdjhbsdj",
-    frameworks: " Nodejs, React, Flask, Django, and Spring.",
-    database: "SQL,NOSQL,GRAPH",
-    cloud_platform: "AWS,heoku,google cloud,Azure",
-    profile_link: "some url",
-    additional_info: "I don't know why I am applying for this."
-}
-// an application with all null value to reset data and avoid undefined 
-const init_info = {
-    name: '',
-    student_number: '',
-    ut_email : '',
-    cgpa : '',
-    program: '',
-    year: '',
-    resume: '',
-    group: '',
-    group_name: '',
-    program_language: '',
-    frameworks: '',
-    database: '',
-    cloud_platform: '',
-    profile_link: '',
-    project_idea: '',
-    project_description: '',
-    additional_info: ''
-}
 
 // main container of application page
 export default function AdminApplication (){
@@ -192,14 +109,13 @@ function GroupOrPEY (props){
 // show a list of applicants and enables modal to show detailed information of a selected student
 function Applicants(props){
     // store the information to show in modal
-    const [studentInfo, setInfo] = useState(init_info);
+    const [studentInfo, setInfo] = useState({});
     // show modal when state is true
     const [showModal, setShowModal] = useState(false);
     // close modal and reset student info
     let count = 0;
     const handleShowModal = ()=>{
         setShowModal(false);
-        setInfo(init_info);
     }
     useEffect(()=>{
     },[props.applications])
@@ -222,13 +138,6 @@ function Applicants(props){
         databases: "Databases",
         platforms: "Cloud Platforms"
     }
-    // create many example data
-    for (let i = 0; i < 5; i++){
-        samples[i] = {...student_sample,id:i};
-    }
-    for (let i = 5; i < 10; i++){
-        samples[i] = {...mentor_sample,id:i+5};
-    }
     // show specific info in general applicants page for students
     const student_card = (key)=>{
         return ((key === "year") || (key === "has_group") || (key === "cgpa") || (key === "project_idea"))
@@ -238,7 +147,34 @@ function Applicants(props){
         return ((key === "year") || (key === "cgpa") || (key === "PEY"))
     }
     // submit form
-    
+    const handleAccept = (student) =>{
+        if (studentInfo.role === "Student"){
+            axios.post("/applications/acceptStudent",{"student_num":student.student_num})
+            .catch((error)=>{
+                alert(error);
+            })
+        }else if (studentInfo.role === "Mentor"){
+            axios.post("/applications/acceptMentor",{"student_num":student.student_num})
+            .catch((error)=>{
+                alert(error);
+            })
+        }
+        setShowModal(false);
+    }
+    const handleDecline = (student) =>{
+        if (studentInfo.role === "Student"){
+            axios.delete("/applications/rejectStudent",{params:{"_id":student['_id']}})
+            .catch((error)=>{
+                alert(error);
+            })
+        }else if (studentInfo.role === "Mentor"){
+            axios.post("/applications/rejectMentor",{params:{"_id":student['_id']}})
+            .catch((error)=>{
+                alert(error);
+            })
+        }
+        setShowModal(false);
+    }
     return (
         <Container fluid>
             {/* show all student info in the sample*/}
@@ -274,7 +210,7 @@ function Applicants(props){
                     </div>
                     <hr></hr>
                     <Row xs={1} md={2} className="g-4 ms-2">
-                        <div><b>Student # :</b> {studentInfo.student_number}</div>
+                        <div><b>Student # :</b> {studentInfo.student_num}</div>
                         <div><b>Year :</b> {studentInfo.year}</div>
                         <div><b>CGPA :</b> {studentInfo.cgpa}</div>
                         <div><b>Program :</b> {studentInfo.program}</div>
@@ -319,10 +255,10 @@ function Applicants(props){
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary me-auto" onClick={handleShowModal}>
+                    <Button variant="primary me-auto" onClick={()=>handleAccept(studentInfo)} >
                     Accept
                     </Button>
-                    <Button variant="secondary" onClick={handleShowModal}>
+                    <Button variant="secondary" onClick={()=>handleDecline(studentInfo)}>
                     Reject
                     </Button>
                 </Modal.Footer>

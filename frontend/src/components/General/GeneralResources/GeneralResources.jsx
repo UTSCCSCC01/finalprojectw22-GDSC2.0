@@ -1,5 +1,5 @@
 import React from "react";
-import '../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { Container } from "react-bootstrap";
 import ResourceFilter from "./ResourceFilter";
 import FileFilter from "./FileFilter";
