@@ -78,3 +78,16 @@
   text-decoration: none;
   color: #4285f4;
 }
+
+.dark .register-wrap {
+  background: #333;
+  box-shadow: 0px 10px 34px -15px rgb(0 0 0 / 24%);
+}
+
+.dark .register-wrap input {
+  background: #fff;
+}
+
+.dark .register-wrap p {
+  color: #fff;
+}
