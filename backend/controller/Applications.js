@@ -1,5 +1,4 @@
 
-
 const mongoose = require("mongoose");
 const studentAppModel = require("../models/studentAppModel");
 const mentorAppModel = require("../models/mentorAppModel");
@@ -114,16 +113,13 @@ exports.studentAppValidator =[
         body("have_group","Please let use know if you have a group").not().isEmpty().isBoolean(),
         body("project_idea","Please let use know if you have a project idea").not().isEmpty().isBoolean(),
         body("databases","Please select at least one databases").not().isEmpty(),
-
         body("platforms","Please select at least one platforms").not().isEmpty(),
         (req,res,next)=>{
             let errors = validationResult(req);
-
             if (!errors.isEmpty()){
                 return res.status(400).json({'errors':errors.array()});
             }
             errors = studentDetailValidator(req.body);
-  
             if (Object.keys(errors).length > 0){
                 return res.status(400).json({'errors':[errors]});
             }

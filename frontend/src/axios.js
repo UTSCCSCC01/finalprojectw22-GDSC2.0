@@ -36,7 +36,6 @@ export async function postApplicationFilter(condtion = null, max_applications = 
  * @returns A number which is the total number of applications that matching the filter\
  * and a max_applications length of applications.
  */
-
 export async function acceptApplication(user_id,role,condtion=null,max_applications=20,num_page=1){
     const req = await instance.post("An endpoint which gets applications");
     if (req.data){
