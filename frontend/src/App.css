@@ -7,3 +7,8 @@
     background-position: center;
     background-size: cover;
 }
+.dark {
+    background: #222;
+    color: #fff;
+}
+

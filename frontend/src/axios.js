@@ -21,7 +21,7 @@ export async function getApplications(){
  * @returns A number which is the total number of applications that matching the filter\
  * and a max_applications length of applications.
  */
-export function postApplicationFilter(condtion = null, max_applications = 20, num_page = 1){
+export async function postApplicationFilter(condtion = null, max_applications = 20, num_page = 1){
     const req = await instance.post("An endpoint which gets applications");
     return req.data;
 }
@@ -36,7 +36,7 @@ export function postApplicationFilter(condtion = null, max_applications = 20, nu
  * @returns A number which is the total number of applications that matching the filter\
  * and a max_applications length of applications.
  */
-export function acceptApplication(user_id,role,condtion=null,max_applications=20,num_page=1){
+export async function acceptApplication(user_id,role,condtion=null,max_applications=20,num_page=1){
     const req = await instance.post("An endpoint which gets applications");
     if (req.data){
         const req = await instance.post("An endpoint which gets applications");
@@ -54,12 +54,20 @@ export function acceptApplication(user_id,role,condtion=null,max_applications=20
  * @returns A number which is the total number of applications that matching the filter\
  * and a max_applications length of applications.
  */
- export function declineApplication(user_id,role,condition=null,max_applications=20,num_page=1){
+ export async function declineApplication(user_id,role,condition=null,max_applications=20,num_page=1){
     const req = await instance.post("An endpoint which gets applications");
     if (req.data){
         const req = await instance.post("An endpoint which gets applications");
     }
     return req.data;
+ }
+
+ export async function postStudentApplication(student){
+    console.log("SENDING STUDENT APPLICATION");
+    const req = await axios.post(
+        "http://localhost:5000/applications/studentSubmit", student).then((response) => {
+        console.log("STUDENT FORM SUBMITTED");
+    });
  }
 
 export default instance

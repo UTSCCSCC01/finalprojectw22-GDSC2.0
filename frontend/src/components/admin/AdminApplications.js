@@ -41,7 +41,6 @@ const types = {
     "student" : "Student",
     "mentor" : "Mentor"
 }
-
 const req_years = {
     "all" : 2,
     "third" : 3,
@@ -150,6 +149,9 @@ export default function AdminApplication (){
     const updateApplications = useCallback((value)=>{
         setApplications(value);
     })
+    useEffect(()=>{
+
+    },[])
     return (
         <div className="d-flex flex-column">
             <Card.Header className="d-flex">
@@ -163,6 +165,7 @@ export default function AdminApplication (){
             <Card.Body className = "d-flex">
                 <Filter updateApplications={updateApplications}/>
                 <Applicants applications={applications}/>
+
             </Card.Body>
             <Card.Footer className="d-flex justify-content-center">
                 <Form className="d-flex align-content-center">
