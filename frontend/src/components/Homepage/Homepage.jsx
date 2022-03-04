@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Container, Row } from "react-bootstrap";
 import dscutm from "../../images/dsc_utm.png";
 import "./Homepage.css";
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 
 const Homepage = () => {
+    const {mode, toggleMode} = useContext(DarkModeContext)
     return (
-        <div className='main'>
+        <div className={mode === true ? "main dark" : "main"}>
             <Container>
                 <Row md={1}>
                     <img className='dsclogo' src={dscutm} alt="dsc_utm" />
