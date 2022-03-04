@@ -13,25 +13,31 @@ const express = require("express");
 const connDB = require("./config/db");
 const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
-const answerModel = require("./models/answerModel");
+const applicationRoute = require("./routes/applications");
 
+const answerModel = require("./models/answerModel");
 const app = express();
+const portalStatus = {
+  active : true
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
 app.use(bodyParser.json());
-
 // connect to database
 connDB();
 
 const loginRoute = require("./routes/login");
+const registerRoute = require("./routes/register")
+const sendMail = require("./routes/sendMail")
 //const getAnsRoute = require("./routes/getAnswers");
 //const createAnsRoute = require("./routes/createAnswers");
 
 app.use("/login", loginRoute);
+app.use('/register', registerRoute)
+app.use("/mail", sendMail)
 //app.use("/getAnswers", getAnsRoute);
 //app.use("/createAnswers", createAnsRoute);
-
+app.use("/applications",applicationRoute);
 
 
 app.get("/", (req, res) => {
@@ -53,33 +59,19 @@ app.post("/", (req, res) => {
   res.send("inserted");
 });
 
-app.get("/getAnswers", (req, res) => {
-  answerModel
-    .find({})
-    .then((data) => res.json(data))
-    .catch((e) => console.log(e));
+app.get("/getPortalStatus", (req, res) => {
+  res.send(portalStatus);
 });
-app.post("/createAnswers", (req, res) => {
-    console.log(req.body.test);
-    answerModel
-        .create({ 
-            uid: req.body.uid,
-            yearofstudy: req.body.yearofstudy,
-            interests: req.body.interests,
-            experience: req.body.experience,
-            courses: req.body.courses,
-            optional: req.body.optional
-         })
-        .then((id) => {
-      console.log(`inserted: ${id}`);
-    })
-        .catch((e) => console.log(e));
-    res.send("inserted");
-});
-//End of endpoints 
 
+app.post("/postPortalStatus",(req,res)=>{
+  portalStatus.active = req.body.status;
+  res.send(portalStatus);
+})
+//End of endpoints 
+const port = process.env.PORT || 5000
 app.listen(
-  process.env.PORT,
-  console.log(`listening on port ${process.env.PORT}`)
+  port,
+  console.log(`listening on port ${port}`)
 );
 
+module.exports = app;
