@@ -14,7 +14,6 @@ const connDB = require("./config/db");
 const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
-
 const app = express();
 const portalStatus = {
   active : true

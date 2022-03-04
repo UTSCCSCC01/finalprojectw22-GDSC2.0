@@ -21,7 +21,11 @@ export async function getApplications(){
  * @returns A number which is the total number of applications that matching the filter\
  * and a max_applications length of applications.
  */
+<<<<<<< HEAD
+export function postApplicationFilter(condtion = null, max_applications = 20, num_page = 1){
+=======
 export async function postApplicationFilter(condtion = null, max_applications = 20, num_page = 1){
+>>>>>>> sprint2
     const req = await instance.post("An endpoint which gets applications");
     return req.data;
 }
@@ -36,7 +40,11 @@ export async function postApplicationFilter(condtion = null, max_applications = 
  * @returns A number which is the total number of applications that matching the filter\
  * and a max_applications length of applications.
  */
+<<<<<<< HEAD
+export function acceptApplication(user_id,role,condtion=null,max_applications=20,num_page=1){
+=======
 export async function acceptApplication(user_id,role,condtion=null,max_applications=20,num_page=1){
+>>>>>>> sprint2
     const req = await instance.post("An endpoint which gets applications");
     if (req.data){
         const req = await instance.post("An endpoint which gets applications");
@@ -54,7 +62,11 @@ export async function acceptApplication(user_id,role,condtion=null,max_applicati
  * @returns A number which is the total number of applications that matching the filter\
  * and a max_applications length of applications.
  */
+<<<<<<< HEAD
+ export function declineApplication(user_id,role,condition=null,max_applications=20,num_page=1){
+=======
  export async function declineApplication(user_id,role,condition=null,max_applications=20,num_page=1){
+>>>>>>> sprint2
     const req = await instance.post("An endpoint which gets applications");
     if (req.data){
         const req = await instance.post("An endpoint which gets applications");
@@ -62,6 +74,8 @@ export async function acceptApplication(user_id,role,condtion=null,max_applicati
     return req.data;
  }
 
+<<<<<<< HEAD
+=======
  export async function postStudentApplication(student){
     console.log("SENDING STUDENT APPLICATION");
     const req = await axios.post(
@@ -70,4 +84,5 @@ export async function acceptApplication(user_id,role,condtion=null,max_applicati
     });
  }
 
+>>>>>>> sprint2
 export default instance
