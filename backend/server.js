@@ -15,7 +15,9 @@ const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
 const app = express();
-
+const portalStatus = {
+  active : true
+}
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(bodyParser.json());
@@ -51,7 +53,14 @@ app.post("/", (req, res) => {
   res.send("inserted");
 });
 
+app.get("/getPortalStatus", (req, res) => {
+  res.send(portalStatus);
+});
 
+app.post("/postPortalStatus",(req,res)=>{
+  portalStatus.active = req.body.status;
+  res.send(portalStatus);
+})
 //End of endpoints 
 
 app.listen(

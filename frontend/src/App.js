@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback} from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
 import Login from "./components/Login"
@@ -19,6 +19,13 @@ import AdminLogin from "./components/admin/AdminLogin";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 const App = () => {
+  const [portalActive,setPortalActive] = useState(false);
+  useEffect(()=>{
+    axios.get("/getPortalStatus")
+    .then((res)=>{
+      setPortalActive(res.data.active);
+    })
+  },[])
   return (
     <>
       <Navbarmenu />
@@ -34,11 +41,11 @@ const App = () => {
           <Route path="/contactUs" element={<ContactUs />} />
           <Route path="/portal" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="portal/:id" element={<Initial />} />
-          <Route path="portal/:id/student/app/" element={<StudentForm />} />
-          <Route path="portal/:id/mentor/app/" element={<MentorForm />} />
+          <Route path="portal/:id" element={portalActive?<Initial />:<PageNotFound/>} />
+          <Route path="portal/:id/student/app/" element={portalActive?<StudentForm />:<PageNotFound />} />
+          <Route path="portal/:id/mentor/app/" element={portalActive?<MentorForm />:<PageNotFound/>} />
+          <Route path="/admin/main" element={<AdminPage />}/>
           <Route path="/admin/log" element={<AdminLogin />} />
-          <Route path="/admin/main" element={<AdminPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
