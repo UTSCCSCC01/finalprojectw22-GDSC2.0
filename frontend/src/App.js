@@ -1,7 +1,6 @@
 import "./App.css";
 import { useEffect, useState,useCallback} from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import axios from "axios";
 import Login from "./components/Login"
 import Register from "./components/Register/Register"
 import Navbarmenu from "./components/Navbarmenu/Navbarmenu";
@@ -17,6 +16,11 @@ import MentorForm from "./components/application/forms/MentorForm";
 import AdminPage from "./components/admin/AdminPage";
 import AdminLogin from "./components/admin/AdminLogin";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
+import GeneralPage from "./components/General/GeneralPage";
+import AdminProfiles from "./components/AdminProfiles/AdminProfiles";
+import BugReportForm from "./components/BugReport/BugReportForm";
+import DarkModeState from "./context/darkMode/DarkModeState"
+
 
 const App = () => {
   const [portalActive,setPortalActive] = useState(false);
@@ -28,6 +32,7 @@ const App = () => {
   },[])
   return (
     <>
+      <DarkModeState>
       <Navbarmenu />
       <Router>
         <Routes>
@@ -35,6 +40,7 @@ const App = () => {
           <Route path="/projects" element />
           <Route path="/resources" element />
           <Route path="/events" element />
+          <Route path="/reportBug" element={<BugReportForm />}/>
           <Route path="/team" element={<Team />} />
           <Route path="/subscribe" element={<Subscribe />} />
           <Route path="/about" element={<About />} />
@@ -45,10 +51,13 @@ const App = () => {
           <Route path="portal/:id/student/app/" element={portalActive?<StudentForm />:<PageNotFound />} />
           <Route path="portal/:id/mentor/app/" element={portalActive?<MentorForm />:<PageNotFound/>} />
           <Route path="/admin/main" element={<AdminPage />}/>
+          <Route path="/general/main" element={<GeneralPage />} />
           <Route path="/admin/log" element={<AdminLogin />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/adminProfiles" element={<AdminProfiles />} />
         </Routes>
       </Router>
+      </DarkModeState>
     </>
 
   );

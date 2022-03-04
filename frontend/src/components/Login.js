@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import DarkModeContext from "../context/darkMode/DarkModeContext"
+
 
 const Login = () => {
   const initialValues = { username: "", email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  
+  const {mode, toggleMode} = useContext(DarkModeContext)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +49,7 @@ const Login = () => {
     return errors;
   };
   return (
-    <div className="main">
+    <div className={mode === true ? "main dark" : "main"}>
       <div className="container my-5">
         <div className="row justify-content-center">
           <div className="col-lg-5 col-md-7 col-sm-12">
@@ -91,11 +95,6 @@ const Login = () => {
                   <p className="text-danger field-error">
                     {formErrors.password}
                   </p>
-                </div>
-                <div className="forgot-password">
-                  <a href="#">
-                    <i>forgot password</i>
-                  </a>
                 </div>
                 <button
                   type="submit"

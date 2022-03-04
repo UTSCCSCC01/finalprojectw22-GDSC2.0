@@ -14,6 +14,7 @@ const connDB = require("./config/db");
 const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
+const answerModel = require("./models/answerModel");
 const app = express();
 const portalStatus = {
   active : true
@@ -25,10 +26,14 @@ app.use(bodyParser.json());
 connDB();
 
 const loginRoute = require("./routes/login");
+const registerRoute = require("./routes/register")
+const sendMail = require("./routes/sendMail")
 //const getAnsRoute = require("./routes/getAnswers");
 //const createAnsRoute = require("./routes/createAnswers");
 
 app.use("/login", loginRoute);
+app.use('/register', registerRoute)
+app.use("/mail", sendMail)
 //app.use("/getAnswers", getAnsRoute);
 //app.use("/createAnswers", createAnsRoute);
 app.use("/applications",applicationRoute);
@@ -62,10 +67,10 @@ app.post("/postPortalStatus",(req,res)=>{
   res.send(portalStatus);
 })
 //End of endpoints 
-
+const port = process.env.PORT || 5000
 app.listen(
-  process.env.PORT,
-  console.log(`listening on port ${process.env.PORT}`)
+  port,
+  console.log(`listening on port ${port}`)
 );
 
 module.exports = app;

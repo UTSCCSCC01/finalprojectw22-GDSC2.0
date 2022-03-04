@@ -1,8 +1,8 @@
 import React, {useState,useEffect} from "react";
 import Nav from "react-bootstrap/Nav";
-import Card from "react-bootstrap/Card"
-import Accordion from "react-bootstrap/Accordion"
-import dsc_utm from "../../images/dsc_utm.png"
+import Card from "react-bootstrap/Card";
+import Accordion from "react-bootstrap/Accordion";
+import dsc_utm from "../../images/dsc_utm.png";
 import AdminStyle from "../../css/admin/AdminPage.module.css";
 import AdminApplication from "./AdminApplications"
 import {Button} from "react-bootstrap"
