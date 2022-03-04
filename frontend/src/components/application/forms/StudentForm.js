@@ -10,23 +10,24 @@ import Multiselect from "multiselect-react-dropdown";
 import "./MentorForm.css";
 //const {postStudentApplication} = require("../../../axios.js");
 import Axios from "axios";
+import { FaEyeDropper } from "react-icons/fa";
 // import FormGroup from "react-bootstrap/esm/FormGroup";
 
 const StudentForm = () => {
   const dbOptions = [
-    { value: "SQL (PostgreSQL, MySQL etc.)" },
-    { value: "noSQL (MongoDB, Firestore, DynamoDB etc.)" },
-    { value: "Graph Databases (Neo4j)" },
-    { value: "None" },
+    { label: "SQL (PostgreSQL, MySQL etc.)", value: "sql"},
+    { label: "noSQL (MongoDB, Firestore, DynamoDB etc.)", value: "nosql"},
+    { label: "Graph Databases (Neo4j)", value: "graph"},
+    { label: "None", value: "none"},
   ];
   const platOptions = [
-    { value: "AWS" },
-    { value: "Google cloud Platform" },
-    { value: "Firebase" },
-    { value: "Heroku" },
-    { value: "Netlify" },
-    { value: "Azure" },
-    { value: "None" },
+    { label: "AWS", value: "aws"},
+    { label: "Google cloud Platform", value: "google_cloud"},
+    { label: "Firebase", value: "firebase"},
+    { label: "Heroku", value: "heroku"},
+    { label: "Netlify", value: "netlify"},
+    { label: "Azure", value: "azure"},
+    { label: "None", value: "none"},
   ];
 
   const init_student = {
@@ -43,16 +44,19 @@ const StudentForm = () => {
         "sql": false,
         "nosql": false,
         "graph": false,
-        "any": true
+        "none": true
       },
       "platforms": {
-      'aws': false,
-      'google_cloud':false,
-      'firebase':false,
-      'heroku': false,
-      'netlify':false,
-      'azure':false,
-      'any':true
+        "pre_select":{
+            'aws': false,
+            'google_cloud':false,
+            'firebase':false,
+            'heroku': false,
+            'netlify':false,
+            'azure':false,
+        },
+        'none':true,
+        'other':''
       },
       "have_group": false,
       "group_members": "",
@@ -64,7 +68,8 @@ const StudentForm = () => {
   const [db, setDB] = useState(dbOptions);
   const [plat, setPlat] = useState(platOptions);
   const [student, setStudent] = useState(init_student);
-
+  const [databaseEvent, setDatabaseEvent] = useState("");
+  const [platEvent, setPlatEvent] = useState("");
   // 
 //   const handleCheckUserId=(e)=>{
 //     setStudent({...student,'user_id':e.target.value})
@@ -117,17 +122,18 @@ const StudentForm = () => {
   // 
   const handleCheckDatabases=(e)=>{
     console.log("DATABASE HANDLER TRIGGERED");
-    let id = e.target.id;
-    student['databases'][id] = !student['databases'][id];
-    setStudent({...student,'databases':student['databases']});
+    console.log(e);
+    console.log(student['databases']);
+    setDatabaseEvent(e);
   }
 
   //
   const handleCheckPlat=(e)=>{
     console.log("PLATFORM HANDLER TRIGGERED");
-    let id = e.target.id;
-    student['platforms'][id] = !student['platforms'][id];
-    setStudent({...student,'platforms':student['platforms']});
+    setPlatEvent(e);
+    // let id = e[0].value;
+    // student['platforms'][id] = !student['platforms'][id];
+    // setStudent({...student,'platforms':student['platforms']});
   }
 
   //
@@ -170,13 +176,36 @@ const StudentForm = () => {
 
   //http://localhost:5000
   const createStudentApplication = (e) => {
+    e.preventDefault();
     console.log("SENDING STUDENT APPLICATION");
+
+    //set databases
+    for(let i = 0; i < databaseEvent.length; i++){
+        if (databaseEvent[i].value != 'none'){
+            student['databases']['none'] = false;
+            student['databases'][databaseEvent[i].value] = !student['databases'][databaseEvent[i].value];
+        }
+        
+    }
+    
+    //set platforms
+    //console.log(platEvent);
+    for(let i = 0; i < platEvent.length; i++){
+        //console.log(platEvent[i].value);
+        if (platEvent[i].value != 'none'){
+            student['platforms']['none'] = false;
+            console.log(platEvent[i].value);
+            console.log(student['platforms']['pre_select']['aws']);
+            student['platforms']['pre_select'][platEvent[i].value] = !student['platforms']['pre_select'][platEvent[i].value];
+        }
+    }
+
     console.log(student);
     Axios.post("/applications/studentSubmit", student
     ).then((response) => {
         console.log(response);
     });
-    e.preventDefault();
+    
   }
 
   return (
@@ -353,7 +382,14 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Multiselect options={db} displayValue="value" id={db} value={student['databases'][db]} onChange={handleCheckDatabases}/>
+              <Multiselect 
+              options={db} 
+              displayValue="label" 
+              id={db} 
+              value={student['databases'][db.value]} 
+              onSelect={handleCheckDatabases}
+              onRemove={handleCheckDatabases}
+              />
             </Col>
           </Form.Group>
 
@@ -364,7 +400,14 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Multiselect options={plat} displayValue="value" id={plat} value={student['platforms'][plat]} onChange={handleCheckPlat}/>
+              <Multiselect 
+              options={plat} 
+              displayValue="label" 
+              id={plat} 
+              value={student['platforms'][plat.value]} 
+              onSelect={handleCheckPlat}
+              onRemove={handleCheckPlat}
+              />
             </Col>
           </Form.Group>
 

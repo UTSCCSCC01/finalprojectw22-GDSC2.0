@@ -120,7 +120,6 @@ exports.studentAppValidator =[
         body("have_group","Please let use know if you have a group").not().isEmpty().isBoolean(),
         body("project_idea","Please let use know if you have a project idea").not().isEmpty().isBoolean(),
         body("databases","Please select at least one databases").not().isEmpty(),
-        body("platforms","Please select at least one platforms").not().isEmpty(),
         (req,res,next)=>{
             console.log("GOT TO VALIDATOR");
             let errors = validationResult(req);
@@ -155,16 +154,20 @@ function studentDetailValidator(req_data){
         errors["database"] = "Please select at least one databases";
     }
     let platforms = req_data['platforms'];
+    let empty = true;
     if (!(platforms["none"] || (platforms['other'] !== ''))){
-        let pre_select = platforms['pre-select'];
+        let pre_select = platforms['pre_select'];
         if (pre_select){
             for (let i = 0; i < plats.length; i ++){
                 if (pre_select[plats[i]]){
+                    empty = false;
                     break;
                 }
             }
         }
-        errors["platforms"] = "Please select at least one platforms";
+        if (empty){
+            errors["platforms"] = "Please select at least one platforms";
+        }
     }
     if (req_data["have_group"]){
         if (!req_data["group_members"]){
