@@ -14,6 +14,7 @@ const connDB = require("./config/db");
 const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
+const teamRoute = require("./routes/team");
 const app = express();
 const portalStatus = {
   active : true
@@ -36,7 +37,7 @@ app.use("/mail", sendMail)
 //app.use("/getAnswers", getAnsRoute);
 //app.use("/createAnswers", createAnsRoute);
 app.use("/applications",applicationRoute);
-
+app.use("/teams",teamRoute);
 
 app.get("/", (req, res) => {
   res.send("API IS RUNNING...");
