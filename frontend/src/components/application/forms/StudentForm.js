@@ -282,7 +282,7 @@ const StudentForm = () => {
                 <Form.Check
                   type="radio"
                   label="Second Year"
-                  name="formHorizontalRadios"
+                  name="formHorizontalRadios1"
                   id="student" 
                   value="2" 
                   onChange={handleCheckYear}
@@ -290,7 +290,7 @@ const StudentForm = () => {
                 <Form.Check
                   type="radio"
                   label="Third Year"
-                  name="formHorizontalRadios"
+                  name="formHorizontalRadios1"
                   id="student" 
                   value="3"
                   onChange={handleCheckYear}
@@ -298,7 +298,7 @@ const StudentForm = () => {
                 <Form.Check
                   type="radio"
                   label="Fourth Year or above"
-                  name="formHorizontalRadios"
+                  name="formHorizontalRadios1"
                   id="student" 
                   value="4"
                   onChange={handleCheckYear}
@@ -325,7 +325,7 @@ const StudentForm = () => {
               <Form.Check
                 type="radio"
                 label="Yes"
-                name="formHorizontalRadios"
+                name="formHorizontalRadios2"
                 id="student" 
                 value={student['have_group']} 
                 onChange={handleCheckGroup}
@@ -333,7 +333,7 @@ const StudentForm = () => {
               <Form.Check
                 type="radio"
                 label="No"
-                name="formHorizontalRadios"
+                name="formHorizontalRadios2"
                 id="student" 
                 value={student['have_group']} 
                 onChange={handleCheckGroup}
@@ -440,7 +440,7 @@ const StudentForm = () => {
               <Form.Check
                 type="radio"
                 label="Yes"
-                name="formHorizontalRadios"
+                name="formHorizontalRadios3"
                 id="student" 
                 value={student['project_idea']} 
                 onChange={handleCheckProject}
@@ -448,7 +448,7 @@ const StudentForm = () => {
               <Form.Check
                 type="radio"
                 label="No"
-                name="formHorizontalRadios"
+                name="formHorizontalRadios3"
                 id="student" 
                 value={student['project_idea']} 
                 onChange={handleCheckProject}
