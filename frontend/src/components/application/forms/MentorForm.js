@@ -258,7 +258,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="number" placeholder="CGPA" id="mentor" value={mentor['cgpa']} onChange={handleCheckCGPA}/>
+              <Form.Control type="number" placeholder="CGPA" step="0.1" min="1.8" max="4.0" id="mentor" value={mentor['cgpa']} onChange={handleCheckCGPA}/>
             </Col>
           </Form.Group>
 
