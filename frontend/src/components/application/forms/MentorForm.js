@@ -131,7 +131,7 @@ const MentorForm = () => {
 
   // 
   const handleCheckLinks=(e)=>{
-    setStudent({...mentor,'links':e.target.value});
+    setMentor({...mentor,'links':e.target.value});
   }
 
   // 
@@ -459,7 +459,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" id="mentor" value={student['links']} onChange={handleCheckLinks}/>
+              <Form.Control as="textarea" placeholder="Your answer" id="mentor" value={mentor['links']} onChange={handleCheckLinks}/>
             </Col>
           </Form.Group>
         </div>
