@@ -64,6 +64,8 @@ const MentorForm = () => {
     "group_members": "",
     "project_idea": false,
     "idea_description": "",
+    "links": "",
+    "status": 1,
     "additional": ""
 }
   const [db, setDB] = useState(dbOptions);
@@ -125,6 +127,11 @@ const MentorForm = () => {
   // 
   const handleCheckLanguages=(e)=>{
     setMentor({...mentor,'languages':e.target.value});
+  }
+
+  // 
+  const handleCheckLinks=(e)=>{
+    setStudent({...mentor,'links':e.target.value});
   }
 
   // 
@@ -452,7 +459,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Form.Control as="textarea" placeholder="Your answer" id="mentor" value={student['links']} onChange={handleCheckLinks}/>
             </Col>
           </Form.Group>
         </div>

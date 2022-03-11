@@ -62,6 +62,8 @@ const StudentForm = () => {
       "group_members": "",
       "project_idea": false,
       "idea_description": "",
+      "links": "",
+      "status": 1,
       "additional": ""
   }
 
@@ -117,6 +119,11 @@ const StudentForm = () => {
   // 
   const handleCheckLanguages=(e)=>{
     setStudent({...student,'languages':e.target.value});
+  }
+
+  // 
+  const handleCheckLinks=(e)=>{
+    setStudent({...student,'links':e.target.value});
   }
 
   // 
@@ -414,7 +421,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Form.Control as="textarea" placeholder="Your answer" id="student" value={student['links']} onChange={handleCheckLinks}/>
             </Col>
           </Form.Group>
         </div>
