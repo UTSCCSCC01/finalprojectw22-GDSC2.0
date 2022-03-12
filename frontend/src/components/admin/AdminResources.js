@@ -11,6 +11,7 @@ import {
 import AppModule from "../../css/admin/Application.module.css";
 import React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function AdminResources() {
   return (
@@ -26,7 +27,6 @@ function Resources() {
     name: "workshop",
     link: "www.google.com",
     description: "random randomrandom randomrandom random",
-
   };
 
   let resource2 = {
@@ -79,7 +79,6 @@ function Resources() {
     setResourceModal(true);
   };
 
-
   let getSections = () => {
     let sections = new Set();
 
@@ -89,6 +88,10 @@ function Resources() {
     console.log(sections);
     return sections;
   };
+
+  useEffect(() => {
+    axios.get();
+  });
 
   let handleDelete = (resource) => {
     setResourcesState((prev) =>
@@ -279,7 +282,6 @@ function Resources() {
         {Array.from(getSections()).map((section) => {
           return (
             <div key={section}>
-
               <Row xs={1} md={1} className="g-4 mt-2">
                 <h1>{section}</h1>
                 <hr></hr>
@@ -304,7 +306,6 @@ function Resources() {
                             {r.description.length > 15
                               ? r.description.substring(0, 15).concat("...")
                               : r.description}
-
                           </h6>
                           <div className="d-flex m-2 justify-content-around">
                             <Button
