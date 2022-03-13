@@ -5,6 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 import dsc_utm from "../../images/dsc_utm.png";
 import AdminStyle from "../../css/admin/AdminPage.module.css";
 import GeneralResources from "./GeneralResources/GeneralResources";
+import GeneralProjects from "./GeneralProjects/GeneralProjects";
 
 export default function GeneralPage() {
   // reference: https://gdscutm.com
@@ -81,7 +82,9 @@ export default function GeneralPage() {
           <Accordion.Collapse eventKey="4">
             <Card className={AdminStyle.container_width}>
               <Card.Header>Past Projects</Card.Header>
-              <Card.Body></Card.Body>
+              <Card.Body>
+                <GeneralProjects />
+              </Card.Body>
             </Card>
           </Accordion.Collapse>
         </Accordion>
