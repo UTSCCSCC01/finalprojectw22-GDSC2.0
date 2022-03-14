@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {getAll,getAllTeams,createTeam,deleteTeam,getTeamMembers,addTeamMember,removeTeamMember} = require("../controller/Teams")
+const {getAll,getAllTeams,createTeam,deleteTeam,getTeamMembers,addTeamMember,removeTeamMember} = require("../controller/Team")
 
 router.route("/getAll").get(getAll);
 router.route("/getAllTeams").get(getAllTeams);

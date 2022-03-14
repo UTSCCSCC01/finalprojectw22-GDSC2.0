@@ -4,11 +4,11 @@ const teamMemberModel = require("../models/teamMemberModel");
 
 // Generic Endpoints
 exports.getAll = (async (req,res)=>{
-    const teams = await teamModel.find({}).sort({"creation_time":-1})
+    const teams = await teamModel.find().sort({"creation_time":-1})
     const response_body = {}
-    for (let team in teams){
-        let members = await teamMemberModel.find({"team":team.id})
-        response_body[team.team_name] = members
+    for (let team of teams){
+        let members = await teamMemberModel.find({"team":team._id})
+        response_body[team['team_name']] = members
     }
     res.status(200).json({
         "all": response_body
@@ -21,7 +21,7 @@ exports.getAll = (async (req,res)=>{
  * }
  */
 exports.getAllTeams = (async (req,res)=>{
-    const teams = await teamModel.find({}).sort({"creation_time":-1})
+    const teams = await teamModel.find().sort({"creation_time":-1})
     res.status(200).json({
         "teams": teams
     })
@@ -33,16 +33,16 @@ exports.getAllTeams = (async (req,res)=>{
  * }
  */
 exports.createTeam = (async (req,res)=>{
-    await teamModel.create(req.body['team_name'])
-    .then((id)=>{
-        res.status(201).json({
-            "success": "create team success"
-        })
-    })
+    const team = await teamModel.create({'team_name':req.body['team_name']})
     .catch((e)=>{
         res.status(400).json({
             'error': e
         })
+        return;
+    })
+    res.status(201).json({
+        "success": "create team success",
+        "team_name": team.team_name
     })
 })
 
@@ -85,22 +85,20 @@ exports.deleteTeam = (async (req,res)=>{
  */
 exports.getTeamMembers = (async (req,res)=>{
     const team = await teamModel.findOne({"team_name":req.body['team_name']})
-    .then((id)=>{
-        const members = await teamMemberModel.find({'team':team.id})
-        .then((members)=>{
-            res.status(200).json({
-                'members':members
-            })
-        })
-        .catch((e)=>{
-            res.status(400).json({
-                'error':"you should not get here"
-            })
-        })
-    })
     .catch((e)=>{
         res.status(404).json({
             "error": "team does not exist"
+        })
+    })
+    const members = await teamMemberModel.find({'team':team.id})
+    .then((members)=>{
+        res.status(200).json({
+            'members':members
+        })
+    })
+    .catch((e)=>{
+        res.status(400).json({
+            'error':"you should not get here"
         })
     })
 })
