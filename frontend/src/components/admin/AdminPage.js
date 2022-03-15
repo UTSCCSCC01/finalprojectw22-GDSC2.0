@@ -8,6 +8,8 @@ import AdminApplication from "./AdminApplications"
 import {Button} from "react-bootstrap"
 import axios from "axios"
 import AdminTeamManagement from "./AdminTeamManagement";
+import AdminPastProject from "./AdminPastProject";
+
 
 export default function AdminPage(props){
     // reference: https://gdscutm.com
@@ -110,7 +112,9 @@ export default function AdminPage(props){
                             <Card.Header>
                                 Past Projects
                             </Card.Header>
-                            <Card.Body></Card.Body>
+                            <Card.Body>
+                                <AdminPastProject/>
+                            </Card.Body>
                         </Card>
                     </Accordion.Collapse>
                 </Accordion>
