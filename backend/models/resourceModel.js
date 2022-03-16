@@ -3,12 +3,13 @@
 const mongoose = require("mongoose");
 const resourceSchema = new mongoose.Schema({
   // define field and values this schema should have.
-  section: {
+  
+  name: {
     type: String,
     required: true,
   },
-  name: {
-    type: String,
+  image:{
+    type:String,
     required: true,
   },
   link: {
