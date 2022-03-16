@@ -14,14 +14,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function AdminResources() {
-  return (
-    <>
-      <Resources />
-    </>
-  );
-}
-
-function Resources() {
   //   let resource = {
   //     section: "Recordings",
   //     name: "workshop",
@@ -76,42 +68,46 @@ function Resources() {
   const [resourceModal, setResourceModal] = useState(false);
 
   const handleViewResource = (resource) => {
+    console.log(resource);
     setResourceInfo(resource);
     setResourceModal(true);
   };
 
   let getSections = () => {
-    let sections = new Set();
+    let sections = new Set(
+      resourcesState.map((r) => r.section.trim().toLowerCase())
+    );
 
-    for (var i = 0; i < resourcesState.length; i++) {
-      sections.add(resourcesState[i].section.trim().toLowerCase());
-    }
     console.log(sections);
     return sections;
   };
 
-  useEffect(() => {
-    getResources();
-  }, []);
-
-  let getResources = () => {
+  let getResources = async () => {
     axios.get("/resources").then((res) => {
-      setResourcesState(res.data);
+      setResourcesState(res.data.slice());
     });
   };
 
-  let handleDelete = (resource) => {
-    console.log(typeof resource);
-    axios
-      .delete("/resources", { data: { resourceId: resource } })
-      .then((res) => console.log(res));
-
+  useEffect(() => {
+    console.log("useeffect");
     getResources();
-    // setResourcesState((prev) =>
-    //   prev.filter((r) => {
-    //     return r.id !== resource;
-    //   })
-    // );
+  }, []);
+
+  // let getResources = async () => {
+
+  // };
+
+  let handleDelete = async (resource) => {
+    console.log(resource);
+    console.log(typeof resource);
+
+    axios.delete("/resources", { data: { resourceId: resource } }).then();
+
+    setResourcesState((prev) =>
+      prev.filter((r) => {
+        return r._id !== resource;
+      })
+    );
   };
 
   let handleHide = () => {
@@ -152,12 +148,14 @@ function Resources() {
       description: formValues.description.trim(),
     });
 
+    // getResources();
     setResourcesState((prev) => {
-      // console.log(prev);
+      console.log("hi");
+      console.log(res.data);
       return [
         ...prev,
         {
-          _id: res.data.id,
+          _id: res.data._id,
           section: res.data.section,
           name: res.data.name,
           link: res.data.link,
@@ -165,6 +163,7 @@ function Resources() {
         },
       ];
     });
+    // console.log(resourcesState);
 
     // setResourcesState((prev) => [
     //   ...prev,
@@ -311,7 +310,7 @@ function Resources() {
       </div>
 
       <Container fluid className="mt-3">
-        {Array.from(getSections()).map((section) => {
+        {[...getSections()].map((section) => {
           return (
             <div key={section}>
               <Row xs={1} md={1} className="g-4 mt-2">

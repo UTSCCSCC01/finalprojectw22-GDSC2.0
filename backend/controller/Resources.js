@@ -22,8 +22,8 @@ const addResource = async (req, res) => {
 
 const deleteResource = async (req, res) => {
   console.log(req.body);
-  Resource.remove({ _id: req.body.resourceId })
-    .then((r) => res.json(r))
+  Resource.deleteOne({ _id: req.body.resourceId })
+    .then((r) => console.log(r))
     .catch((e) => res.json({ message: e }));
 };
 
