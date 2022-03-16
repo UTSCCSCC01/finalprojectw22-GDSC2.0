@@ -19,6 +19,7 @@ import PageNotFound from "./components/PageNotFound/PageNotFound";
 import GeneralPage from "./components/General/GeneralPage";
 import AdminProfiles from "./components/AdminProfiles/AdminProfiles";
 import BugReportForm from "./components/BugReport/BugReportForm";
+import BugReportLogs from "./components/BugReportLogs/BugReportLogs";
 import DarkModeState from "./context/darkMode/DarkModeState"
 import axios from "axios";
 
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/resources" element />
           <Route path="/events" element />
           <Route path="/reportBug" element={<BugReportForm />}/>
+          <Route path="/reportBugLogs" element={<BugReportLogs />} />
           <Route path="/team" element={<Team />} />
           <Route path="/subscribe" element={<Subscribe />} />
           <Route path="/about" element={<About />} />
