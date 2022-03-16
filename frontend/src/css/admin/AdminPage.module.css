@@ -9,7 +9,7 @@
     margin-bottom: 3rem;
 }
 .admin_nav{
-    width: 10rem;
+    min-width: 10rem;
     position: relative;
     left:0;
 }
@@ -32,5 +32,6 @@ a{
     margin-right: 5vw;
 }
 .container_width{
-    min-width: 900px;
+    width: auto;
+    max-width: 75vw;
 }
