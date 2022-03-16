@@ -23,7 +23,7 @@ const Navbarmenu = () => {
             <Nav.Link href="/adminProfiles">Admins</Nav.Link>
 
             <Nav.Link href="/reportBug">Report Bug</Nav.Link>
-            <Nav.Link href="/reportBugLogs">Report Bug Logs</Nav.Link>
+
             <Nav.Link href="/subscribe">Subscribe</Nav.Link>
             <Nav.Link href="/contactUs">Contact Us</Nav.Link>
           </Nav>

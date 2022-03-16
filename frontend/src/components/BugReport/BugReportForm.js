@@ -15,48 +15,23 @@ const BugReportForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            axios.post("/mail",
-                {
-                    data: {
-                        email: formValues.email,
-                        severity: formValues.bugSeverity,
-                        occurs: formValues.bugOccurance,
-                        information: formValues.information
-                    }
-                },
-                {
-                    headers: {
-                        "x-access-token": localStorage.getItem("token")
-                    }
-                }).then(() => {
-                    
-                }).catch((err) => {
-                    console.log(err)
-                })
 
-            axios.post("/bugReport",
-                {
-                    data: {
-                        email: formValues.email,
-                        severity: formValues.bugSeverity,
-                        occurs: formValues.bugOccurance,
-                        information: formValues.information
-                    }
-                },
-                {
-                    headers: {
-                        "x-access-token": localStorage.getItem("token")
-                    }
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
+            axios.post("/mail", {
+                data: {
+                    email: formValues.email,
+                    severity: formValues.bugSeverity,
+                    occurs: formValues.bugOccurance,
+                    information: formValues.information
                 }
-            ).then(() => {
-            }).catch((err) => {
-                console.log(err)
+            }).then(() => {
+                window.location.href = "/"
+            }).catch(() => {
+                window.location.href = "/reportBug"
             })
-            window.location.href = "/"
         }
     };
 
@@ -90,7 +65,7 @@ const BugReportForm = () => {
                             <h3 className="my-2 text-center text-danger">Bug Report</h3>
                             <form className="mt-3" onSubmit={handleSubmit}>
                                 <div className="form-group mb-3">
-                                    <label className="text-left mb-2" htmlFor="">Your Email <span className="text-danger">*</span></label>
+                                    <label className="text-left" htmlFor="" className="mb-2">Your Email <span className="text-danger">*</span></label>
                                     <input type="text" className="form-control" placeholder="Enter your email" name="email"
                                         onChange={handleChange} />
                                     <p className="text-danger field-error">
@@ -148,7 +123,7 @@ const BugReportForm = () => {
                                 </div>
                                 <div className="form-group mb-4">
                                     <label htmlFor="report" className="mb-3">Add your bug information <span className="text-danger">*</span></label>
-                                    <textarea name="information" className="w-100 form-control" rows='5' placeholder="Report Bug"
+                                    <textarea name="information" className="w-100" rows='5' className="form-control" placeholder="Report Bug"
                                         onChange={handleChange}
                                     ></textarea>
                                     <p className="text-danger field-error">

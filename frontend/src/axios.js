@@ -79,11 +79,7 @@ export async function acceptApplication(user_id,role,condtion=null,max_applicati
  export async function postStudentApplication(student){
     console.log("SENDING STUDENT APPLICATION");
     const req = await axios.post(
-        "http://localhost:5000/applications/studentSubmit", student, {
-            headers: {
-                "x-access-token": localStorage.getItem("token")
-            }
-        }).then((response) => {
+        "http://localhost:5000/applications/studentSubmit", student).then((response) => {
         console.log("STUDENT FORM SUBMITTED");
     });
  }
