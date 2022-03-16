@@ -5,6 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 import dsc_utm from "../../images/dsc_utm.png";
 import AdminStyle from "../../css/admin/AdminPage.module.css";
 import AdminApplication from "./AdminApplications"
+import AdminParticipantSearch from "./AdminParticipantSearch/AdminParticipantSearch"
 import {Button} from "react-bootstrap"
 import axios from "axios"
 
@@ -66,6 +67,11 @@ export default function AdminPage(props){
                         Past Projects
                         </Nav.Link>
                     </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="5" href="#">
+                        Participants
+                        </Nav.Link>
+                    </Nav.Item>
                 </Nav>
                 <Accordion className={`w-100 ${AdminStyle.info_sec} mb-5`} defaultActiveKey = {itemKey} activeKey = {itemKey}>
                     <Accordion.Collapse eventKey = "1">
@@ -95,6 +101,16 @@ export default function AdminPage(props){
                                 Past Projects
                             </Card.Header>
                             <Card.Body></Card.Body>
+                        </Card>
+                    </Accordion.Collapse>
+                    <Accordion.Collapse eventKey = "5">
+                        <Card className={AdminStyle.container_width}>
+                            <Card.Header>
+                                Participants
+                            </Card.Header>
+                            <Card.Body>
+                                <AdminParticipantSearch />
+                            </Card.Body>
                         </Card>
                     </Accordion.Collapse>
                 </Accordion>
