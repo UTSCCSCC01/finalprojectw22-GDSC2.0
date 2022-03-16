@@ -4,7 +4,7 @@ import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import DarkModeContext from "../context/darkMode/DarkModeContext"
-
+import axios from "axios"
 
 const Login = () => {
   const initialValues = { username: "", email: "", password: "" };
@@ -25,7 +25,17 @@ const Login = () => {
     setIsSubmit(true);
 
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
+      axios.post("/login", {
+        data: {
+           username: formValues.username,
+           email: formValues.email,
+           password: formValues.password
+        }
+      }).then((res) => {
+        localStorage.setItem("token", res.data.token)
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   };
 
