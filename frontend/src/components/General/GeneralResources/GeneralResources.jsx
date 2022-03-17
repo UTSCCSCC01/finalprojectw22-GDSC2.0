@@ -5,38 +5,14 @@ import ResourceFilter from "./ResourceFilter";
 import axios from "axios";
 
 function GeneralResources() {
-  const [resourcesState, setResourcesState] = useState([]);
-
-  let getResources = async () => {
-    axios.get("/resources").then((res) => {
-      setResourcesState(res.data);
-    });
-  };
-
-  useEffect(() => {
-    console.log("useeffect");
-    getResources();
-  }, []);
-
-  let getSections = () => {
-    let sections = new Set(
-      resourcesState.map((r) => r.section.trim().toLowerCase())
-    );
-
-    console.log(sections);
-    return sections;
-  };
-
   return (
     <Container>
-      {[...getSections()].map((section) => (
+      <ResourceFilter />
+      {/* {[...getSections()].map((section) => (
         <>
           <h2>{section}</h2>
-          <ResourceFilter
-            resources={resourcesState.filter((r) => r.section === section)}
-          />
         </>
-      ))}
+      ))} */}
 
       {/* <ResourceFilter />
       <br />
