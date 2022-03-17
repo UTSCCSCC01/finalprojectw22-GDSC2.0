@@ -11,89 +11,101 @@ import {
 import AppModule from "../../css/admin/Application.module.css";
 import React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function AdminResources() {
-  return (
-    <>
-      <Resources />
-    </>
-  );
-}
+  //   let resource = {
+  //     section: "Recordings",
+  //     name: "workshop",
+  //     link: "www.google.com",
+  //     description: "random randomrandom randomrandom random",
+  //   };
 
-function Resources() {
-  let resource = {
-    section: "Recordings",
-    name: "workshop",
-    link: "www.google.com",
-    description: "random randomrandom randomrandom random",
+  //   let resource2 = {
+  //     section: "Files",
+  //     name: "sample react",
+  //     link: "www.google.com",
+  //     description: "some files",
+  //   };
 
-  };
+  //   let resource3 = {
+  //     section: "Graphics",
+  //     name: "sample react",
+  //     link: "www.google.com",
+  //     description: "some pictures",
+  //   };
 
-  let resource2 = {
-    section: "Files",
-    name: "sample react",
-    link: "www.google.com",
-    description: "some files",
-  };
-
-  let resource3 = {
-    section: "Graphics",
-    name: "sample react",
-    link: "www.google.com",
-    description: "some pictures",
-  };
-
-  let sample_resources = [];
+  // let sample_resources = [];
   //   let resources2 = [];
 
-  for (let i = 0; i < 5; i++) {
-    sample_resources.push({ ...resource, id: i });
-  }
-  for (let i = 5; i < 10; i++) {
-    sample_resources.push({ ...resource2, id: i });
-  }
+  // for (let i = 0; i < 5; i++) {
+  //   sample_resources.push({ ...resource, id: i });
+  // }
+  // for (let i = 5; i < 10; i++) {
+  //   sample_resources.push({ ...resource2, id: i });
+  // }
 
-  for (let i = 10; i < 15; i++) {
-    sample_resources.push({ ...resource3, id: i });
-  }
+  // for (let i = 10; i < 15; i++) {
+  //   sample_resources.push({ ...resource3, id: i });
+  // }
 
-  const [resourcesState, setResourcesState] = useState(sample_resources);
+  const [resourcesState, setResourcesState] = useState([]);
 
+  // list of resources to display
+
+  // store the information to show in modal
   const initResourceInfo = {
+    id: "",
     section: "",
     name: "",
     link: "",
     description: "",
   };
 
-  // list of resources to display
-
-  // store the information to show in modal
   const [resourceInfo, setResourceInfo] = useState(initResourceInfo);
 
   // show modal when state is true
   const [resourceModal, setResourceModal] = useState(false);
 
   const handleViewResource = (resource) => {
+    console.log(resource);
     setResourceInfo(resource);
     setResourceModal(true);
   };
 
-
   let getSections = () => {
-    let sections = new Set();
+    let sections = new Set(
+      resourcesState.map((r) => r.section.trim().toLowerCase())
+    );
 
-    for (var i = 0; i < resourcesState.length; i++) {
-      sections.add(resourcesState[i].section.trim().toLowerCase());
-    }
     console.log(sections);
     return sections;
   };
 
-  let handleDelete = (resource) => {
+  let getResources = async () => {
+    axios.get("/resources").then((res) => {
+      setResourcesState(res.data);
+    });
+  };
+
+  useEffect(() => {
+    console.log("useeffect");
+    getResources();
+  }, []);
+
+  // let getResources = async () => {
+
+  // };
+
+  let handleDelete = async (resource) => {
+    console.log(resource);
+    console.log(typeof resource);
+
+    axios.delete("/resources", { data: { resourceId: resource } }).then();
+
     setResourcesState((prev) =>
       prev.filter((r) => {
-        return r.id !== resource;
+        return r._id !== resource;
       })
     );
   };
@@ -115,9 +127,9 @@ function Resources() {
 
   const [AddResourceModal, setAddResourceModal] = useState(false);
   const [formErrors, setFormErrors] = useState(false);
-  const [id, setId] = useState(15);
+  // const [id, setId] = useState(15);
 
-  const handleAddResource = () => {
+  const handleAddResource = async () => {
     console.log(formValues);
     if (
       formValues.section == "" ||
@@ -128,18 +140,43 @@ function Resources() {
       setFormErrors(true);
       return;
     }
-    setResourcesState((prev) => [
-      ...prev,
-      {
-        id: id,
-        section: formValues.section.trim(),
-        name: formValues.name.trim(),
-        link: formValues.link.trim(),
-        description: formValues.description.trim(),
-      },
-    ]);
 
-    setId((prev) => prev + 1);
+    let res = await axios.post("/resources", {
+      section: formValues.section.trim(),
+      name: formValues.name.trim(),
+      link: formValues.link.trim(),
+      description: formValues.description.trim(),
+    });
+
+    // getResources();
+    setResourcesState((prev) => {
+      console.log("hi");
+      console.log(res.data);
+      return [
+        ...prev,
+        {
+          _id: res.data._id,
+          section: res.data.section,
+          name: res.data.name,
+          link: res.data.link,
+          description: res.data.description,
+        },
+      ];
+    });
+    // console.log(resourcesState);
+
+    // setResourcesState((prev) => [
+    //   ...prev,
+    //   {
+    //     id: id,
+    //     section: formValues.section.trim(),
+    //     name: formValues.name.trim(),
+    //     link: formValues.link.trim(),
+    //     description: formValues.description.trim(),
+    //   },
+    // ]);
+
+    // setId((prev) => prev + 1);
     setAddResourceModal(false);
     setFormValues(initResourceInfo);
     setFormErrors(false);
@@ -168,19 +205,18 @@ function Resources() {
           <Modal.Body>
             {formErrors && (
               <h3 style={{ color: "red" }} className="text-center">
-                Missing Form
+                Missing Form Input
               </h3>
             )}
 
-            <Form.Group as={Row} className="mb-3" controlId="idea">
+            <Form.Group as={Row} className="mb-3" controlId="section">
               <Col>
-                <Form.Label for="section" olumn sm={10}>
+                <Form.Label column sm={10}>
                   Section
                 </Form.Label>
               </Col>
               <Col sm={15}>
                 <Form.Control
-                  id="section"
                   value={formValues.section}
                   name="section"
                   onChange={handleChange}
@@ -190,9 +226,9 @@ function Resources() {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="idea">
+            <Form.Group as={Row} className="mb-3" controlId="name">
               <Col>
-                <Form.Label for="name" column sm={10}>
+                <Form.Label column sm={10}>
                   Name
                 </Form.Label>
               </Col>
@@ -200,7 +236,6 @@ function Resources() {
                 <Form.Control
                   value={formValues.name}
                   name="name"
-                  id="name"
                   onChange={handleChange}
                   maxLength="15"
                   type="text"
@@ -208,9 +243,9 @@ function Resources() {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="idea">
+            <Form.Group as={Row} className="mb-3" controlId="link">
               <Col>
-                <Form.Label forcolumn sm={10}>
+                <Form.Label column sm={10}>
                   Link
                 </Form.Label>
               </Col>
@@ -224,15 +259,14 @@ function Resources() {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="idea">
+            <Form.Group as={Row} className="mb-3" controlId="desc">
               <Col>
-                <Form.Label for="desc" column sm={10}>
+                <Form.Label column sm={10}>
                   Description
                 </Form.Label>
               </Col>
               <Col sm={15}>
                 <Form.Control
-                  id="desc"
                   value={formValues.description}
                   name="description"
                   as="textarea"
@@ -276,10 +310,9 @@ function Resources() {
       </div>
 
       <Container fluid className="mt-3">
-        {Array.from(getSections()).map((section) => {
+        {[...getSections()].map((section) => {
           return (
             <div key={section}>
-
               <Row xs={1} md={1} className="g-4 mt-2">
                 <h1>{section}</h1>
                 <hr></hr>
@@ -287,13 +320,13 @@ function Resources() {
               <Row xs={1} md={3} className="g-4">
                 {resourcesState
                   .filter((r) => {
-                    console.log(r.name);
+                    // console.log(r.name);
                     return r.section.toLowerCase() === section;
                   })
                   .map((r) => {
                     return (
                       <Col
-                        key={r.id}
+                        key={r._id}
                         className={`text-center ${AppModule.card_fit_content}`}
                       >
                         <Card className={`p-2 h-auto`}>
@@ -304,7 +337,6 @@ function Resources() {
                             {r.description.length > 15
                               ? r.description.substring(0, 15).concat("...")
                               : r.description}
-
                           </h6>
                           <div className="d-flex m-2 justify-content-around">
                             <Button
@@ -316,7 +348,7 @@ function Resources() {
 
                             <Button
                               variant="danger"
-                              onClick={() => handleDelete(r.id)}
+                              onClick={() => handleDelete(r._id)}
                             >
                               Delete
                             </Button>
