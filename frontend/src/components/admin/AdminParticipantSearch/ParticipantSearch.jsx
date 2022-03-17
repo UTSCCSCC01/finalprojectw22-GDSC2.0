@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import data from "./data"
+import participantData from "./participantData"
 
-const GraphicFilter = () => {
+const ParticipantSearch = () => {
 
     const [filter, setFilter] = useState('');
 
@@ -9,7 +9,7 @@ const GraphicFilter = () => {
         setFilter(event.target.value);
     }
 
-    let dataSearch = data.graphicData.filter(item => {
+    let dataSearch = participantData.data.filter(item => {
         return Object.keys(item).some(key =>
             item[key].toString().toLowerCase().includes(filter.toString().toLowerCase())
             )
@@ -21,7 +21,7 @@ const GraphicFilter = () => {
                 
                 <div className='col-12 mb-5'>
                     <div className='mb-3 col-4 mx-auto text-center'>
-                        <input type="text" className='form-control' placeholder='Filter' value={filter} onChange={search.bind(this)} />
+                        <input type="text" className='form-control' placeholder='Search' value={filter} onChange={search.bind(this)} />
                     </div>
                 </div>
 
@@ -29,9 +29,13 @@ const GraphicFilter = () => {
                     return (
                         <div className='col-11 col-md-6 col-lg-3 mx-0 mb-4'>
                             <div className='card p-0 overflow-hidden h-100 shadow'>
+                                <img src={item.image} className="card-img-top"/>
                                 <div className='card-body'>
-                                    <h5 className='card-title'>{item.name}</h5>
-                                    <p className='card-text'>{item.description}</p>
+                                    <h4 className='card-title'>{item.full_name}</h4>
+                                    <br />
+                                    <h6 className='card-title'>{item.email} <br /> {item.program}</h6>
+                                    <p className='card-text'> <u>Year:</u> {item.year} <br /> <u>CGPA:</u> {item.cgpa} <br /> <u>Languages:</u> {item.languages} <br /> <u>Frameworks:</u> {item.frameworks} <br /> <u>Databases:</u> {item.databases} <br /> <u>Platforms:</u> {item.platforms}</p>
+                                    <p><u>{item.resume}</u></p>
                                 </div>
                             </div>
                         </div>
@@ -42,4 +46,4 @@ const GraphicFilter = () => {
     )
 }
 
-export default GraphicFilter;
+export default ParticipantSearch;
