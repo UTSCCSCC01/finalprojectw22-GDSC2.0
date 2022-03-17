@@ -46,7 +46,7 @@
     <li><a href="https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/doc/sprint0">sprint0</a></li>
     <li><a href="https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/doc/sprint1">sprint1</a></li>
     <li><a href="https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/doc/sprint2">sprint2</a></li>
-    <li><a href=""></a>sprint3</li>
+    <li><a href="https://github.com/UTSCCSCC01/finalprojectw22-GDSC2.0/tree/master/doc/sprint3">sprint3</a></li>
     <li><a href=""></a>sprint4</li>
   </ul>
 </details>
@@ -125,6 +125,8 @@ Detailed instructions are in [docker-walkthrough.md](https://github.com/UTSCCSCC
     <li><a href="https://github.com/axios/axios">Axios</a> (Front-End Request Framework)</li>
     <li><a href="https://getbootstrap.com">Bootstrap</a> (Front-End Styling Kit)</li>
     <li><a href="https://react-bootstrap.github.io">React-Bootstrap</a> (Front-End Styling Kit Dedicated for React)</li>
+    <li><a href="https://formik.org">Formik</a> (Front-End Form Shortcut)</li>
+    <li><a href="https://github.com/auth0/node-jsonwebtoken">Node.js JWT</a> (Token Authentication)</li>
   </ul>
 </details>
 
