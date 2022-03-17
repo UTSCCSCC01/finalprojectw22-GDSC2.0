@@ -11,7 +11,7 @@
 require("dotenv").config();
 const express = require("express");
 const connDB = require("./config/db");
-const testModel = require("./models/testModel");
+// const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
 const resourcesRoute = require("./routes/resources");
@@ -40,6 +40,7 @@ app.use("/mail", sendMail);
 app.use("/applications", applicationRoute);
 app.use("/resources", resourcesRoute);
 app.use("/teams",teamRoute);
+
 
 app.get("/", (req, res) => {
   res.send("API IS RUNNING...");
