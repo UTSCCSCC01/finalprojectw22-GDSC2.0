@@ -84,7 +84,7 @@ function AdminResources() {
 
   let getResources = async () => {
     axios.get("/resources").then((res) => {
-      setResourcesState(res.data.slice());
+      setResourcesState(res.data);
     });
   };
 
