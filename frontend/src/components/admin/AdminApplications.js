@@ -454,7 +454,7 @@ function Filter(props) {
     setFilter({ ...filter, cgpa: e.target.value });
   };
   const handleStatus = (e) => {
-    setFilter({ ...filter, status: e.target.id });
+    setFilter({ ...filter, status: parseInt(e.target.id) });
   };
   const handleApply = (e) => {
     console.log(filter["hasGroup"]);
@@ -605,6 +605,7 @@ function Filter(props) {
           type="checkbox"
           id="hasGroup"
           checked={filter["hasGroup"]}
+          disabled={filter["role"] === "mentor"}
           onChange={handleHasGroup}
         />
       </Form>
