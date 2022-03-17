@@ -102,7 +102,7 @@ export default function AdminPage(props){
                             <Card.Header>
                                 Resources
                             </Card.Header>
-                            <Card.Body></Card.Body>
+                            <Card.Body><AdminResources/></Card.Body>
                         </Card>
                     </Accordion.Collapse>
                     <Accordion.Collapse eventKey = "4">
