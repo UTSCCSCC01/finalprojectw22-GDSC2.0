@@ -8,7 +8,7 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ImagePath: {
+  imagePath: {
       type:String,
       required: true,
   },
