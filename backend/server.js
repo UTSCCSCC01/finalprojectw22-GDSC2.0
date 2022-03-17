@@ -15,6 +15,7 @@ const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
 const resourcesRoute = require("./routes/resources");
+const teamRoute = require("./routes/team");
 const app = express();
 const portalStatus = {
   active: true,
@@ -38,6 +39,7 @@ app.use("/mail", sendMail);
 //app.use("/createAnswers", createAnsRoute);
 app.use("/applications", applicationRoute);
 app.use("/resources", resourcesRoute);
+app.use("/teams",teamRoute);
 
 app.get("/", (req, res) => {
   res.send("API IS RUNNING...");
