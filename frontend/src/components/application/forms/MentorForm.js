@@ -64,8 +64,6 @@ const MentorForm = () => {
     "group_members": "",
     "project_idea": false,
     "idea_description": "",
-    "links": "",
-    "status": 1,
     "additional": ""
 }
   const [db, setDB] = useState(dbOptions);
@@ -127,11 +125,6 @@ const MentorForm = () => {
   // 
   const handleCheckLanguages=(e)=>{
     setMentor({...mentor,'languages':e.target.value});
-  }
-
-  // 
-  const handleCheckLinks=(e)=>{
-    setMentor({...mentor,'links':e.target.value});
   }
 
   // 
@@ -258,7 +251,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="number" placeholder="CGPA" step="0.1" min="1.8" max="4.0" id="mentor" value={mentor['cgpa']} onChange={handleCheckCGPA}/>
+              <Form.Control type="number" placeholder="CGPA" id="mentor" value={mentor['cgpa']} onChange={handleCheckCGPA}/>
             </Col>
           </Form.Group>
 
@@ -282,7 +275,7 @@ const MentorForm = () => {
                 <Form.Check
                   type="radio"
                   label="Second Year"
-                  name="formHorizontalRadios1"
+                  name="formHorizontalRadios"
                   id="mentor" 
                   value="2" 
                   onChange={handleCheckYear}
@@ -290,7 +283,7 @@ const MentorForm = () => {
                 <Form.Check
                   type="radio"
                   label="Third Year"
-                  name="formHorizontalRadios1"
+                  name="formHorizontalRadios"
                   id="mentor" 
                   value="3"
                   onChange={handleCheckYear}
@@ -298,7 +291,7 @@ const MentorForm = () => {
                 <Form.Check
                   type="radio"
                   label="Fourth Year or above"
-                  name="formHorizontalRadios1"
+                  name="formHorizontalRadios"
                   id="mentor" 
                   value="4"
                   onChange={handleCheckYear}
@@ -332,14 +325,14 @@ const MentorForm = () => {
                 <Form.Check
                   type="radio"
                   label="Yes"
-                  name="formHorizontalRadios2"
+                  name="formHorizontalRadios"
                   id="mentor" 
                   onChange={handleCheckPEY}
                 />
                 <Form.Check
                   type="radio"
                   label="No"
-                  name="formHorizontalRadios2"
+                  name="formHorizontalRadios"
                   id="mentor" 
                   onChange={handleCheckPEY}
                 />
@@ -459,7 +452,7 @@ const MentorForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" id="mentor" value={mentor['links']} onChange={handleCheckLinks}/>
+              <Form.Control as="textarea" placeholder="Your answer" />
             </Col>
           </Form.Group>
         </div>

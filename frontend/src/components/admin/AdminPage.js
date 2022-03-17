@@ -7,9 +7,6 @@ import AdminStyle from "../../css/admin/AdminPage.module.css";
 import AdminApplication from "./AdminApplications"
 import {Button} from "react-bootstrap"
 import axios from "axios"
-import AdminTeamManagement from "./AdminTeamManagement";
-import AdminPastProject from "./AdminPastProject";
-
 
 export default function AdminPage(props){
     // reference: https://gdscutm.com
@@ -56,21 +53,16 @@ export default function AdminPage(props){
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link eventKey="2" href="#">
-                        Teams
-                        </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="3" href="#">
                         Resources
                         </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="4" href="#">
+                        <Nav.Link eventKey="3" href="#">
                         Events
                         </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="5" href="#">
+                        <Nav.Link eventKey="4" href="#">
                         Past Projects
                         </Nav.Link>
                     </Nav.Item>
@@ -84,22 +76,12 @@ export default function AdminPage(props){
                     <Accordion.Collapse eventKey = "2">
                         <Card className={AdminStyle.container_width}>
                             <Card.Header>
-                                Team Management
-                            </Card.Header>
-                            <Card.Body>
-                                <AdminTeamManagement/>
-                            </Card.Body>
-                        </Card>
-                    </Accordion.Collapse>
-                    <Accordion.Collapse eventKey = "3">
-                        <Card className={AdminStyle.container_width}>
-                            <Card.Header>
                                 Resources
                             </Card.Header>
                             <Card.Body></Card.Body>
                         </Card>
                     </Accordion.Collapse>
-                    <Accordion.Collapse eventKey = "4">
+                    <Accordion.Collapse eventKey = "3">
                         <Card className={AdminStyle.container_width}>
                             <Card.Header>
                                 Events
@@ -107,14 +89,12 @@ export default function AdminPage(props){
                             <Card.Body></Card.Body>
                         </Card>
                     </Accordion.Collapse>
-                    <Accordion.Collapse eventKey = "5">
+                    <Accordion.Collapse eventKey = "4">
                         <Card className={AdminStyle.container_width}>
                             <Card.Header>
                                 Past Projects
                             </Card.Header>
-                            <Card.Body>
-                                <AdminPastProject/>
-                            </Card.Body>
+                            <Card.Body></Card.Body>
                         </Card>
                     </Accordion.Collapse>
                 </Accordion>

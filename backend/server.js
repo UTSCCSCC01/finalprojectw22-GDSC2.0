@@ -14,7 +14,7 @@ const connDB = require("./config/db");
 const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
-const teamRoute = require("./routes/team");
+const auth = require("./middleware/auth")
 const app = express();
 const portalStatus = {
   active : true
@@ -28,16 +28,18 @@ connDB();
 const loginRoute = require("./routes/login");
 const registerRoute = require("./routes/register")
 const sendMail = require("./routes/sendMail")
+const bugReport = require("./routes/bugReport")
 //const getAnsRoute = require("./routes/getAnswers");
 //const createAnsRoute = require("./routes/createAnswers");
 
 app.use("/login", loginRoute);
 app.use('/register', registerRoute)
-app.use("/mail", sendMail)
+app.use("/mail", auth, sendMail)
+app.use("/bugReport", auth, bugReport)
 //app.use("/getAnswers", getAnsRoute);
 //app.use("/createAnswers", createAnsRoute);
-app.use("/applications",applicationRoute);
-app.use("/teams",teamRoute);
+app.use("/applications", auth, applicationRoute);
+
 
 app.get("/", (req, res) => {
   res.send("API IS RUNNING...");
@@ -67,7 +69,7 @@ app.post("/postPortalStatus",(req,res)=>{
   res.send(portalStatus);
 })
 //End of endpoints 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 8000
 app.listen(
   port,
   console.log(`listening on port ${port}`)

@@ -58,19 +58,6 @@ exports.submitStudentForm = (async (req,res)=>{
     })
 })
 
-exports.submitMentorForm = (async (req,res)=>{
-    mentorAppModel.create(req.body)
-    .then((id)=>{
-        console.log(id);
-    })
-    .catch((e)=>{
-        console.log(e)
-    })
-    res.status(201).json({
-      status: 'success',
-    })
-})
-
 exports.filterStudentApp = (async (req,res)=>{
     let query = buildQueryFitler(req.body);
     const filteredStudents = await studentAppModel.find(query).where('year').gte(req.body.year)
@@ -101,7 +88,7 @@ exports.acceptMentorForm = (async (req,res)=>{
         })
     }else{
         res.status(404).json({
-            status: "Cannot find mentor with the corresponding student number"
+            status: "Cannot find student with the corresponding student number"
         })
     }
 })
@@ -122,7 +109,7 @@ exports.rejectMentorForm = (async (req,res)=>{
         })
     }else{
         res.status(404).json({
-            status: "Cannot find mentor with the corresponding student number"
+            status: "Cannot find student with the corresponding student number"
         })
     }
 })
@@ -176,78 +163,7 @@ exports.studentAppValidator =[
         }
 ];
 
-//This function probably needs to be modified to cover more fields
-exports.mentorAppValidator =[
-    body('student_num',"Invalid Student Number").not().isEmpty().isString().isLength({min:10,max:10}),
-    body("email","Invalid Email").not().isEmpty().isEmail(),
-    body("cgpa","Invalid CGPA").not().isEmpty().isFloat({min:0,max:4}),
-    body("year","You need to be Second year and above").not().isEmpty().isInt({min:2,max:4}),
-    body("resume_path", "Please Provide Your Resume").not().isEmpty(),
-    body("have_group","Please let use know if you have a group").not().isEmpty().isBoolean(),
-    body("project_idea","Please let use know if you have a project idea").not().isEmpty().isBoolean(),
-    body("databases","Please select at least one databases").not().isEmpty(),
-    body("platforms","Please select at least one platforms").not().isEmpty(),
-    (req,res,next)=>{
-        let errors = validationResult(req);
-        if (!errors.isEmpty()){
-            return res.status(400).json({'errors':errors.array()});
-        }
-        errors = mentorDetailValidator(req.body);
-        if (Object.keys(errors).length > 0){
-            return res.status(400).json({'errors':[errors]});
-        }
-        next();
-    }
-];
-
 function studentDetailValidator(req_data){
-    const errors = {}
-    const email_re = /^[^\s@]+@mail.utoronto.ca/;
-    if (!email_re.test(req_data["email"])){
-        errors["email"] = "Please use UofT email"
-    }
-    let db = req_data['databases'];
-    let db_no_input = true;
-    for (let i = 0; i < dbs.length; i++){
-        if (db[dbs[i]]){
-            db_no_input = false;
-            break;
-        }
-    }
-    if (db_no_input){
-        errors["database"] = "Please select at least one databases";
-    }
-    let platforms = req_data['platforms'];
-    let empty = true;
-    if (!(platforms["none"] || (platforms['other'] !== ''))){
-        let pre_select = platforms['pre_select'];
-        if (pre_select){
-            for (let i = 0; i < plats.length; i ++){
-                if (pre_select[plats[i]]){
-                    empty = false;
-                    break;
-                }
-            }
-        }
-        if (empty){
-            errors["platforms"] = "Please select at least one platforms";
-        }
-    }
-    if (req_data["have_group"]){
-        if (!req_data["group_members"]){
-            errors["group"] = "Please enter your group members' information";
-        }
-    }
-    if (req_data["project_idea"]){
-        if (!req_data["idea_description"]){
-            errors["idea"] = "Please enter your idea description";
-        }
-    }
-    return errors;
-}
-
-//This function probably needs to be modified to cover more fields
-function mentorDetailValidator(req_data){
     const errors = {}
     const email_re = /^[^\s@]+@mail.utoronto.ca/;
     if (!email_re.test(req_data["email"])){

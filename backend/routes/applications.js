@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const {submitStudentForm, submitMentorForm, studentAppValidator, mentorAppValidator, filterStudentApp,filterMentorApp,studentQueryValidator,
+const {submitStudentForm, studentAppValidator,filterStudentApp,filterMentorApp,studentQueryValidator,
     mentorQueryValidator,acceptMentorForm,acceptStudentForm,rejectMentorForm,rejectStudentForm} = require("../controller/Applications");
 
 // application routes
 router.route("/studentSubmit").post(studentAppValidator,submitStudentForm);
-router.route("/mentorSubmit").post(mentorAppValidator,submitMentorForm);
 router.route("/filterStudentApp").post(studentQueryValidator,filterStudentApp);
 router.route("/filterMentorApp").post(mentorQueryValidator,filterMentorApp);
 router.route("/acceptStudent").post(acceptStudentForm);
