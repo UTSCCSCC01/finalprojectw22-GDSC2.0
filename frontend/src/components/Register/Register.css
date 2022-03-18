@@ -88,6 +88,10 @@
   background: #fff;
 }
 
+.dark .register-wrap input:focus {
+  background-color: #fff;
+}
+
 .dark .register-wrap p {
   color: #fff;
 }

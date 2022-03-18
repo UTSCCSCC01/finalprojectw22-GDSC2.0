@@ -2,16 +2,16 @@ import React, { useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 import DarkModeContext from "../context/darkMode/DarkModeContext"
-
+import axios from "axios"
 
 const Login = () => {
   const initialValues = { username: "", email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  
+
   const {mode, toggleMode} = useContext(DarkModeContext)
 
   const handleChange = (e) => {
@@ -25,7 +25,18 @@ const Login = () => {
     setIsSubmit(true);
 
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
+      axios.post("/login", {
+        data: {
+           username: formValues.username,
+           email: formValues.email,
+           password: formValues.password
+        }
+      }).then((res) => {
+        window.location.href = "/"
+        localStorage.setItem("token", res.data.token)
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   };
 
