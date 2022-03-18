@@ -1,14 +1,16 @@
 
-const resourceModel = require("../models/projects.js");
 const express = require("express");
 const router = express.Router();
-const { body, validationResult } = require("express-validator");
 const {
-  
-  reqPastProjects,
+  getPastProjects,
+  addPastProjects,
+  createValidator,
+  deletePastProjects,
 } = require("../controller/PastProjects.js");
 
-router.route("/").post(reqPastProjects);
+router.route("/create").post(createValidator,addPastProjects);
+router.route("/").get(getPastProjects);
+router.route("/delete").post(deletePastProjects);
 
 
 module.exports = router;

@@ -1,28 +1,33 @@
 // Each file will represent a different collection in database
 
 const mongoose = require("mongoose");
-const ResourceSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
   // define field and values this schema should have.
   
-  name: {
+  firstName: {
     type: String,
     required: true,
   },
-  image:{
+  lastName: {
+      type:String,
+      required: true,
+  },
+  userName: {
     type:String,
     required: true,
-  },
-  link: {
-    type: String,
+},
+email: {
+    type:String,
     required: true,
-  },
-  description: {
-    type: String,
+},
+password: {
+    type:String,
     required: true,
-  },
+}
+  
 });
 
 //takes the name of the collection and the schema that represents it
-const ResourceModel = mongoose.model("resources", ResourceSchema);
+const AdminTableModel = mongoose.model("resources", adminSchema);
 
-module.exports = ResourceModel;
+module.exports = AdminTableModel;
