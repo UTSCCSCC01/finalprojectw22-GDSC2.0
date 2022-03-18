@@ -1,7 +1,7 @@
 // Each file will represent a different collection in database
 
 const mongoose = require("mongoose");
-const resourceSchema = new mongoose.Schema({
+const ResourceSchema = new mongoose.Schema({
   // define field and values this schema should have.
   
   name: {
@@ -23,6 +23,6 @@ const resourceSchema = new mongoose.Schema({
 });
 
 //takes the name of the collection and the schema that represents it
-const ResourceModel = mongoose.model("resources", resourceSchema );
+const ResourceModel = mongoose.model("resources", ResourceSchema);
 
 module.exports = ResourceModel;
