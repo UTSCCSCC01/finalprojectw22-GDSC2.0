@@ -28,16 +28,20 @@ connDB();
 const loginRoute = require("./routes/login");
 const registerRoute = require("./routes/register")
 const sendMail = require("./routes/sendMail")
+
+//const pastProjects = require("./routes/projects.js")
+
 //const getAnsRoute = require("./routes/getAnswers");
 //const createAnsRoute = require("./routes/createAnswers");
 
-app.use("/login", loginRoute);
+//app.use("/admin/main")
 app.use('/register', registerRoute)
 app.use("/mail", sendMail)
 //app.use("/getAnswers", getAnsRoute);
 //app.use("/createAnswers", createAnsRoute);
 app.use("/applications",applicationRoute);
 app.use("/teams",teamRoute);
+app.use("/portal", loginRoute)
 
 app.get("/", (req, res) => {
   res.send("API IS RUNNING...");

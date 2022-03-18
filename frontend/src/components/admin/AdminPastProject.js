@@ -3,6 +3,8 @@ import {Button, Form, Col, Modal, Row} from "react-bootstrap";
 import Card from "react-bootstrap/Card"
 import ProjectModule from "../../css/admin/AdminPastProject.module.css"
 import AppModule from "../../css/admin/Application.module.css"
+import Axios from "axios";
+import axios from "axios";
 
 const sample_project = [
     {
@@ -45,16 +47,39 @@ export default function AdminPastProject(){
         // do nothing
         setShowDeleteModal({...showDeleteModal,"show":false})
     }
+    
 
     useEffect(()=>{
         // initial get request
         setProjects(sample_project)
+        axios.get("/pastProjects").then((res) => {
+          return [{
+            _id: res.data._id,
+            name: res.data.name,
+            link: res.data.link,
+            image_path: res.data.image_path,
+            description: res.data.description,
+          },]
+
+        })
+
+
+
+
     },[])
     useEffect(()=>{
-        if (projectForm){
-            // send request
-        }
-    },[projectForm])
+        
+      console.log("Send Request");
+      axios.post("/pastProjects", {
+
+        name: projectForm.name.trim(),
+        imagePath: projectForm.image_path.trim(),
+        link: projectForm.link.trim(),
+        description: projectForm.description.trim(),
+
+      })
+       
+    },[])
     return (
     <div>
         <div className="d-flex">
