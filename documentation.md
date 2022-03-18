@@ -38,23 +38,51 @@ This route handles a login action by checking the user credentials with the data
 Register:
 This route handles a register action by storing the necessary information in the database
 
+Applications:
+This route handles the backend work regarding applications that are created by users on the frontend
+
 Answers:
 This route deals with the answers given by potential candidates through the application form. This information is also stored in the database
 
+Resources:
+This route handles request that deal with the resources page.
+
+Send Mail:
+This route handles any error or bug requests reported by users
+
+Team:
+This route deals with requests from the frontend dealing with teams.
+
 ### Models
 Users:
-This file outlines the required information needed to create a user in the database. This includes a username, email, and password
-
-Teams:
-This file outlines how teams with students and mentors will be stored in the database
+This file outlines the required information needed to create a user in the database. This includes a Firstname, lastname, username, email, password, student #
 
 Answer:
 This file outlines the format of the answers provided from the application form and how they will look in the database.
 
 Resource:
-This model outlines the needed attributes a user could have for the resources page
+This model outlines the needed attributes a user could have for the resources page. Fields include: Name, link, description, section
+
+
+Activity Log:
+This model keeps track of activity on the website such as user log in\log out, admin actions etc. Fields include: User, action, date
+
+
+Admin Table:
+This model is used to represent all users that have admin status. Fields include: Firstname, lastname, username, email, password
+
+
+Project:
+This file is used to outline how the website keeps track of projects posted on the website. Fields include: Name, image path, link, description
+
+Teams:
+This model represents how the database wil store the different teams
+
+Team Member Model:
+This model represents the users in each of the teams. Fields include: Student_num ,team (team_id), role
+
 
 
 ### Database
 
-Mongo DB is the database framework chosen to store information that the website gathers and needs to function
+Mongo DB is the database framework chosen to store information that the website gathers and needs to function correclty. MongoDB is a NoSQL DBMS where data is stored in collections consisting of documents
