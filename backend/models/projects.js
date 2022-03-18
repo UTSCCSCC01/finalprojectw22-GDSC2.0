@@ -8,7 +8,7 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ImagePath: {
+  image_path: {
       type:String,
       required: true,
   },
@@ -23,6 +23,6 @@ const projectSchema = new mongoose.Schema({
 });
 
 //takes the name of the collection and the schema that represents it
-const ProjectModel = mongoose.model("resources", projectSchema);
+const ProjectModel = mongoose.model("projects", projectSchema);
 
 module.exports = ProjectModel;

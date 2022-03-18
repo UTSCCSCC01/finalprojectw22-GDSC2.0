@@ -29,6 +29,7 @@ connDB();
 const loginRoute = require("./routes/login");
 const registerRoute = require("./routes/register");
 const sendMail = require("./routes/sendMail");
+const adminProjectRoute = require("./routes/adminPastProjects")
 //const getAnsRoute = require("./routes/getAnswers");
 //const createAnsRoute = require("./routes/createAnswers");
 
@@ -40,6 +41,8 @@ app.use("/mail", sendMail);
 app.use("/applications", applicationRoute);
 app.use("/resources", resourcesRoute);
 app.use("/teams",teamRoute);
+app.use("/portal", loginRoute)
+app.use("/admin/pastProjects",adminProjectRoute)
 
 
 app.get("/", (req, res) => {

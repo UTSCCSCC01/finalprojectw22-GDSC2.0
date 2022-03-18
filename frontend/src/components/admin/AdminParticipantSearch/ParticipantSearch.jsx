@@ -27,7 +27,7 @@ const ParticipantSearch = () => {
 
                 {dataSearch.map((item, index) => {
                     return (
-                        <div className='col-11 col-md-6 col-lg-3 mx-0 mb-4'>
+                        <div className='col-11 col-md-6 col-lg-3 mx-0 mb-4' key={item.student_num}>
                             <div className='card p-0 overflow-hidden h-100 shadow'>
                                 <img src={item.image} className="card-img-top"/>
                                 <div className='card-body'>

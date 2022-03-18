@@ -4,6 +4,7 @@ const participantData = {
     data: [
         {
             full_name: "Mark M.",
+            student_num: "1234567890",
             image: user,
             email: "Mark123@mail.utoronto.ca",
             program: "Computer Science",
@@ -18,6 +19,7 @@ const participantData = {
         },
         {
             full_name: "Bob b.",
+            student_num: "1234567891",
             image: user,
             email: "Bob123@mail.utoronto.ca",
             program: "Computer Science",
@@ -32,6 +34,7 @@ const participantData = {
         },
         {
             full_name: "Mike M.",
+            student_num: "1234567892",
             image: user,
             email: "Mike.Mil@mail.utoronto.ca",
             program: "Information Security",
@@ -46,6 +49,7 @@ const participantData = {
         },
         {
             full_name: "Dan D.",
+            student_num: "1234567893",
             image: user,
             email: "Dan.Daniel@mail.utoronto.ca",
             program: "Mathematics & Statistics",
@@ -60,6 +64,7 @@ const participantData = {
         },
         {
             full_name: "Ned N.",
+            student_num: "1234567894",
             image: user,
             email: "Ned@mail.utoronto.ca",
             program: "Computer Science",
@@ -74,6 +79,7 @@ const participantData = {
         },
         {
             full_name: "Candace D.",
+            student_num: "1234567895",
             image: user,
             email: "Candace@mail.utoronto.ca",
             program: "Information Security",

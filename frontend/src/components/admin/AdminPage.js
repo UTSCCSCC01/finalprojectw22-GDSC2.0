@@ -87,7 +87,7 @@ export default function AdminPage(props) {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="5" href="#">
+            <Nav.Link eventKey="6" href="#">
               Participants
             </Nav.Link>
           </Nav.Item>
@@ -132,7 +132,7 @@ export default function AdminPage(props) {
               </Card.Body>
             </Card>
           </Accordion.Collapse>
-          <Accordion.Collapse eventKey="5">
+          <Accordion.Collapse eventKey="6">
             <Card className={AdminStyle.container_width}>
               <Card.Header>Participants</Card.Header>
               <Card.Body>
