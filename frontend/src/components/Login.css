@@ -87,7 +87,9 @@
 .dark .login-wrap input {
   background: #fff;
 }
-
+.dark .login-wrap input:focus {
+  background: #fff;
+}
 .dark .login-wrap p {
   color: #fff;
 }
