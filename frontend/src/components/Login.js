@@ -30,7 +30,7 @@ const Login = () => {
            username: formValues.username,
            email: formValues.email,
            password: formValues.password
-        }
+        }, 
       }).then((res) => {
         window.location.href = "/"
         localStorage.setItem("token", res.data.token)

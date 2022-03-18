@@ -69,7 +69,7 @@ app.post("/postPortalStatus",(req,res)=>{
   res.send(portalStatus);
 })
 //End of endpoints 
-const port = process.env.PORT
+const port = process.env.PORT || 8000
 app.listen(
   port,
   console.log(`listening on port ${port}`)

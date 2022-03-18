@@ -39,7 +39,7 @@ const Register = () => {
           }
         })
         if(res.status === 200) {
-          window.location.href="/"
+          window.location.href="/portal"
         }
       }catch(err) {
         window.location.href="/register"
