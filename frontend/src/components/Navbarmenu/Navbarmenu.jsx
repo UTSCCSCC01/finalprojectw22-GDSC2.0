@@ -7,6 +7,7 @@ import DarkModeContext from "../../context/darkMode/DarkModeContext"
 import "./Navbarmenu.css"
 const Navbarmenu = () => {
   const {mode, toggleMode} = useContext(DarkModeContext)
+  const doesUserLoggedIn = localStorage.getItem("token")
   return (
     <Navbar className={mode === true ? "dark" : ""} collapseOnSelect expand="lg" top="fixed">
       <Container>
@@ -19,17 +20,22 @@ const Navbarmenu = () => {
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/portal">Applications</Nav.Link>
             <Nav.Link href="/team">Team</Nav.Link>
+            {
+              doesUserLoggedIn &&(<>
+              <Nav.Link href="/adminProfiles">Admins</Nav.Link>
 
-            <Nav.Link href="/adminProfiles">Admins</Nav.Link>
-
-            <Nav.Link href="/reportBug">Report Bug</Nav.Link>
-
-            <Nav.Link href="/subscribe">Subscribe</Nav.Link>
-            <Nav.Link href="/contactUs">Contact Us</Nav.Link>
+              <Nav.Link href="/reportBug">Report Bug</Nav.Link>
+              <Nav.Link href="/reportBugLogs">Report Bug Logs</Nav.Link>
+              <Nav.Link href="/subscribe">Subscribe</Nav.Link>
+              <Nav.Link href="/contactUs">Contact Us</Nav.Link>
+              </>)
+        }
           </Nav>
           <Nav>
-            <Nav.Link href="/myProfile">My Profile</Nav.Link>
-            <Nav.Link href="/signOut">Sign Out</Nav.Link>
+            {doesUserLoggedIn && <>
+              <Nav.Link href="/myProfile">My Profile</Nav.Link>
+            <Nav.Link href="/signOut">Sign Out</Nav.Link></>}
+           
           </Nav>
         <DarkMode />
         </Navbar.Collapse>

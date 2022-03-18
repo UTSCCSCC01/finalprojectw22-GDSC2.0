@@ -2,10 +2,6 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 const studentAppSchema = new mongoose.Schema({
-    user_id:{
-        type: schema.Types.ObjectId,
-        ref: 'users',
-    },
     student_num:{
         type: String,
         required: true,
@@ -122,6 +118,15 @@ const studentAppSchema = new mongoose.Schema({
         required: function(){
             return this.project_idea;
         }
+    },
+    links: {
+        type: String,
+        required: false
+    },
+    status: {
+        type: Number,
+        required: true,
+        enum: [1,2,3,4]
     },
     additional:{
         type: String,

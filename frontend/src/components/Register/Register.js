@@ -8,7 +8,7 @@ import axios from "axios"
 import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 const Register = () => {
-  const initialValues = {uid: "",firstName: "", lastName: "", username: "", email: "", password: "", confirmedPassword: ""};
+  const initialValues = {uid: "",firstName: "", lastName: "", username: "", studentNum: "", email: "", password: "", confirmedPassword: ""};
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -33,12 +33,13 @@ const Register = () => {
             firstName: formValues.firstName,
             lastName: formValues.lastName,
             userName: formValues.username,
+            studentNumber: formValues.studentNum,
             email: formValues.email,
             password: formValues.password
           }
         })
         if(res.status === 200) {
-          window.location.href="/"
+          window.location.href="/portal"
         }
       }catch(err) {
         window.location.href="/register"
@@ -60,6 +61,9 @@ const Register = () => {
     }
     if (!values.username) {
       errors.username = "Username is required";
+    }
+    if (!values.studentNum) {
+      errors.studentNum = "Student number is required"
     }
     if (!values.email) {
       errors.email = "Email is required";
@@ -126,6 +130,19 @@ const Register = () => {
                   />
                   <p className="text-danger field-error">
                     {formErrors.username}
+                  </p>
+                </div>
+                <div className="form-group">
+                  <input
+                    type="number"
+                    name="studentNum"
+                    className="form-control rounded-left"
+                    placeholder="Student Number"
+                    value={formValues.studentNum}
+                    onChange={handleChange}
+                  />
+                  <p className="text-danger field-error">
+                    {formErrors.studentNum}
                   </p>
                 </div>
                 <div className="form-group">

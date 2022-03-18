@@ -62,6 +62,8 @@ const StudentForm = () => {
       "group_members": "",
       "project_idea": false,
       "idea_description": "",
+      "links": "",
+      "status": 1,
       "additional": ""
   }
 
@@ -117,6 +119,11 @@ const StudentForm = () => {
   // 
   const handleCheckLanguages=(e)=>{
     setStudent({...student,'languages':e.target.value});
+  }
+
+  // 
+  const handleCheckLinks=(e)=>{
+    setStudent({...student,'links':e.target.value});
   }
 
   // 
@@ -251,7 +258,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control type="number" placeholder="CGPA" id="student" value={student['cgpa']} onChange={handleCheckCGPA}/>
+              <Form.Control type="number" placeholder="CGPA" step="0.1" min="1.8" max="4.0" id="student" value={student['cgpa']} onChange={handleCheckCGPA}/>
             </Col>
           </Form.Group>
 
@@ -275,7 +282,7 @@ const StudentForm = () => {
                 <Form.Check
                   type="radio"
                   label="Second Year"
-                  name="formHorizontalRadios"
+                  name="formHorizontalRadios1"
                   id="student" 
                   value="2" 
                   onChange={handleCheckYear}
@@ -283,7 +290,7 @@ const StudentForm = () => {
                 <Form.Check
                   type="radio"
                   label="Third Year"
-                  name="formHorizontalRadios"
+                  name="formHorizontalRadios1"
                   id="student" 
                   value="3"
                   onChange={handleCheckYear}
@@ -291,7 +298,7 @@ const StudentForm = () => {
                 <Form.Check
                   type="radio"
                   label="Fourth Year or above"
-                  name="formHorizontalRadios"
+                  name="formHorizontalRadios1"
                   id="student" 
                   value="4"
                   onChange={handleCheckYear}
@@ -318,7 +325,7 @@ const StudentForm = () => {
               <Form.Check
                 type="radio"
                 label="Yes"
-                name="formHorizontalRadios"
+                name="formHorizontalRadios2"
                 id="student" 
                 value={student['have_group']} 
                 onChange={handleCheckGroup}
@@ -326,7 +333,7 @@ const StudentForm = () => {
               <Form.Check
                 type="radio"
                 label="No"
-                name="formHorizontalRadios"
+                name="formHorizontalRadios2"
                 id="student" 
                 value={student['have_group']} 
                 onChange={handleCheckGroup}
@@ -414,7 +421,7 @@ const StudentForm = () => {
               </Form.Label>
             </Col>
             <Col sm={15}>
-              <Form.Control as="textarea" placeholder="Your answer" />
+              <Form.Control as="textarea" placeholder="Your answer" id="student" value={student['links']} onChange={handleCheckLinks}/>
             </Col>
           </Form.Group>
         </div>
@@ -433,7 +440,7 @@ const StudentForm = () => {
               <Form.Check
                 type="radio"
                 label="Yes"
-                name="formHorizontalRadios"
+                name="formHorizontalRadios3"
                 id="student" 
                 value={student['project_idea']} 
                 onChange={handleCheckProject}
@@ -441,7 +448,7 @@ const StudentForm = () => {
               <Form.Check
                 type="radio"
                 label="No"
-                name="formHorizontalRadios"
+                name="formHorizontalRadios3"
                 id="student" 
                 value={student['project_idea']} 
                 onChange={handleCheckProject}
