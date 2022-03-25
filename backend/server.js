@@ -44,7 +44,7 @@ app.use("/mail", auth, sendMail);
 app.use("/bugReport", auth, bugReport);
 app.use("/applications", auth, applicationRoute);
 app.use("/register", registerRoute);
-app.use("/events", auth, eventRoute);
+app.use("/events", eventRoute);
 app.use("/resources", resourcesRoute);
 app.use("/teams", teamRoute);
 app.use("/portal", loginRoute);

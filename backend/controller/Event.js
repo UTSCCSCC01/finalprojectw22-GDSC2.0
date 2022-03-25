@@ -42,7 +42,7 @@ exports.submitEvent = async (req, res) => {
  * }
  */
 exports.getPastEvents = async (req,res)=>{
-    const events = await eventModel.find({event_date: {$lte: ISODate()}}).exec()
+    const events = await eventModel.find({event_date: {$lte: new Date()}}).exec()
     .catch((e)=>{
         res.status(404).json({
             "error": "past events do not exist"
@@ -65,7 +65,7 @@ exports.getPastEvents = async (req,res)=>{
  * }
  */
  exports.getUpcomingEvents = async (req,res)=>{
-    const events = await eventModel.find({event_date: {$gt: ISODate()}}).exec()
+    const events = await eventModel.find({event_date: {$gt: new Date()}}).exec()
     .catch((e)=>{
         res.status(404).json({
             "error": "past events do not exist"
