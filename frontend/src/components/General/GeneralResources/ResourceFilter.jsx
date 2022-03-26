@@ -63,7 +63,7 @@ const ResourceFilter = ({ resources }) => {
           console.log(resourcesState);
           let data = dataSearch(section).map((item, index) => {
             return (
-              <div className="col-11 col-md-6 col-lg-3 mx-0 mb-4">
+              <div key={index} className="col-11 col-md-6 col-lg-3 mx-0 mb-4">
                 <a
                   href={item.link}
                   style={{ textDecoration: "none", color: "black" }}

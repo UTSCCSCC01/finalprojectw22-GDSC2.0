@@ -8,13 +8,13 @@ const GeneralEvents = () => {
 
   let getPastEvents = async () => {
     axios.get("/events/eventGetPast").then((res) => {
-      setPastEventState(res.data);
+      setPastEventState(res.data.events);
     });
   };
 
   let getUpcomingEvents = async () => {
     axios.get("/events/eventGetUpcoming").then((res) => {
-      setUpcomingEventState(res.data);
+      setUpcomingEventState(res.data.events);
     });
   };
 
