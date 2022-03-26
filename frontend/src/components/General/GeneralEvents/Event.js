@@ -10,7 +10,8 @@ const Event = ({ event: e }) => {
         <div className="card p-0 overflow-hidden h-100 shadow ">
           <div className="card-body">
             <h5 className="card-title">{e.name}</h5>
-            <p className="card-text">{e.event_date.substring(0, 10)}</p>
+            <p className="card-title">{e.event_date.substring(0, 10)}</p>
+            <p className="card-text">{e.location}</p>
           </div>
         </div>
       </a>
