@@ -85,6 +85,7 @@ exports.submitMentorForm = async (req, res) => {
 };
 
 exports.filterStudentApp = async (req, res) => {
+  console.log(req.body)
   let query = buildQueryFitler(req.body);
   console.log(query);
   const filteredStudents = await studentAppModel
@@ -215,6 +216,7 @@ exports.studentAppValidator = [
   body("databases", "Please select at least one databases").not().isEmpty(),
   body("platforms", "Please select at least one platforms").not().isEmpty(),
   (req, res, next) => {
+    console.log(req);
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
