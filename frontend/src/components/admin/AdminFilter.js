@@ -134,8 +134,8 @@ export default function Filter(props) {
         alert("Invalid cgpa, set to minimum (1.8) by default")
         req_body.cgpa = 1.8;
       }
-      console.log(req_body);
       if (req_body.role == "student") {
+          console.log("hello")
         axios
           .post("/applications/filterStudentApp", req_body)
           .then((res) => {
@@ -154,6 +154,7 @@ export default function Filter(props) {
           .post("/applications/filterMentorApp", req_body)
           .then((res) => {
             let data = res.data.data;
+            console.log(data);
             for (let i = 0; i < data.length; i++) {
               data[i]["role"] = "Mentor";
             }

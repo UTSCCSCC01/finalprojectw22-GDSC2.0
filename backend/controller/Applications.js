@@ -97,7 +97,7 @@ exports.filterStudentApp = async (req, res) => {
     .find({ have_group: req.body.hasGroup })
     .sort({ creation_time: 1 });
   length = filteredStudents.length;
-  let resStudents = null;
+  var resStudents = null;
   if (
     (req.body.num_page - 1) * req.body.num_display > length ||
     req.body.num_page < 1
@@ -115,6 +115,9 @@ exports.filterStudentApp = async (req, res) => {
       (req.body.num_page - 1) * req.body.num_display,
       tail
     );
+  }
+  if (resStudents === null){
+    resStudents = []
   }
   res.send({
     total: length,
@@ -163,7 +166,7 @@ exports.filterMentorApp = async (req, res) => {
   let query = buildQueryFitler(req.body);
   let length = 0;
   const filteredMentors = await mentorAppModel
-    .filter(query)
+    .find(query)
     .where("year")
     .gte(req.body.year)
     .where("cgpa")
@@ -171,20 +174,27 @@ exports.filterMentorApp = async (req, res) => {
     .sort({ creation_time: 1 });
   length = filteredMentors.length;
   let resMentors = null;
-  if ((num_page - 1) * num_display > length || num_page < 1) {
+  if (
+    (req.body.num_page - 1) * req.body.num_display > length ||
+    req.body.num_page < 1
+  ) {
     res.status(400).json({
       error: "Index of page out of range",
     });
   }
   if (length > 0) {
     const tail =
-      num_page * num_display > length ? length : num_page * num_display;
-    const resMentors = filteredMentors.slice(
-      (num_page - 1) * num_display - 1,
-      tail - 1
+      req.body.num_page * req.body.num_display > length
+        ? length
+        : req.body.num_page * req.body.num_display;
+        resMentors = filteredMentors.slice(
+      (req.body.num_page - 1) * req.body.num_display,
+      tail
     );
   }
-
+  if (resMentors === null){
+    resMentors = []
+  }
   res.send({
     total: length,
     data: resMentors,
@@ -250,6 +260,7 @@ exports.mentorAppValidator = [
   body("databases", "Please select at least one databases").not().isEmpty(),
   body("platforms", "Please select at least one platforms").not().isEmpty(),
   (req, res, next) => {
+    console.log(req)
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -535,6 +546,6 @@ const buildQueryFitler = (req_body) => {
   if (req_body["complete_pey"]) {
     query["complete_pey"] = req_body["complete_pey"];
   }
-  query["status"] = req_body["status"];
+  //query["status"] = req_body["status"];
   return query;
 };

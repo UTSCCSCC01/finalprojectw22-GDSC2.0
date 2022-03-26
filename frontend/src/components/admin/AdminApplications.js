@@ -24,10 +24,6 @@ export default function AdminApplication() {
     }
   };
   const [applications, setApplications] = useState([]);
-  const updateApplications = useCallback((value) => {
-    setApplications(value);
-  });
-  useEffect(() => {}, []);
   return (
     <div className="d-flex flex-column">
       <Card.Header className="d-flex">
@@ -44,7 +40,7 @@ export default function AdminApplication() {
         </div>
       </Card.Header>
       <Card.Body className="d-flex">
-        <Filter updateApplications={updateApplications} />
+        <Filter updateApplications={setApplications} />
         <Applicants applications={applications} />
       </Card.Body>
       <Card.Footer className="d-flex justify-content-center">

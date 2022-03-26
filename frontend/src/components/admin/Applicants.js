@@ -10,19 +10,25 @@ import { BsDownload } from "react-icons/bs";
 import axios from "axios";
 // checks the or of the applicant, display message accordingly
 function GroupOrPEY(props) {
-    return props.student["role"] == "Student" ? (
+    const [studentInfo,setStudentInfo] = useState({});
+    useEffect(()=>{
+        if (props.Student){
+            setStudentInfo(props.Student);
+        }
+    },[props.Student])
+    return props.Student["role"] === "Student" ? (
       <Row xs={1} md={2} className="g-4 ms-2 mt-1">
         <div>
-          <b>Group :</b> {props.student["have_group"]}
+          <b>Group :</b> {`${props.Student["have_group"]}`}
         </div>
         <div>
-          <b>Group Name :</b> {props.student["group_members"]}
+          <b>Group Name :</b> {props.Student["group_members"]}
         </div>
       </Row>
     ) : (
       <Row xs={1} md={2} className="g-4 ms-2 mt-1">
         <div>
-          <b>PEY :</b> {props.student.complete_PEY}
+          <b>PEY :</b> {`${props.Student.complete_pey}`}
         </div>
       </Row>
     );
@@ -46,13 +52,7 @@ export default function Applicants(props) {
       setInfo(student);
       setShowModal(true);
     };
-    // a groupt of information will be shown in the same format
-    const text_group = {
-      languages: "Program Language",
-      frameworks: "Frameworks",
-      databases: "Databases",
-      platforms: "Cloud Platforms",
-    };
+
     // show specific info in general applicants page for students
     const student_card = (key) => {
       return (
@@ -64,7 +64,7 @@ export default function Applicants(props) {
     };
     // show specific info in general applicants page for mentors
     const mentor_card = (key) => {
-      return key === "year" || key === "cgpa" || key === "PEY";
+      return key === "year" || key === "cgpa" || key === "complete_pey";
     };
     // submit form
     const handleAccept = (student) => {
@@ -130,14 +130,14 @@ export default function Applicants(props) {
                       .filter(student_card)
                       .map((key) => (
                         <p key={key} className="w-50 ps-3">
-                          {key.replaceAll("_"," ")} : {student[key]}
+                          {key.replaceAll("_"," ")} : {`${student[key]}`}
                         </p>
                       ))
                   : Object.keys(student)
                       .filter(mentor_card)
                       .map((key) => (
                         <p key={key} className="w-50 ps-3">
-                          {key.replaceAll("_"," ")} : {student[key]}
+                          {key.replaceAll("_"," ")} : {`${student[key]}`}
                         </p>
                       ))}
               </Card>
@@ -180,13 +180,13 @@ export default function Applicants(props) {
                 <b>Program :</b> {studentInfo.program}
               </div>
             </Row>
-            <GroupOrPEY student={studentInfo} />
+            <GroupOrPEY Student={studentInfo} />
             <Row className="g-4 ms-2 mt-1">
               <div>
                 <b>UofT email :</b> {studentInfo.email}
               </div>
               <div>
-                <b>Profile Link :</b> {studentInfo.profile_link}
+                <b>Profile Link :</b> <a href = {studentInfo.links}>{studentInfo.links}</a>
               </div>
             </Row>
             <hr></hr>
@@ -210,7 +210,7 @@ export default function Applicants(props) {
             </Row>
             <hr></hr>
             <Row className="g-4 ms-2">
-              {typeof studentInfo["project_idea"] === "boolean" ? (
+              {studentInfo["role"] === "Student" ? (
                 <div>
                   <div className="mb-2">
                     <b>Project Description</b>
@@ -222,14 +222,14 @@ export default function Applicants(props) {
                   <div className="mb-2">
                     <b>Past/Current Internship Experience(s)</b>
                   </div>
-                  <div className="mb-4">{studentInfo.internship_exp}</div>
+                  <div className="mb-4">{studentInfo.pey_description}</div>
                   <div className="mb-2">
                     <b>
                       Past/Current Extra-Curricular and/or Leadership
                       Experience(s)
                     </b>
                   </div>
-                  <div className="mb-4">{studentInfo.extra_curricular}</div>
+                  <div className="mb-4">{studentInfo.experience}</div>
                   <div className="mb-2">
                     <b>Software Related Projects Description</b>
                   </div>
@@ -237,14 +237,14 @@ export default function Applicants(props) {
                   <div className="mb-2">
                     <b>Project Links</b>
                   </div>
-                  <div className="mb-2">{studentInfo.project_link}</div>
+                  <div className="mb-2">{studentInfo.project_path}</div>
                 </div>
               )}
               <div>
                 <div className="mb-2">
                   <b>Additional Information</b>
                 </div>
-                <div>{studentInfo.additional_info}</div>
+                <div>{studentInfo.additional}</div>
               </div>
             </Row>
           </Modal.Body>
