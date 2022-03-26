@@ -20,8 +20,9 @@ import GeneralPage from "./components/General/GeneralPage";
 import AdminProfiles from "./components/AdminProfiles/AdminProfiles";
 import BugReportForm from "./components/BugReport/BugReportForm";
 import BugReportLogs from "./components/BugReportLogs/BugReportLogs"
-import Signout from "./components/Signout/Signout"
-import DarkModeState from "./context/darkMode/DarkModeState"
+import Signout from "./components/Signout/Signout";
+import DarkModeState from "./context/darkMode/DarkModeState";
+import PastEvents from "./components/PastEvents/PastEvents";
 import axios from "axios";
 
 
@@ -60,6 +61,7 @@ const App = () => {
           <Route path="*" element={<PageNotFound />} />
           <Route path="/adminProfiles" element={<AdminProfiles />} />
           <Route path="/signOut" element={<Signout />} />
+          <Route path="/events/past" element={<PastEvents/>}/>
         </Routes>
       </Router>
       </DarkModeState>
