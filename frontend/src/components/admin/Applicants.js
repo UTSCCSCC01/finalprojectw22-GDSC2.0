@@ -10,12 +10,6 @@ import { BsDownload } from "react-icons/bs";
 import axios from "axios";
 // checks the or of the applicant, display message accordingly
 function GroupOrPEY(props) {
-    const [studentInfo,setStudentInfo] = useState({});
-    useEffect(()=>{
-        if (props.Student){
-            setStudentInfo(props.Student);
-        }
-    },[props.Student])
     return props.Student["role"] === "Student" ? (
       <Row xs={1} md={2} className="g-4 ms-2 mt-1">
         <div>
@@ -39,8 +33,6 @@ export default function Applicants(props) {
     const [studentInfo, setInfo] = useState({});
     // show modal when state is true
     const [showModal, setShowModal] = useState(false);
-    // close modal and reset student info
-    let count = 0;
     const handleShowModal = () => {
       setShowModal(false);
     };
@@ -73,6 +65,12 @@ export default function Applicants(props) {
           .post("/applications/acceptStudent", {
             student_num: student.student_num,
           })
+          .then((res)=>{
+              let apps = props.applications.filter((app)=>{
+                  return (app.student_num !== student.student_num);
+              })
+            props.updateApplications(apps);
+          })
           .catch((error) => {
             alert(error);
           });
@@ -81,6 +79,12 @@ export default function Applicants(props) {
           .post("/applications/acceptMentor", {
             student_num: student.student_num,
           })
+          .then((res)=>{
+            let apps = props.applications.filter((app)=>{
+                return (app.student_num !== student.student_num);
+            })
+          props.updateApplications(apps);
+        })
           .catch((error) => {
             alert(error);
           });
@@ -93,12 +97,24 @@ export default function Applicants(props) {
           .delete("/applications/rejectStudent", {
             params: { _id: student["_id"] },
           })
+          .then((res)=>{
+            let apps = props.applications.filter((app)=>{
+                return (app.student_num !== student.student_num);
+            })
+          props.updateApplications(apps);
+        })
           .catch((error) => {
             alert(error);
           });
       } else if (studentInfo.role === "Mentor") {
         axios
-          .post("/applications/rejectMentor", { params: { _id: student["_id"] } })
+          .delete("/applications/rejectMentor", { params: { _id: student["_id"] } })
+          .then((res)=>{
+            let apps = props.applications.filter((app)=>{
+                return (app.student_num !== student.student_num);
+            })
+          props.updateApplications(apps);
+        })
           .catch((error) => {
             alert(error);
           });
@@ -215,7 +231,7 @@ export default function Applicants(props) {
                   <div className="mb-2">
                     <b>Project Description</b>
                   </div>
-                  <div>{studentInfo.project_description}</div>
+                  <div>{studentInfo.idea_description}</div>
                 </div>
               ) : (
                 <div>

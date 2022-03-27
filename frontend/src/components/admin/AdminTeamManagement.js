@@ -3,35 +3,6 @@ import {Button,Row,Col,Form,Modal,Nav} from "react-bootstrap";
 import TeamModule from "../../css/admin/AdminTeam.module.css";
 import axios from "axios";
 
-const student_app_info = [
-    {
-        student_num:"1000000",
-        full_name: "aaa"
-    },
-    {
-        student_num:"1000001",
-        full_name: "bbb"
-    },
-    {
-        student_num:"1000002",
-        full_name: "ccc"
-    },
-]
-
-const mentor_app_info = [
-    {
-        student_num:"2000000",
-        full_name: "ddd"
-    },
-    {
-        student_num:"2000001",
-        full_name: "eee"
-    },
-    {
-        student_num:"2000002",
-        full_name: "fff"
-    },
-]
 const AdminTeamManagement = () =>{
     const [modalMsg,setModalMsg] = useState("")
     const [showModal,setShowModal] = useState(false)
@@ -39,6 +10,7 @@ const AdminTeamManagement = () =>{
     // Information State
     const [teamInfo, setTeamInfo] = useState({})
     const [allTeam,setAllTeam] = useState([])
+    const [students,setStudents] = useState([]);
     const handleConfirm = (e)=>{
         if (confirmMethod.func === "select"){
             axios.post("/teams/getTeamMembers",{"team_name":confirmMethod.team_name})
@@ -85,20 +57,29 @@ const AdminTeamManagement = () =>{
                 alert(e)
             })
         }else if(confirmMethod.func === "add"){
-            axios.post("/teams/addTeamMember",{"team_name":confirmMethod.team_name,"student_num":confirmMethod.student_num,'role':"student"})
-            .then((res)=>{
-                axios.post("/teams/getTeamMembers",{"team_name":confirmMethod.team_name})
+            if (teamInfo){
+                axios.post("/teams/addTeamMember",{"team_name":teamInfo.team_name,"student_num":confirmMethod.student_num,'role':confirmMethod.role})
                 .then((res)=>{
-                    let temp_members = []
-                    for (let member of res.data.members){
-                        temp_members = [...temp_members,{student_num:member.student_num,role:member.role}]
-                    }
-                    setTeamInfo({team_name: confirmMethod.team_name,members:temp_members})
+                    axios.post("/teams/getTeamMembers",{"team_name":teamInfo.team_name})
+                    .then((res)=>{
+                        let temp_members = []
+                        for (let member of res.data.members){
+                            temp_members = [...temp_members,{student_num:member.student_num,role:member.role}]
+                        }
+                        setTeamInfo({team_name: teamInfo.team_name,members:temp_members})
+                    })
+                    alert(`Successfully Added Student to ${teamInfo.team_name}`)
+                }).catch((e)=>{
+                    alert(e)
                 })
-                alert(`Successfully Added Student to ${confirmMethod.team_name}`)
-            }).catch((e)=>{
-                alert(e)
-            })
+                if (confirmMethod.role === "student"){
+                    getStudents();
+                }else{
+                    getMentors();
+                }
+            }else{
+                alert("Please Select a team");
+            }
         }
         setShowModal(false)
     }
@@ -111,6 +92,30 @@ const AdminTeamManagement = () =>{
             }
             setAllTeam(teams)
         })
+    }
+    const getStudents = ()=>{
+        axios.get("/teams/getStudentApp")
+        .then((res)=>{
+            let students = res.data.students;
+            students.map((student)=>{
+                student["role"] = "student";
+            })
+            setStudents(students);
+        })
+    }
+    const getMentors = ()=>{
+        axios.get("/teams/getMentorApp")
+        .then((res)=>{
+            let students = res.data.students;
+            students.map((student)=>{
+                student["role"] = "mentor";
+            })
+            setStudents(students);
+        })
+    }
+    const getInfo = {
+        "student":getStudents,
+        "mentor":getMentors
     }
     const handleCancel = (e)=>{
         setShowModal(false)
@@ -140,7 +145,7 @@ const AdminTeamManagement = () =>{
                     <SelectedTeam SelectedTeam={teamInfo} SetSelectedTeam={setTeamInfo} ModalFunc={modalFunc}/>
                 </Col>
                 <Col sm={6} className="pe-2">
-                    <InfoSection ModalFunc={modalFunc} AllTeams={allTeam}/>
+                    <InfoSection ModalFunc={modalFunc} AllTeams={allTeam} Students={students} Info={getInfo}/>
                 </Col>
             </Row>
             <Modal show={showModal} onHide={handleShowModal} className = "d-flex flex=column " dialogClassName="w-50 m-auto">
@@ -217,7 +222,7 @@ const SelectedTeam = (props)=>{
             return
         }
         props.ModalFunc.setModalMsg(`You want to add "${newMember}"  to team \"${teamName}\".`)
-        props.ModalFunc.setConfirmMethod({func:"add",team_name: teamName,student_num:newMember})
+        props.ModalFunc.setConfirmMethod({func:"add",team_name: teamName,student_num:newMember,role:"mentor"})
         setNewMember("")
         props.ModalFunc.setShowModal(true)
     }
@@ -294,14 +299,18 @@ const InfoSection = (props)=>{
     const handleActive = (e) => {
         // update data
         if (e ==='student'){
-            setData(student_app_info)
+            props.Info.student();
         }else if (e==="mentor"){
-            setData(mentor_app_info)
+            props.Info.mentor();
         }else{
             setData(props.AllTeams)
         }
         setActive(e);
     };
+    useEffect(()=>{
+        props.Info.student();
+    },[])
+    
     useEffect(()=>{
         if(itemKey === 'team'){
             setData(props.AllTeams)
@@ -321,9 +330,7 @@ const InfoSection = (props)=>{
                 </Nav.Item>
             </Nav>
             {
-                (data && data.length > 0)? 
-                ((itemKey === "team")?<TeamListItem Data={data} ModalFunc={props.ModalFunc}/>:<StudentListItem Data={data} ModalFunc={props.ModalFunc}/>)
-                : <div></div>
+                ((itemKey === "team")?<TeamListItem Data={props.AllTeams} ModalFunc={props.ModalFunc}/>:<StudentListItem Data={props.Students} ModalFunc={props.ModalFunc} Role={itemKey}/>)
             }
         </div>
     )
@@ -332,13 +339,9 @@ const InfoSection = (props)=>{
 const StudentListItem = (props) =>{
     const handleAdd = (e)=>{
         props.ModalFunc.setModalMsg(`You want to add \"${e.target.id}\" to current team.`)
-        props.ModalFunc.setConfirmMethod({func:addTeamMember})
+        props.ModalFunc.setConfirmMethod({func:"add", student_num:e.target.id,role:props.Role})
         props.ModalFunc.setShowModal(true)
         // do something
-    }
-    const addTeamMember = ()=>{
-        // Set request
-        props.ModalFunc.setShowModal(false)
     }
     return (
         <div>

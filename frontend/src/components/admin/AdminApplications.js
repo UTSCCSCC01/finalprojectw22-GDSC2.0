@@ -41,7 +41,7 @@ export default function AdminApplication() {
       </Card.Header>
       <Card.Body className="d-flex">
         <Filter updateApplications={setApplications} />
-        <Applicants applications={applications} />
+        <Applicants applications={applications} updateApplications={setApplications} />
       </Card.Body>
       <Card.Footer className="d-flex justify-content-center">
         <Form className="d-flex align-content-center">

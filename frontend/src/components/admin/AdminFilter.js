@@ -242,7 +242,7 @@ export default function Filter(props) {
         <hr></hr>
         <h5>Status</h5>
         <Form>
-          {[1, 2, 3, 4].map((s) => (
+          {[1, 2].map((s) => (
             <Form.Check
               label={status[s]}
               key={s}
