@@ -1,20 +1,25 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 
-const Event = ({ event: e }) => {
+const Event = ({ event: e, func: handleViewEvent }) => {
+  console.log(handleViewEvent);
   return (
     <div className="col-11 col-md-6 col-lg-3 mx-0 mb-4 text-center">
-      <a
-        href={e.link !== "" ? e.link : ""}
-        style={{ textDecoration: "none", color: "black" }}
-      >
-        <div className="card p-0 overflow-hidden h-100 shadow ">
-          <div className="card-body">
+      <div className="card p-0 overflow-hidden h-100 shadow ">
+        <div className="card-body">
+          <a
+            href={e.link !== "" ? e.link : ""}
+            style={{ textDecoration: "none", color: "black" }}
+          >
             <h5 className="card-title">{e.name}</h5>
-            <p className="card-title">{e.event_date.substring(0, 10)}</p>
-            <p className="card-text">{e.location}</p>
-          </div>
+          </a>
+          <p className="card-title">{e.event_date.substring(0, 10)}</p>
+          <p className="card-text">{e.location}</p>
+          <Button variant="secondary" onClick={() => handleViewEvent(e)}>
+            View
+          </Button>
         </div>
-      </a>
+      </div>
     </div>
   );
 };

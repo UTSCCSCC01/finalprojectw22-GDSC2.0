@@ -10,16 +10,8 @@ const ResourceFilter = ({ resources }) => {
     setFilter(event.target.value);
   };
 
-  const initResourceInfo = {
-    id: "",
-    section: "",
-    name: "",
-    link: "",
-    description: "",
-  };
-
   const [resourcesState, setResourcesState] = useState([]);
-  const [resourceInfo, setResourceInfo] = useState(initResourceInfo);
+  const [resourceInfo, setResourceInfo] = useState({});
   // show modal when state is true
   const [resourceModal, setResourceModal] = useState(false);
 
@@ -108,11 +100,11 @@ const ResourceFilter = ({ resources }) => {
 
             return (
               data.length > 0 && (
-                <>
+                <React.Fragment key={section}>
                   <h2>{section}</h2>
                   <hr />
                   {data}
-                </>
+                </React.Fragment>
               )
             );
           })}
@@ -143,23 +135,7 @@ const ResourceFilter = ({ resources }) => {
               <b>Description :</b> {resourceInfo.description}
             </div>
           </Row>
-          {/* <Row className="g-4 ms-2 mt-1">
-              <div>
-                <b>UofT email :</b> {studentInfo.ut_email}
-              </div>
-              <div>
-                <b>Profile Link :</b> {studentInfo.profile_link}
-              </div>
-            </Row> */}
         </Modal.Body>
-        <Modal.Footer>
-          {/* <Button variant="primary me-auto" onClick={handleShowModal}>
-              Confirm
-            </Button>
-            <Button variant="secondary" onClick={handleShowModal}>
-              Dont Save
-            </Button> */}
-        </Modal.Footer>
       </Modal>
     </>
   );
