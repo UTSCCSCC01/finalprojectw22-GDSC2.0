@@ -25,14 +25,17 @@ const Navbarmenu = () => {
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/portal">Applications</Nav.Link>
             <Nav.Link href="/team">Team</Nav.Link>
+            <Nav.Link href="/resources">Resources</Nav.Link>
+            <Nav.Link href="/events">Events</Nav.Link>
+            <Nav.Link href="/past-projects">Past Projects</Nav.Link>
             {doesUserLoggedIn && (
               <>
                 {/* <Nav.Link href="/adminProfiles">Admins</Nav.Link> */}
 
-                <Nav.Link href="/reportBug">Report Bug</Nav.Link>
-                <Nav.Link href="/reportBugLogs">Report Bug Logs</Nav.Link>
-                <Nav.Link href="/subscribe">Subscribe</Nav.Link>
-                <Nav.Link href="/contactUs">Contact Us</Nav.Link>
+                {/* <Nav.Link href="/reportBug">Report Bug</Nav.Link> */}
+                {/* <Nav.Link href="/reportBugLogs">Report Bug Logs</Nav.Link> */}
+                {/* <Nav.Link href="/subscribe">Subscribe</Nav.Link>
+                <Nav.Link href="/contactUs">Contact Us</Nav.Link> */}
               </>
             )}
           </Nav>

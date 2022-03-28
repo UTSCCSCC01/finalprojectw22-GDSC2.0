@@ -1,0 +1,12 @@
+footer {
+  border-top: 1px solid rgb(189, 182, 182);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+a {
+  padding: 10px;
+  color: rgb(144, 144, 148);
+  text-decoration: none; /* no underline */
+}

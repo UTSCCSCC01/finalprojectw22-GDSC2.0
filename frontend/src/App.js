@@ -19,6 +19,7 @@ import PageNotFound from "./components/PageNotFound/PageNotFound";
 import GeneralPage from "./components/General/GeneralPage";
 import AdminProfiles from "./components/AdminProfiles/AdminProfiles";
 import BugReportForm from "./components/BugReport/BugReportForm";
+import Footer from "./components/Footer/Footer";
 import BugReportLogs from "./components/BugReportLogs/BugReportLogs";
 import Signout from "./components/Signout/Signout";
 import DarkModeState from "./context/darkMode/DarkModeState";
@@ -69,6 +70,7 @@ const App = () => {
             <Route path="/signOut" element={<Signout />} />
           </Routes>
         </Router>
+        <Footer />
       </DarkModeState>
     </>
   );
