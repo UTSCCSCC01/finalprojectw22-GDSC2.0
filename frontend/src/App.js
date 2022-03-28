@@ -66,7 +66,7 @@ const App = () => {
             <Route path="/resources" element={<GeneralResources />} />
             <Route path="/events" element={<GeneralEvents />} />
             <Route path="/pastProjects" element={<GeneralProjects />} />
-            <Route path="/general/main" element={<GeneralPage />} />
+            {/* <Route path="/general/main" element={<GeneralPage />} /> */}
             <Route path="/admin/log" element={<AdminLogin />} />
             <Route path="/adminProfiles" element={<AdminProfiles />} />
             <Route path="/signOut" element={<Signout />} />
