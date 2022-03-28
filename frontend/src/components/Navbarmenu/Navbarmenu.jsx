@@ -27,7 +27,7 @@ const Navbarmenu = () => {
             <Nav.Link href="/team">Team</Nav.Link>
             <Nav.Link href="/resources">Resources</Nav.Link>
             <Nav.Link href="/events">Events</Nav.Link>
-            <Nav.Link href="/past-projects">Past Projects</Nav.Link>
+            <Nav.Link href="/pastProjects">Past Projects</Nav.Link>
             {doesUserLoggedIn && (
               <>
                 {/* <Nav.Link href="/adminProfiles">Admins</Nav.Link> */}

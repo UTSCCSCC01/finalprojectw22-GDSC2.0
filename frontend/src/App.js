@@ -23,6 +23,9 @@ import Footer from "./components/Footer/Footer";
 import BugReportLogs from "./components/BugReportLogs/BugReportLogs";
 import Signout from "./components/Signout/Signout";
 import DarkModeState from "./context/darkMode/DarkModeState";
+import GeneralResources from "./components/General/GeneralResources/ResourceFilter";
+import GeneralEvents from "./components/General/GeneralEvents/GeneralEvents";
+import GeneralProjects from "./components/General/GeneralProjects/GeneralProjects";
 import axios from "axios";
 
 const App = () => {
@@ -39,9 +42,6 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/projects" element />
-            <Route path="/resources" element />
-            <Route path="/events" element />
             <Route path="/reportBug" element={<BugReportForm />} />
             {/* <Route path="/reportBugLogs" element={<BugReportLogs />} /> */}
             <Route path="/team" element={<Team />} />
@@ -63,11 +63,14 @@ const App = () => {
               element={portalActive ? <MentorForm /> : <PageNotFound />}
             />
             <Route path="/admin/main" element={<AdminPage />} />
+            <Route path="/resources" element={<GeneralResources />} />
+            <Route path="/events" element={<GeneralEvents />} />
+            <Route path="/pastProjects" element={<GeneralProjects />} />
             <Route path="/general/main" element={<GeneralPage />} />
             <Route path="/admin/log" element={<AdminLogin />} />
-            <Route path="*" element={<PageNotFound />} />
             <Route path="/adminProfiles" element={<AdminProfiles />} />
             <Route path="/signOut" element={<Signout />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>
         <Footer />
