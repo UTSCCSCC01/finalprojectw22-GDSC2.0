@@ -6,6 +6,7 @@ import dsc_utm from "../../images/dsc_utm.png";
 import AdminStyle from "../../css/admin/AdminPage.module.css";
 import GeneralResources from "./GeneralResources/GeneralResources";
 import GeneralProjects from "./GeneralProjects/GeneralProjects";
+import GeneralEvents from "./GeneralEvents/GeneralEvents";
 
 export default function GeneralPage() {
   // reference: https://gdscutm.com
@@ -60,9 +61,7 @@ export default function GeneralPage() {
           <Accordion.Collapse eventKey="1">
             <Card className={AdminStyle.container_width}>
               <Card.Header>Applications</Card.Header>
-              <Card.Body>
-                
-              </Card.Body>
+              <Card.Body></Card.Body>
             </Card>
           </Accordion.Collapse>
           <Accordion.Collapse eventKey="2">
@@ -76,7 +75,9 @@ export default function GeneralPage() {
           <Accordion.Collapse eventKey="3">
             <Card className={AdminStyle.container_width}>
               <Card.Header>Events</Card.Header>
-              <Card.Body></Card.Body>
+              <Card.Body>
+                <GeneralEvents />
+              </Card.Body>
             </Card>
           </Accordion.Collapse>
           <Accordion.Collapse eventKey="4">
