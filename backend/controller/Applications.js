@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const studentAppModel = require("../models/studentAppModel");
 const mentorAppModel = require("../models/mentorAppModel");
-const { body, validationResult } = require("express-validator");
+const { body,check, validationResult } = require("express-validator");
 
 const dbs = ["sql", "nosql", "graph", "none"];
 const plats = ["aws", "google_cloud", "firebase", "heroku", "netlify", "azure"];
@@ -17,6 +17,42 @@ const pre_plats = [
 ];
 /** Gneral Endpoints */
 
+exports.getStatus = async (req,res) =>{
+  var student_num = req.body.student_num;
+  var student_status = 0;
+  var mentor_status = 0;
+  var name = null;
+  var studentApp = await studentAppModel.find({"student_num":student_num})
+  .catch((e)=>{
+    res.status(400).json({
+      "errors": e
+    })
+    return;
+  });
+  var mentorApp = await studentAppModel.find({'student_num':student_num})
+  .catch((e)=>{
+    res.status(400).json({
+      "errors": e
+    })
+    return;
+  });
+  if (studentApp.length > 0){
+    student_status = studentApp[0].status;
+    name = studentApp[0].full_name;
+  }
+  if (mentorApp.length > 0){
+    mentor_status = mentorApp[0].status;
+    if (!name){
+      name = mentorApp[0].full_name;
+    }
+  }
+  res.status(200).json({
+    "name" : name,
+    "student": student_status,
+    "mentor": mentor_status
+  });
+
+}
 /** Student Endpoints */
 
 exports.acceptStudentForm = async (req, res) => {
@@ -38,14 +74,16 @@ exports.acceptStudentForm = async (req, res) => {
 
 exports.rejectStudentForm = async (req, res) => {
   if (req.query["_id"]) {
-    studentAppModel
-      .deleteOne({
+    await studentAppModel
+      .findOneAndUpdate({
         _id: req.query._id,
+      },{
+        status:-1
       })
-      .then(() => {
+      .then((i)=>{
         res.status(200).json({
-          status: "reject success",
-        });
+          success: "success"
+        })
       })
       .catch((e) => {
         console.log(e);
@@ -61,7 +99,7 @@ exports.rejectStudentForm = async (req, res) => {
 };
 
 exports.submitStudentForm = async (req, res) => {
-  studentAppModel
+  await studentAppModel
     .create(req.body)
     .then((id) => {
       console.log(id);
@@ -75,7 +113,7 @@ exports.submitStudentForm = async (req, res) => {
 };
 
 exports.submitMentorForm = async (req, res) => {
-  mentorAppModel
+  await mentorAppModel
     .create(req.body)
     .then((id) => {
       console.log(id);
@@ -146,9 +184,11 @@ exports.acceptMentorForm = async (req, res) => {
 
 exports.rejectMentorForm = async (req, res) => {
   if (req.query["_id"]) {
-    mentorAppModel
-      .deleteOne({
+    await mentorAppModel
+      .findOneAndUpdate({
         _id: req.query["_id"],
+      },{
+        status:-1
       })
       .then(() => {
         res.status(200).json({
@@ -207,6 +247,18 @@ exports.filterMentorApp = async (req, res) => {
   });
 };
 /** Validators */
+
+exports.statusValidator = [
+  body("student_num","Invalid Student Number").not().isEmpty().isString(),
+  (req,res,next)=>{
+    let errors = validationResult(req);
+    if (!errors.isEmpty()){
+      console.log(errors)
+      return res.status(400).json({errors:errors.array()})
+    }
+    next();
+  }
+]
 
 exports.studentAppValidator = [
   body("student_num", "Invalid Student Number")
