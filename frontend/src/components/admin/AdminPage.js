@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
@@ -12,7 +12,8 @@ import axios from "axios";
 import AdminTeamManagement from "./AdminTeamManagement";
 import AdminPastProject from "./AdminPastProject";
 import BugReportLogs from "../BugReportLogs/BugReportLogs";
-
+import DarkModeContext from "../../context/darkMode/DarkModeContext";
+import "./admin.css";
 export default function AdminPage(props) {
   // reference: https://gdscutm.com
   const [itemKey, setActive] = useState("1");
@@ -35,10 +36,11 @@ export default function AdminPage(props) {
       .post("/postPortalStatus", { status: false })
       .then((res) => setPortalActive(res.data.active));
   };
+  const {mode, toggleMode} = useContext(DarkModeContext)
   // main frame of admin interface
   // includes nav bar and designated area to show content.
   return (
-    <div>
+    <div className={mode === true ? "dark": ""}>
       <div className={AdminStyle.admin_logo_box}>
         <h1>
           <img src={dsc_utm} alt="" className={AdminStyle.admin_logo}></img>

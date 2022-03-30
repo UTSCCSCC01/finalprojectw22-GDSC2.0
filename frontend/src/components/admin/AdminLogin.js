@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import LoginStyle from "../../css/admin/AdminLogin.module.css";
 import dsc_utm from "../../images/dsc_utm.png";
 import Form from "react-bootstrap/Form";
@@ -6,6 +6,9 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/esm/Button";
 import banner from "../../images/banner.png";
+import DarkModeContext from "../../context/darkMode/DarkModeContext";
+import SetRoleContext from "../../context/setRole/SetRoleContext"
+import axios from "axios"
 export default function AdminLogin(){
     // reference: https://gdscutm.com/
     const [loginInfo,setLoginInfo] = useState(
@@ -14,8 +17,24 @@ export default function AdminLogin(){
             Password: null
         }
     )
+    const {mode, toggleMode} = useContext(DarkModeContext)
+    const {isAdmin, changeRole} = useContext(SetRoleContext)
     const submitButton=()=>{
         console.log(loginInfo);
+            axios.post("/login", {
+              data: {
+                 email: loginInfo.AdminId,
+                 password: loginInfo.Password,
+                 mode: "admin"
+              }, 
+            }).then((res) => {
+              changeRole(res.data.isAdmin)
+              window.location.href = "/"
+              localStorage.setItem("token", res.data.token)
+            }).catch((err) => {
+              console.log(err)
+            })
+          
     }
     // background styles
     const styles = {
@@ -25,11 +44,15 @@ export default function AdminLogin(){
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             width: '100vw',
-            height: '100vh'
+            height: '100vh',
+        },
+        hideImage: {
+            backgroundImage: "none"
         }
     };
     return (
-        <div className={`d-flex flex-column ${LoginStyle.background_container}`} style={styles.container}>
+            <div className={mode === true ? "dark" : ""} style={mode === true ? styles.hideImage : styles.container}>
+            <div className={`d-flex flex-column ${LoginStyle.background_container}`}>
             <div className={LoginStyle.admin_logo_box}>
                 <h1>
                     <img src={dsc_utm} alt ="" className = {LoginStyle.admin_logo}></img>
@@ -50,6 +73,7 @@ export default function AdminLogin(){
                     <Button action="submit" className="align-self-center mt-3" onClick={submitButton}>Sign In</Button>
                 </Form>
             </div>
+        </div>
         </div>
     );
 }
