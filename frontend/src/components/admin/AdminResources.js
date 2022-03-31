@@ -62,7 +62,7 @@ function AdminResources() {
     description: "",
   };
 
-  const [resourceInfo, setResourceInfo] = useState(initResourceInfo);
+  const [resourceInfo, setResourceInfo] = useState({});
 
   // show modal when state is true
   const [resourceModal, setResourceModal] = useState(false);

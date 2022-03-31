@@ -9,7 +9,7 @@ const Homepage = () => {
     const {mode, toggleMode} = useContext(DarkModeContext)
     return (
         <div className={mode === true ? "main dark" : "main"}>
-            <Container>
+            <Container className="mt-auto mb-auto">
                 <Row md={1}>
                     <img className='dsclogo' src={dscutm} alt="dsc_utm" />
                     <p className='dsclogo'>Creating impact and <b>empowering students</b> through technology.</p>

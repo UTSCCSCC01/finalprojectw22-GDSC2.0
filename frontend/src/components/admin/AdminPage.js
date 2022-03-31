@@ -11,6 +11,7 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 import AdminTeamManagement from "./AdminTeamManagement";
 import AdminPastProject from "./AdminPastProject";
+import BugReportLogs from "../BugReportLogs/BugReportLogs";
 
 export default function AdminPage(props) {
   // reference: https://gdscutm.com
@@ -91,6 +92,11 @@ export default function AdminPage(props) {
               Participants
             </Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="7" href="#">
+              Bug Log
+            </Nav.Link>
+          </Nav.Item>
         </Nav>
         <Accordion
           className={`w-100 ${AdminStyle.info_sec} mb-5`}
@@ -137,6 +143,14 @@ export default function AdminPage(props) {
               <Card.Header>Participants</Card.Header>
               <Card.Body>
                 <AdminParticipantSearch />
+              </Card.Body>
+            </Card>
+          </Accordion.Collapse>
+          <Accordion.Collapse eventKey="7">
+            <Card className={AdminStyle.container_width}>
+              <Card.Header>Bug Log</Card.Header>
+              <Card.Body>
+                <BugReportLogs />
               </Card.Body>
             </Card>
           </Accordion.Collapse>
