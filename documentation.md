@@ -26,6 +26,14 @@ A login in screen that prompts users for their username, email, and password
 Register:
 A register page for new users that do not have an account and want to create one
 
+Bug Report:
+A page that allows users of the site to report bugs to admins
+
+Page Not Found:
+This page deals with incorrect url requests or pages that do not exist
+
+Dark Mode:
+This is a feature of our frontend that allows users to view the page in dark mode
 
 ## Backend
 
@@ -53,6 +61,9 @@ This route handles any error or bug requests reported by users
 Team:
 This route deals with requests from the frontend dealing with teams.
 
+Past Projects:
+This route allows admins to make changes to the past projects page in the frontend.
+
 ### Models
 Users:
 This file outlines the required information needed to create a user in the database. This includes a Firstname, lastname, username, email, password, student #
@@ -76,7 +87,7 @@ Project:
 This file is used to outline how the website keeps track of projects posted on the website. Fields include: Name, image path, link, description
 
 Teams:
-This model represents how the database wil store the different teams
+This model represents how the database wil store the different teams. This includes the team name, project description, and the teams elevator pitch
 
 Team Member Model:
 This model represents the users in each of the teams. Fields include: Student_num ,team (team_id), role
