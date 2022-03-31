@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const teamModel = require("../models/teamModel");
 const teamMemberModel = require("../models/teamMemberModel");
-const studentModel = require("../model/studentAppModel");
-const mentorModel = require("../model/mentorAppModel");
+const studentAppModel = require("../models/studentAppModel");
+const mentorAppModel = require("../models/mentorAppModel");
 
 // Generic Endpoints
 exports.getAll = (async (req,res)=>{
@@ -108,10 +108,10 @@ exports.getTeamInfo = (async (req,res)=>{
     var mentors = [];
     for (let i = 0; i < members.length; i++) { 
         if (members[i].role == "student"){
-            let student = await studentModel.findOne({"student_num":members[i].student_num})
+            let student = await studentAppModel.findOne({"student_num":members[i].student_num})
             students.push(student)
         }else{
-            let mentor = await mentorModel.findOne({"student_num":members[i].student_num})
+            let mentor = await mentorAppModel.findOne({"student_num":members[i].student_num})
             mentors.push(mentor)
         }
     }
@@ -168,6 +168,20 @@ exports.deleteTeam = (async (req,res)=>{
         })
         return;
     })
+    var student;
+    await members.map((member)=>{
+        if (member.role === "student"){
+            student = studentAppModel.findOne({
+                "student_num":member.student_num
+            })
+        }else{
+            student = mentorAppModel.findOne({
+                "student_num":member.student_num
+            })
+        }
+        student.status = 3;
+        student.save();
+    })
     res.status(200).json({
         "success": "delete success"
     })
@@ -187,15 +201,13 @@ exports.getTeamMembers = (async (req,res)=>{
         })
     })
     const members = await teamMemberModel.find({'team':team.id})
-    .then((members)=>{
-        res.status(200).json({
-            'members':members
-        })
-    })
     .catch((e)=>{
         res.status(400).json({
             'error':"you should not get here"
         })
+    })
+    res.status(200).json({
+        'members':members
     })
 })
 
@@ -207,8 +219,10 @@ exports.getTeamMembers = (async (req,res)=>{
  * }
  */
 exports.addTeamMember = (async (req,res)=>{
+    console.log(req.body)
     const team = await teamModel.findOne({"team_name":req.body["team_name"]})
     .catch((e)=>{
+        console.log("1")
         res.status(400).json({
             "error":e
         })
@@ -218,14 +232,24 @@ exports.addTeamMember = (async (req,res)=>{
         "student_num": req.body['student_num'],
         "role": req.body["role"],
         "team": team.id
-    }).then((id)=>{
-        res.status(200).json({
-            "success": "member added successfully"
-        })
     }).catch((e)=>{
+        console.log(e)
         res.status(400).json({
             "error":e
         })
+        return;
+    })
+    if (req.body["role"] === 'student'){
+        await studentAppModel.findOneAndUpdate({
+            "student_num": req.body['student_num']
+        },{"status": 4})
+    }else{
+        await mentorAppModel.findOneAndUpdate({
+            "student_num": req.body['student_num']
+        },{'status':4})
+    }
+    res.status(200).json({
+        "success": "member added successfully"
     })
 })
 
@@ -253,9 +277,46 @@ exports.removeTeamMember = (async (req,res)=>{
         })
         return;
     })
+    const student = await studentAppModel.findOne({
+        "student_num":req.body['student_num']
+    })
+    student.status = 3;
+    student.save();
     res.status(200).json({
         "success":"remove success"
     })
 })
 
+/**
+ * payload:{
+ *  status: 3
+ * }
+ */
+exports.getStudentApp = async (req,res)=>{
+    const students = await studentAppModel.find({"status": 3}).catch((e)=>{
+        res.status(400).json({
+            "error": e
+        })
+    })
+    console.log(students);
+    res.status(200).json({
+        "students":students
+    })
+}
+
+/**
+ * payload:{
+ *  status: 3
+ * }
+ */
+ exports.getMentorApp = async (req,res)=>{
+    const mentors = await mentorAppModel.find({"status": 3}).catch((e)=>{
+            res.status(400).json({
+                "error": e
+            })
+        })
+    res.status(200).json({
+        "students":mentors
+    })
+}
 // Validators

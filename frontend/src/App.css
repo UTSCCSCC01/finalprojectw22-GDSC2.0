@@ -12,6 +12,7 @@
     color: #fff;
 }
 
+<<<<<<< HEAD
 .bg_new{
     min-height: 93vh;
     display: flex;
@@ -19,3 +20,10 @@
     background-position: center;
     background-size: cover;
 }
+=======
+.bg_img{
+    background-image: url("./images/banner.png");
+    background-position: center;
+    background-size: cover;
+}
+>>>>>>> sprint4
