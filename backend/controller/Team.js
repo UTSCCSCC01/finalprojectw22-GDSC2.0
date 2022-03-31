@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const teamModel = require("../models/teamModel");
 const teamMemberModel = require("../models/teamMemberModel");
+const studentModel = require("../model/studentAppModel");
+const mentorModel = require("../model/mentorAppModel");
 
 // Generic Endpoints
 exports.getAll = (async (req,res)=>{
@@ -27,6 +29,61 @@ exports.getAllTeams = (async (req,res)=>{
     })
 })
 
+/**
+ * payload:{
+ *  student_num
+ * }
+ */
+exports.getTeam = (async (req,res)=>{
+    const member = await teamMemberModel.findOne({"student_num":req.param.student_num})
+    .catch((e)=>{
+        res.status(404).json({
+            errors:e
+        })
+        return;
+    })
+    res.status(200).json({
+        'team_id': member.team
+    })
+})
+
+/**
+ * payload:{
+ *  team_id
+ * }
+ */
+exports.getTeamInfo = (async (req,res)=>{
+    const team = await teamModel.findOne({'_id':req.param.team_id})
+    .catch((e)=>{
+        res.status(400).json({
+            errors:e
+        })
+    })
+    const members = await teamMemberModel.find({'team':req.param.team_id})
+    .catch((e)=>{
+        res.status(400).json({
+            errors:e
+        })
+    })
+    var students = [];
+    var mentors = [];
+    for (let i = 0; i < members.length; i++) { 
+        if (members[i].role == "student"){
+            let student = await studentModel.findOne({"student_num":members[i].student_num})
+            students.push(student)
+        }else{
+            let mentor = await mentorModel.findOne({"student_num":members[i].student_num})
+            mentors.push(mentor)
+        }
+    }
+    res.status(200).json({
+        "team_name": team.team_name,
+        "description": team.description,
+        "pitch": team.pitch,
+        "students": students,
+        "mentors": mentors
+    })
+})
 /**
  * payload:{
  *  team_name: string
