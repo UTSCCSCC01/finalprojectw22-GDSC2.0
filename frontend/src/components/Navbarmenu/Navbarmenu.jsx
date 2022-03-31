@@ -24,7 +24,6 @@ const Navbarmenu = () => {
           <Nav className="me-auto">
             <Nav.Link href="/about">About</Nav.Link>
             <Nav.Link href="/portal">Applications</Nav.Link>
-            <Nav.Link href="/team">Team</Nav.Link>
             <Nav.Link href="/resources">Resources</Nav.Link>
             <Nav.Link href="/events">Events</Nav.Link>
             <Nav.Link href="/pastProjects">Past Projects</Nav.Link>
