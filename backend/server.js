@@ -8,14 +8,14 @@
  */
 
 // required frameworks/modules
-require("dotenv").config({path: "../.env"});
+require("dotenv").config();
 const express = require("express");
 const connDB = require("./config/db");
 // const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
 const auth = require("./middleware/auth");
-const resourcesRoute = require("./routes/resources") 
+const resourcesRoute = require("./routes/resources");
 const teamRoute = require("./routes/team");
 const eventRoute = require("./routes/events");
 
