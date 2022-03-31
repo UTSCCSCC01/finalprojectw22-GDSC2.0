@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const studentAppModel = require("../models/studentAppModel");
 const mentorAppModel = require("../models/mentorAppModel");
-const { body, validationResult } = require("express-validator");
+const { body,check, validationResult } = require("express-validator");
 
 const dbs = ["sql", "nosql", "graph", "none"];
 const plats = ["aws", "google_cloud", "firebase", "heroku", "netlify", "azure"];
@@ -17,11 +17,51 @@ const pre_plats = [
 ];
 /** Gneral Endpoints */
 
+exports.getStatus = async (req,res) =>{
+  var student_num = req.body.student_num;
+  var student_status = 0;
+  var mentor_status = 0;
+  var name = null;
+  var studentApp = await studentAppModel.find({"student_num":student_num})
+  .catch((e)=>{
+    res.status(400).json({
+      "errors": e
+    })
+    return;
+  });
+  var mentorApp = await studentAppModel.find({'student_num':student_num})
+  .catch((e)=>{
+    res.status(400).json({
+      "errors": e
+    })
+    return;
+  });
+  if (studentApp.length > 0){
+    student_status = studentApp[0].status;
+    name = studentApp[0].full_name;
+  }
+  if (mentorApp.length > 0){
+    mentor_status = mentorApp[0].status;
+    if (!name){
+      name = mentorApp[0].full_name;
+    }
+  }
+  res.status(200).json({
+    "name" : name,
+    "student": student_status,
+    "mentor": mentor_status
+  });
+
+}
 /** Student Endpoints */
 
 exports.acceptStudentForm = async (req, res) => {
   if (req.body.student_num) {
-    console.log(req.body);
+    var student = await studentAppModel.findOne({"student_num":req.body.student_num});
+    if (student.status < 4){
+      student.status = student.status + 1;
+    }
+    student.save()
     res.status(200).json({
       status: "success",
     });
@@ -34,14 +74,16 @@ exports.acceptStudentForm = async (req, res) => {
 
 exports.rejectStudentForm = async (req, res) => {
   if (req.query["_id"]) {
-    studentAppModel
-      .deleteOne({
+    await studentAppModel
+      .findOneAndUpdate({
         _id: req.query._id,
+      },{
+        status:-1
       })
-      .then(() => {
+      .then((i)=>{
         res.status(200).json({
-          status: "reject success",
-        });
+          success: "success"
+        })
       })
       .catch((e) => {
         console.log(e);
@@ -57,7 +99,7 @@ exports.rejectStudentForm = async (req, res) => {
 };
 
 exports.submitStudentForm = async (req, res) => {
-  studentAppModel
+  await studentAppModel
     .create(req.body)
     .then((id) => {
       console.log(id);
@@ -71,7 +113,7 @@ exports.submitStudentForm = async (req, res) => {
 };
 
 exports.submitMentorForm = async (req, res) => {
-  mentorAppModel
+  await mentorAppModel
     .create(req.body)
     .then((id) => {
       console.log(id);
@@ -86,7 +128,6 @@ exports.submitMentorForm = async (req, res) => {
 
 exports.filterStudentApp = async (req, res) => {
   let query = buildQueryFitler(req.body);
-  console.log(query);
   const filteredStudents = await studentAppModel
     .find(query)
     .where("year")
@@ -96,7 +137,7 @@ exports.filterStudentApp = async (req, res) => {
     .find({ have_group: req.body.hasGroup })
     .sort({ creation_time: 1 });
   length = filteredStudents.length;
-  let resStudents = null;
+  var resStudents = null;
   if (
     (req.body.num_page - 1) * req.body.num_display > length ||
     req.body.num_page < 1
@@ -115,6 +156,9 @@ exports.filterStudentApp = async (req, res) => {
       tail
     );
   }
+  if (resStudents === null){
+    resStudents = []
+  }
   res.send({
     total: length,
     data: resStudents,
@@ -123,7 +167,11 @@ exports.filterStudentApp = async (req, res) => {
 /** Mentor Endpoints */
 exports.acceptMentorForm = async (req, res) => {
   if (req.body.student_num) {
-    console.log(req.body);
+    var student = await mentorAppModel.findOne({"student_num":req.body.student_num});
+    if (student.status < 4){
+      student.status = student.status + 1;
+    }
+    student.save()
     res.status(200).json({
       status: "success",
     });
@@ -136,9 +184,11 @@ exports.acceptMentorForm = async (req, res) => {
 
 exports.rejectMentorForm = async (req, res) => {
   if (req.query["_id"]) {
-    mentorAppModel
-      .deleteOne({
+    await mentorAppModel
+      .findOneAndUpdate({
         _id: req.query["_id"],
+      },{
+        status:-1
       })
       .then(() => {
         res.status(200).json({
@@ -162,7 +212,7 @@ exports.filterMentorApp = async (req, res) => {
   let query = buildQueryFitler(req.body);
   let length = 0;
   const filteredMentors = await mentorAppModel
-    .filter(query)
+    .find(query)
     .where("year")
     .gte(req.body.year)
     .where("cgpa")
@@ -170,26 +220,45 @@ exports.filterMentorApp = async (req, res) => {
     .sort({ creation_time: 1 });
   length = filteredMentors.length;
   let resMentors = null;
-  if ((num_page - 1) * num_display > length || num_page < 1) {
+  if (
+    (req.body.num_page - 1) * req.body.num_display > length ||
+    req.body.num_page < 1
+  ) {
     res.status(400).json({
       error: "Index of page out of range",
     });
   }
   if (length > 0) {
     const tail =
-      num_page * num_display > length ? length : num_page * num_display;
-    const resMentors = filteredMentors.slice(
-      (num_page - 1) * num_display - 1,
-      tail - 1
+      req.body.num_page * req.body.num_display > length
+        ? length
+        : req.body.num_page * req.body.num_display;
+        resMentors = filteredMentors.slice(
+      (req.body.num_page - 1) * req.body.num_display,
+      tail
     );
   }
-
+  if (resMentors === null){
+    resMentors = []
+  }
   res.send({
     total: length,
     data: resMentors,
   });
 };
 /** Validators */
+
+exports.statusValidator = [
+  body("student_num","Invalid Student Number").not().isEmpty().isString(),
+  (req,res,next)=>{
+    let errors = validationResult(req);
+    if (!errors.isEmpty()){
+      console.log(errors)
+      return res.status(400).json({errors:errors.array()})
+    }
+    next();
+  }
+]
 
 exports.studentAppValidator = [
   body("student_num", "Invalid Student Number")
@@ -215,6 +284,7 @@ exports.studentAppValidator = [
   body("databases", "Please select at least one databases").not().isEmpty(),
   body("platforms", "Please select at least one platforms").not().isEmpty(),
   (req, res, next) => {
+    console.log(req);
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -248,6 +318,7 @@ exports.mentorAppValidator = [
   body("databases", "Please select at least one databases").not().isEmpty(),
   body("platforms", "Please select at least one platforms").not().isEmpty(),
   (req, res, next) => {
+    console.log(req)
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -426,91 +497,6 @@ const querySubValidator = (req_data) => {
   return errors;
 };
 /** Query Helper */
-
-const mentorFilter = (filters, mentor) => {
-  for (key in filters.keys) {
-    // filter databases
-    if (key === "year") {
-      if (mentor.year < filters.year) {
-        return false;
-      }
-    }
-    if (key === "cgpa") {
-      if (mentor.cgpa < filters.cgpa) {
-        return false;
-      }
-    }
-    if (key === "complete_pey" && filters.complete_pey) {
-      if (!mentor.complete_pey) {
-        return false;
-      }
-    }
-    if (
-      key === "databases" &&
-      !filters.databases.any &&
-      !mentor.databases.none
-    ) {
-      for (db in filters.databases) {
-        if (!mentor.databases.db) {
-          return false;
-        }
-      }
-    }
-    // filter cloudPlat
-    if (
-      key === "cloudPlat" &&
-      !filters.cloudPlat.any &&
-      !mentor.platforms.none
-    ) {
-      for (plat in filters.cloudPlat.plat) {
-        if (!mentor.platforms.plat) {
-          return false;
-        }
-      }
-    }
-  }
-  return true;
-};
-
-const studentFilter = (filters, student) => {
-  for (key in filters.keys) {
-    // filter databases
-    if (key === "year") {
-      if (mentor.year < filters.year) {
-        return false;
-      }
-    }
-    if (key === "cgpa") {
-      if (mentor.cgpa < filters.cgpa) {
-        return false;
-      }
-    }
-    if (
-      key === "databases" &&
-      !filters.databases.any &&
-      !mentor.databases.none
-    ) {
-      for (db in filters.databases) {
-        if (!mentor.databases.db) {
-          return false;
-        }
-      }
-    }
-    // filter cloudPlat
-    if (
-      key === "cloudPlat" &&
-      !filters.cloudPlat.any &&
-      !mentor.platforms.none
-    ) {
-      for (plat in filters.cloudPlat.plat) {
-        if (!mentor.platforms.plat) {
-          return false;
-        }
-      }
-    }
-  }
-  return true;
-};
 
 const buildQueryFitler = (req_body) => {
   var query = {};

@@ -6,8 +6,6 @@ router.route("/setPitch").post(setPitch);
 router.route("/getPitch").get(getPitch);
 router.route("/getDescription").get(getDescription);
 router.route("/setDescription").post(setDescription);
-
-
 router.route("/getAll").get(getAll);
 router.route("/getAllTeams").get(getAllTeams);
 router.route("/createTeam").post(createTeam);
@@ -15,5 +13,7 @@ router.route("/deleteTeam").post(deleteTeam);
 router.route("/getTeamMembers").post(getTeamMembers);
 router.route("/addTeamMember").post(addTeamMember);
 router.route("/removeTeamMember").post(removeTeamMember);
+router.route("/getMentorApp").get(getMentorApp);
+router.route("/getStudentApp").get(getStudentApp);
 
 module.exports = router;
