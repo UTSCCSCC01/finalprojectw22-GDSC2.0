@@ -17,7 +17,46 @@ exports.getAll = (async (req,res)=>{
     })
 })
 
+
+
 // Teams Endpoints
+exports.getDescription = (async (req,res)=>{
+    const team = await teamModel.findOne({"team_name":req.body['team_name']})
+    res.status(200).json({
+        "description": team.description
+    })
+})
+exports.setDescription = (async (req,res)=>{
+    const teams = await teamModel.create({'description': req.body['description']})
+    .catch((e) => {
+        res.status(400).json({
+            "error": e
+        })
+        return;
+    })
+   
+})
+
+exports.getPitch = (async (req,res)=>{
+    const team = await teamModel.findOne({"team_name":req.body['team_name']})
+    res.status(200).json({
+        "pitch": team.pitch
+    })
+})
+exports.setPitch = (async (req,res)=>{
+    const teams = await teamModel.create({'pitch': req.body['pitch']})
+    .catch((e) => {
+        res.status(400).json({
+            "error": e
+        })
+        return;
+    })
+   
+})
+
+
+
+
 /**
  * payload:{
  * }

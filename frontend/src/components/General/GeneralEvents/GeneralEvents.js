@@ -65,8 +65,9 @@ const GeneralEvents = () => {
       <Modal
         show={eventModal}
         onHide={() => setEventModal(false)}
-        className="d-flex flex=column "
+        className="d-flex flex-column"
         dialogClassName={`${AppModule.dialog_width}`}
+        centered
       >
         <Modal.Header closeButton>
           <Modal.Title>Event Information</Modal.Title>
@@ -79,12 +80,12 @@ const GeneralEvents = () => {
             </h4>
           </div>
           <hr></hr>
-          <Row xs={1} md={1} className="g-4 ms-2">
+          <Row xs={1} md={1} className="g-4 ms-2 pb-3">
             <div>
               <b>Time :</b> {eventInfo.event_time}
             </div>
             <div>
-              <b>Link :</b> {eventInfo.link}
+              <b>Link :</b><a href={eventInfo.link}>{eventInfo.link}</a>
             </div>
             <div>
               <b>Description :</b> {eventInfo.description}
