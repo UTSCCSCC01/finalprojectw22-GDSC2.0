@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Register.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,11 +22,13 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFormErrors(validate(formValues));
+    setFormErrors(validate(e, formValues));
     setIsSubmit(true);
+  };
 
+  useEffect(async () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues)
       try {
         const res = await axios.post('/register', {
           data: {
@@ -47,9 +49,9 @@ const Register = () => {
 
       }
     }
-  };
+  }, [formErrors])
 
-  const validate = (values) => {
+  const validate = (e, values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 

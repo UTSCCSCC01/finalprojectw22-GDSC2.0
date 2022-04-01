@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,13 +23,16 @@ const Login = () => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
+  };
 
+  useEffect(async () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       axios.post("/login", {
         data: {
            username: formValues.username,
            email: formValues.email,
-           password: formValues.password
+           password: formValues.password,
+           mode: "user"
         }, 
       }).then((res) => {
         window.location.href = "/"
@@ -38,7 +41,7 @@ const Login = () => {
         console.log(err)
       })
     }
-  };
+  }, [formErrors])
 
   const validate = (values) => {
     const errors = {};

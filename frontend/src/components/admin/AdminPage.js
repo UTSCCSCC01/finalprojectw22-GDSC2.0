@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
@@ -11,7 +11,10 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 import AdminTeamManagement from "./AdminTeamManagement";
 import AdminPastProject from "./AdminPastProject";
-
+import BugReportLogs from "../BugReportLogs/BugReportLogs";
+import AdminEvents from "./AdminEvents";
+import DarkModeContext from "../../context/darkMode/DarkModeContext";
+import "./admin.css";
 export default function AdminPage(props) {
   // reference: https://gdscutm.com
   const [itemKey, setActive] = useState("1");
@@ -34,10 +37,11 @@ export default function AdminPage(props) {
       .post("/postPortalStatus", { status: false })
       .then((res) => setPortalActive(res.data.active));
   };
+  const {mode, toggleMode} = useContext(DarkModeContext)
   // main frame of admin interface
   // includes nav bar and designated area to show content.
   return (
-    <div>
+    <div className={mode === true ? "dark": ""}>
       <div className={AdminStyle.admin_logo_box}>
         <h1>
           <img src={dsc_utm} alt="" className={AdminStyle.admin_logo}></img>
@@ -91,6 +95,11 @@ export default function AdminPage(props) {
               Participants
             </Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="7" href="#">
+              Bug Log
+            </Nav.Link>
+          </Nav.Item>
         </Nav>
         <Accordion
           className={`w-100 ${AdminStyle.info_sec} mb-5`}
@@ -121,7 +130,9 @@ export default function AdminPage(props) {
           <Accordion.Collapse eventKey="4">
             <Card className={AdminStyle.container_width}>
               <Card.Header>Events</Card.Header>
-              <Card.Body></Card.Body>
+              <Card.Body>
+                <AdminEvents />
+              </Card.Body>
             </Card>
           </Accordion.Collapse>
           <Accordion.Collapse eventKey="5">
@@ -137,6 +148,14 @@ export default function AdminPage(props) {
               <Card.Header>Participants</Card.Header>
               <Card.Body>
                 <AdminParticipantSearch />
+              </Card.Body>
+            </Card>
+          </Accordion.Collapse>
+          <Accordion.Collapse eventKey="7">
+            <Card className={AdminStyle.container_width}>
+              <Card.Header>Bug Log</Card.Header>
+              <Card.Body>
+                <BugReportLogs />
               </Card.Body>
             </Card>
           </Accordion.Collapse>

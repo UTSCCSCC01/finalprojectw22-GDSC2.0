@@ -17,6 +17,7 @@ const applicationRoute = require("./routes/applications");
 const auth = require("./middleware/auth");
 const resourcesRoute = require("./routes/resources");
 const teamRoute = require("./routes/team");
+const eventRoute = require("./routes/events");
 
 const app = express();
 const portalStatus = {
@@ -41,10 +42,10 @@ const bugReport = require("./routes/bugReport");
 app.use("/login", loginRoute);
 app.use("/mail", auth, sendMail);
 app.use("/bugReport", auth, bugReport);
-app.use("/applications", auth, applicationRoute);
+//app.use("/applications", auth, applicationRoute);
+app.use("/applications", applicationRoute);
 app.use("/register", registerRoute);
-//app.use("/getAnswers", getAnsRoute);
-//app.use("/createAnswers", createAnsRoute);
+app.use("/events", eventRoute);
 app.use("/resources", resourcesRoute);
 app.use("/teams", teamRoute);
 app.use("/portal", loginRoute);

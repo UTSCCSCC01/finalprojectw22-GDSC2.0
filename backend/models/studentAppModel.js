@@ -126,7 +126,7 @@ const studentAppSchema = new mongoose.Schema({
     status: {
         type: Number,
         required: true,
-        enum: [1,2,3,4]
+        enum: [-1,1,2,3,4]
     },
     additional:{
         type: String,
