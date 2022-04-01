@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
@@ -7,7 +7,6 @@ import AdminStyle from "../../css/admin/AdminPage.module.css";
 import GeneralResources from "./GeneralResources/GeneralResources";
 import GeneralProjects from "./GeneralProjects/GeneralProjects";
 import GeneralEvents from "./GeneralEvents/GeneralEvents";
-
 export default function GeneralPage() {
   // reference: https://gdscutm.com
   const [itemKey, setActive] = useState("1");

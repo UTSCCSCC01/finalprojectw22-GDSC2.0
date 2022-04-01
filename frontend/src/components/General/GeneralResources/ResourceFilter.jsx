@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Button, Row, Modal } from "react-bootstrap";
 import AppModule from "../../../css/admin/Application.module.css";
-
+import DarkModeContext from "../../../context/darkMode/DarkModeContext";
+import "./ResourceFilter.css"
 const ResourceFilter = ({ resources }) => {
   const [filter, setFilter] = useState("");
 
@@ -55,9 +56,10 @@ const ResourceFilter = ({ resources }) => {
           }) && item.section === section
       );
     });
-
+    const {mode, toggleMode} = useContext(DarkModeContext)
   return (
     <>
+      <div className={mode === true ? "dark" : ""}>
       <section className="py-4 container">
         <div className="row justify-content-center">
           <div className="col-12 mb-5">
@@ -113,9 +115,10 @@ const ResourceFilter = ({ resources }) => {
       <Modal
         show={resourceModal}
         onHide={() => setResourceModal(false)}
-        className="d-flex flex=column "
+        className="d-flex flex=column"
         dialogClassName={`${AppModule.dialog_width}`}
       >
+        <div className={mode === true ? "dark" : ""}>
         <Modal.Header closeButton>
           <Modal.Title>Resource Information</Modal.Title>
         </Modal.Header>
@@ -136,7 +139,9 @@ const ResourceFilter = ({ resources }) => {
             </div>
           </Row>
         </Modal.Body>
+        </div>
       </Modal>
+      </div>
     </>
   );
 };

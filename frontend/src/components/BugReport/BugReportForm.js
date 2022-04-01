@@ -18,6 +18,9 @@ const BugReportForm = () => {
         e.preventDefault()
         setFormErrors(validate(formValues));
         setIsSubmit(true);
+    };
+
+    useEffect(() => {
         if (Object.keys(formErrors).length === 0 && isSubmit) {
             axios.post("/mail",
                 {
@@ -58,7 +61,7 @@ const BugReportForm = () => {
             })
             window.location.href = "/"
         }
-    };
+    }, [formErrors])
 
     const validate = (values) => {
         const errors = {};

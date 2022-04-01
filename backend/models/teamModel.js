@@ -6,6 +6,14 @@ const teamSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
+    description:{
+        type:String,
+        required: true
+    },
+    pitch:{
+        type:String,
+        required: true
+    },
     creation_time:{
         type:Date,
         default: Date.now,

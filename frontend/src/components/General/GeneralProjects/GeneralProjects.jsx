@@ -8,16 +8,19 @@ import {
     Form,
   } from "react-bootstrap";
   import AppModule from "../../../css/admin/Application.module.css";
-  import React from "react";
+  import React, {useContext} from "react";
   import { useState } from "react";
-  import useLocalStorage from "../../../hooks/useLocalStorage";
-
+  import useLocalStorage from "../../../hooks/useLocalStorage"; 
+  import DarkModeContext from "../../../context/darkMode/DarkModeContext";
   function GeneralProjects() {
+    const {mode, toggleMode} = useContext(DarkModeContext)
     return (
+      <div className={mode === true ? "dark" : ""} style={{height: "100vh"}}>
       <Container>
           <h2>Past Projects</h2>
         <Projects />
       </Container>
+      </div>
     );
   }
   
@@ -111,7 +114,8 @@ import {
       setFormValues(initResourceInfo);
       setFormErrors(false);
     };
-  
+    const {mode, toggleMode} = useContext(DarkModeContext)
+   
     return (
       <>
         <div className="text-center mt-4">
@@ -129,6 +133,7 @@ import {
             className="d-flex flex=column "
             dialogClassName={`${AppModule.dialog_width}`}
           >
+            <div className={mode === true ? "dark" : ""}>
             <Modal.Header closeButton>
               <Modal.Title>Add Project</Modal.Title>
             </Modal.Header>
@@ -217,6 +222,7 @@ import {
                 </Button>
               </div>
             </Modal.Footer>
+            </div>
           </Modal>
         </div>
   

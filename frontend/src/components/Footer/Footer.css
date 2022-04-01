@@ -18,3 +18,7 @@ a {
   /* color: rgb(144, 144, 148); */
   text-decoration: none; /* no underline */
 }
+
+.dark  a {
+  color: #fff;
+}

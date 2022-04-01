@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Button } from "react-bootstrap";
 
 const Event = ({ event: e, func: handleViewEvent }) => {
   console.log(handleViewEvent);
   return (
+    
     <div className="col-11 col-md-6 col-lg-3 mx-0 mb-4 text-center">
       <div className="card p-0 overflow-hidden h-100 shadow ">
         <div className="card-body">
