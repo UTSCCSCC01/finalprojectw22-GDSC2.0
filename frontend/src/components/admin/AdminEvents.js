@@ -53,7 +53,7 @@ function Events() {
     let events = new Set();
 
     for (var i = 0; i < resourcesState.length; i++) {
-      events.add(resourcesState[i].event_date);
+      events.add(resourcesState[i].event_date.trim().toLowerCase());
     }
     return events;
   };
@@ -95,6 +95,7 @@ function Events() {
     ) {
       setFormErrors(true);
       return;
+
     } else {
       axios
         .post(
@@ -163,7 +164,6 @@ function Events() {
                 Missing Form
               </h3>
             )}
-
             <Form.Group as={Row} className="mb-3" controlId="idea">
               <Col>
                 <Form.Label for="name" column sm={10}>
@@ -291,6 +291,7 @@ function Events() {
                             {r.description.length > 15
                               ? r.description.substring(0, 15).concat("...")
                               : r.description}
+
                           </h6>
                           <div className="d-flex m-2 justify-content-around">
                             <Button
