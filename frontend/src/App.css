@@ -12,6 +12,13 @@
     color: #fff;
 }
 
+.bg_new{
+    min-height: 93vh;
+    display: flex;
+    background-image: url("./images/newbanner.jpg");
+    background-position: center;
+    background-size: cover;
+}
 .bg_img{
     background-image: url("./images/banner.png");
     background-position: center;

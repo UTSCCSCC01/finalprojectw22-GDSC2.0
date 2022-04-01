@@ -26,6 +26,7 @@ import DarkModeState from "./context/darkMode/DarkModeState";
 import GeneralResources from "./components/General/GeneralResources/ResourceFilter";
 import GeneralEvents from "./components/General/GeneralEvents/GeneralEvents";
 import GeneralProjects from "./components/General/GeneralProjects/GeneralProjects";
+import StudentTeam from "./components/StudentTeam/StudentTeam";
 import axios from "axios";
 import SetRoleState from "./context/setRole/SetRoleState";
 
@@ -72,6 +73,7 @@ const App = () => {
             <Route path="/admin/log" element={<AdminLogin />} />
             <Route path="/adminProfiles" element={<AdminProfiles />} />
             <Route path="/signOut" element={<Signout />} />
+            <Route path="/team/:team_id" element={<StudentTeam />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>
