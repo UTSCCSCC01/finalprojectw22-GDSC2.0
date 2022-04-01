@@ -16,7 +16,7 @@ import axios from "axios";
 function AdminEvents() {
   return (
     <Container>
-        <h2>Events</h2>
+      <h2>Events</h2>
       <Events />
     </Container>
   );
@@ -24,8 +24,9 @@ function AdminEvents() {
 
 function Events() {
   let sample_resources = [];
-  
-  const [resourcesState, setResourcesState] = useLocalStorage("id", sample_resources);
+
+  const [resourcesState, setResourcesState] = useState([]);
+  // useLocalStorage("id", sample_resources);
 
   const initResourceInfo = {
     event_date: "",
@@ -47,7 +48,6 @@ function Events() {
     setResourceInfo(resource);
     setResourceModal(true);
   };
-
 
   let getSections = () => {
     let events = new Set();
@@ -95,27 +95,30 @@ function Events() {
     ) {
       setFormErrors(true);
       return;
-    }
-    else {
-      axios.post("/eventSubmit",
-      {
-          data: {
+
+    } else {
+      axios
+        .post(
+          "/eventSubmit",
+          {
+            data: {
               name: formValues.name,
               event_date: formValues.event_date,
               link: formValues.link,
               description: formValues.description,
-              location: formValues.location
+              location: formValues.location,
+            },
+          },
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("token"),
+            },
           }
-      },
-      {
-          headers: {
-              "x-access-token": localStorage.getItem("token")
-          }
-      }).then(() => {
-          
-      }).catch((err) => {
-          console.log(err)
-      })
+        )
+        .then(() => {})
+        .catch((err) => {
+          console.log(err);
+        });
     }
     setResourcesState((prev) => [
       ...prev,
@@ -161,8 +164,6 @@ function Events() {
                 Missing Form
               </h3>
             )}
-
-
             <Form.Group as={Row} className="mb-3" controlId="idea">
               <Col>
                 <Form.Label for="name" column sm={10}>
@@ -266,7 +267,6 @@ function Events() {
         {Array.from(getSections()).map((event_date) => {
           return (
             <div key={event_date}>
-
               <Row xs={1} md={1} className="g-4 mt-2">
                 <h1>{event_date}</h1>
                 <hr></hr>
@@ -274,6 +274,7 @@ function Events() {
               <Row xs={1} md={3} className="g-4">
                 {resourcesState
                   .filter((r) => {
+                    console.log(r);
                     return r.event_date.toLowerCase() === event_date;
                   })
                   .map((r) => {
@@ -337,7 +338,10 @@ function Events() {
             <hr></hr>
             <Row xs={1} md={1} className="g-4 ms-2">
               <div>
-                <b>Link :</b> <a className="h6" variant="secondary" href={resourceInfo.link}>{resourceInfo.link}</a>
+                <b>Link :</b>{" "}
+                <a className="h6" variant="secondary" href={resourceInfo.link}>
+                  {resourceInfo.link}
+                </a>
               </div>
               <div>
                 <b>Description :</b> {resourceInfo.description}
@@ -354,4 +358,3 @@ function Events() {
 }
 
 export default AdminEvents;
-  
