@@ -12,6 +12,7 @@ import axios from "axios";
 import AdminTeamManagement from "./AdminTeamManagement";
 import AdminPastProject from "./AdminPastProject";
 import BugReportLogs from "../BugReportLogs/BugReportLogs";
+import AdminEvents from "./AdminEvents";
 import DarkModeContext from "../../context/darkMode/DarkModeContext";
 import "./admin.css";
 export default function AdminPage(props) {
@@ -129,7 +130,9 @@ export default function AdminPage(props) {
           <Accordion.Collapse eventKey="4">
             <Card className={AdminStyle.container_width}>
               <Card.Header>Events</Card.Header>
-              <Card.Body></Card.Body>
+              <Card.Body>
+                <AdminEvents />
+              </Card.Body>
             </Card>
           </Accordion.Collapse>
           <Accordion.Collapse eventKey="5">

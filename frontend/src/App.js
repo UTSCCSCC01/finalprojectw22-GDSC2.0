@@ -8,7 +8,6 @@ import Homepage from "./components/Homepage/Homepage";
 import About from "./components/About/About";
 import Subscribe from "./components/Subscribe/Subscribe";
 import ContactUs from "./components/ContactUs/ContactUs";
-import Team from "./components/Team/Team";
 import Initial from "./components/application/Initial/Initial";
 import "bootstrap/dist/css/bootstrap.min.css";
 import StudentForm from "./components/application/forms/StudentForm";
@@ -47,7 +46,6 @@ const App = () => {
             <Route path="/" element={<Homepage />} />
             <Route path="/reportBug" element={<BugReportForm />} />
             {/* <Route path="/reportBugLogs" element={<BugReportLogs />} /> */}
-            <Route path="/team" element={<Team />} />
             <Route path="/subscribe" element={<Subscribe />} />
             <Route path="/about" element={<About />} />
             <Route path="/contactUs" element={<ContactUs />} />
