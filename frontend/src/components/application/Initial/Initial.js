@@ -2,7 +2,6 @@ import React,{useState,useEffect,} from "react";
 import "./Initial.css";
 // import Button from '@mui/material/Button';
 import { useNavigate, useParams } from "react-router-dom";
-import { Outlet, nav } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import ProgressBar from "react-bootstrap/ProgressBar";
 // import Button from "../common/Button";
@@ -25,7 +24,6 @@ const Initial = () => {
         alert(e)
     })
   }
-
   useEffect(()=>{
     getStatus();
   },[])
@@ -46,14 +44,14 @@ const Initial = () => {
         </div>
         <div className="initial-container">
           <div className="initial-child w-25">
-            <StudentMessage Status ={status.student} Role ="student"/>
+            <StudentMessage Status ={status.student} Role ="student" StudentNum={student_num}/>
             <ProgressBar animated variant="info" label={`${Math.max(0,status.student*25)}%`} now={Math.max(0,status.student*25)} />
           </div>
 
           <div className="vl"></div>
           <div className="initial-child w-25">
-            <StudentMessage Status ={status.mentor} Role = "mentor"/>
-            <ProgressBar animated variant="success" label={`${Math.max(0,status.student*25)}%`} now={Math.max(0,status.student*25)} />
+            <StudentMessage Status ={status.mentor} Role = "mentor" StudentNum={student_num}/>
+            <ProgressBar animated variant="success" label={`${Math.max(0,status.mentor*25)}%`} now={Math.max(0,status.mentor*25)} />
           </div>
       </div>
       </div>
@@ -63,6 +61,19 @@ const Initial = () => {
 
 const StudentMessage = (props)=>{
   let nav = useNavigate();
+  const handleTeamPage = ()=>{
+    console.log("hello")
+    axios.post("/teams/getTeam",{'student_num':props.StudentNum})
+    .then((res)=>{
+      console.log(res)
+      var team_id = res.data.team_id
+      nav(`/team/${team_id}`);
+    })
+    .catch((e)=>{
+      console.log(e)
+      alert("Please contact Admins")
+    })
+  }
   if (props.Status == -1){
     return (
       <div>
@@ -108,6 +119,7 @@ const StudentMessage = (props)=>{
         <Button
           size="large"
           variant="outline-primary"
+          onClick={()=>handleTeamPage()}
         >
           Go to my team
         </Button>

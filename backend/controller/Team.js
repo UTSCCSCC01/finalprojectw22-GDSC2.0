@@ -21,18 +21,22 @@ exports.getAll = (async (req,res)=>{
 
 // Teams Endpoints
 exports.getDescription = (async (req,res)=>{
-    const team = await teamModel.findOne({"team_name":req.body['team_name']})
+    console.log("hello again")
+    const team = await teamModel.findOne({"_id":req.body['id']})
+    console.log(team);
     res.status(200).json({
         "description": team.description
     })
 })
+
 exports.setDescription = (async (req,res)=>{
-    const teams = await teamModel.create({'description': req.body['description']})
+    console.log("hello")
+    const teams = await teamModel.findOneAndUpdate({'_id':req.body.id},{'description': req.body['description']})
     .catch((e) => {
+        console.log("error")
         res.status(400).json({
             "error": e
         })
-        return;
     })
    
 })
@@ -74,7 +78,7 @@ exports.getAllTeams = (async (req,res)=>{
  * }
  */
 exports.getTeam = (async (req,res)=>{
-    const member = await teamMemberModel.findOne({"student_num":req.param.student_num})
+    const member = await teamMemberModel.findOne({"student_num":req.body.student_num})
     .catch((e)=>{
         res.status(404).json({
             errors:e
@@ -92,13 +96,13 @@ exports.getTeam = (async (req,res)=>{
  * }
  */
 exports.getTeamInfo = (async (req,res)=>{
-    const team = await teamModel.findOne({'_id':req.param.team_id})
+    const team = await teamModel.findOne({'_id':req.body.team_id})
     .catch((e)=>{
         res.status(400).json({
             errors:e
         })
     })
-    const members = await teamMemberModel.find({'team':req.param.team_id})
+    const members = await teamMemberModel.find({'team':req.body.team_id})
     .catch((e)=>{
         res.status(400).json({
             errors:e
@@ -219,26 +223,26 @@ exports.getTeamMembers = (async (req,res)=>{
  * }
  */
 exports.addTeamMember = (async (req,res)=>{
-    console.log(req.body)
     const team = await teamModel.findOne({"team_name":req.body["team_name"]})
     .catch((e)=>{
-        console.log("1")
         res.status(400).json({
             "error":e
         })
         return;
     })
+    console.log(req.body['student_num'])
+    console.log(req.body["role"])
     await teamMemberModel.create({
         "student_num": req.body['student_num'],
         "role": req.body["role"],
-        "team": team.id
+        "team": team._id
     }).catch((e)=>{
-        console.log(e)
         res.status(400).json({
             "error":e
         })
         return;
     })
+    console.log(team);
     if (req.body["role"] === 'student'){
         await studentAppModel.findOneAndUpdate({
             "student_num": req.body['student_num']
@@ -298,7 +302,6 @@ exports.getStudentApp = async (req,res)=>{
             "error": e
         })
     })
-    console.log(students);
     res.status(200).json({
         "students":students
     })

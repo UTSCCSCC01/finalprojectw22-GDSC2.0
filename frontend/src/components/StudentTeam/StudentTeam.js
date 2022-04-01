@@ -2,36 +2,9 @@ import React, {useState,useEffect,useRef} from "react";
 import { useParams } from "react-router-dom";
 import {Row, Col, Button, Modal} from "react-bootstrap";
 import AppModule from "../../css/admin/Application.module.css";
+import axios from 'axios';
 import "./StudentTeam.css";
-const sample_students = [
-    {
-        student_num: "100000000",
-        name: "aaa",
-        email: "aaa@gmail.com"
-    },
-    {
-        student_num: "100000001",
-        name: "bbb",
-        email: "bbb@gmail.com"
-    },
-    {
-        student_num: "100000002",
-        name: "ccc",
-        email: "ccc@gmail.com"
-    }
-]
-const sample_mentors = [
-    {
-        student_num: "100000003",
-        name: "illir",
-        email: "illirTheBest@mail.com"
-    }
-]
-const sample_team = {
-    name: "GDSC2.0",
-    description: "The best university project in Toronto",
-    pitch: "What is a pitch"
-}
+
 export default function StudentTeam(){
     const params = useParams();
     const team_id = params.team_id;
@@ -41,9 +14,10 @@ export default function StudentTeam(){
     const inputRef = useRef();
     const [descriptionModal, setDescriptionModal] = useState(false)
     const [description,setDescription] = useState("")
+    const [desInput,setDesInput] = useState("")
 
     const [source, setSource] = useState();
-
+    const [sourceModal,setSourceModal] = useState(false);
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         const url = URL.createObjectURL(file);
@@ -53,23 +27,39 @@ export default function StudentTeam(){
         setDescriptionModal(true);
     }
     const handleSubmit = ()=>{
-        console.log(description);
+        axios.post('/teams/setDescription',{'id':team_id,'description':desInput})
+        .catch((e)=>{
+            alert(e);
+        })
+        axios.post("/teams/getDescription",{'id':team_id})
+        .then((res)=>{
+            setDescription(res.data.description);
+            setDesInput("")
+        })
         setDescriptionModal(false);
     }
+    const handlePitchUpdate = ()=>{
+        setSourceModal(true)
+    }
+    const handlePitchChange = (e)=>{
+        handleFileChange(e);
+        setSourceModal(false);
+    }
     useEffect(()=>{
-        // get team info and all members info
-        /** 
-         * response {
-         *  team_name,
-         *  description,
-         *  pitch,
-         *  students: [studentApp]
-         *  mentors: [mentorApp]
-         * }
-         */
-        setStudents(sample_students);
-        setMentors(sample_mentors);
-        setTeamInfo(sample_team);
+        axios.post("/teams/getTeamInfo",{"team_id":team_id}).
+        then((res)=>{
+            setStudents(res.data.students);
+            setMentors(res.data.mentors);
+            setTeamInfo({
+                name:res.data.team_name,
+                description:res.data.description,
+                pitch:res.data.description,
+            })
+            setDescription(res.data.description)
+        })
+        .catch((e)=>{
+            alert(e);
+        })
         
     },[])
     return (
@@ -82,7 +72,7 @@ export default function StudentTeam(){
                 <div>
                 
                     <h3 className="w-100">Project Description <Button onClick={handleEdit}>Edit</Button></h3>
-                    <p className="description_container">{teamInfo.description}</p>
+                    <p className="description_container">{description}</p>
                 </div>
                 <hr/>
                 <div>
@@ -98,14 +88,13 @@ export default function StudentTeam(){
                                 onChange={handleFileChange}
                                 accept=".mov,.mp4"
                             />
-                            <Button>Submit</Button>
                             </div>
                         </div>
                         )
                     }
                     {source && (
                         <div>
-                            <h3>Elevator Pitch <Button>Update</Button></h3>
+                            <h3>Elevator Pitch <Button onClick={handlePitchUpdate}>Update</Button></h3>
                             <div className="text-center">
                             <video
                             controls
@@ -127,7 +116,7 @@ export default function StudentTeam(){
                         <div key={mentor.student_num} className="pb-2">
                             <Row>
                                 <Col sm={2}>Name:</Col>
-                                <Col sm={10} className="team_member">{mentor.name}</Col>
+                                <Col sm={10} className="team_member">{mentor.full_name}</Col>
                             </Row>
                             <Row>
                                 <Col sm={2}>Email:</Col>
@@ -145,7 +134,7 @@ export default function StudentTeam(){
                         <div key={student.student_num} className="pb-2">
                             <Row>
                                 <Col sm={2}>Name:</Col>
-                                <Col sm={10} className="team_member">{student.name}</Col>
+                                <Col sm={10} className="team_member">{student.full_name}</Col>
                             </Row>
                             <Row>
                                 <Col sm={2}>Email:</Col>
@@ -168,9 +157,28 @@ export default function StudentTeam(){
                 <Modal.Title>Project Description</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <textarea cols ="50" rows="8" value={description} onChange={(e)=>setDescription(e.target.value)}></textarea>
+                <textarea cols ="50" rows="8" value={desInput} onChange={(e)=>setDesInput(e.target.value)}></textarea>
                 </Modal.Body>
                 <Modal.Footer><Button onClick={handleSubmit}>Submit</Button></Modal.Footer>
+            </Modal>
+            <Modal
+                show={sourceModal}
+                onHide={() => setSourceModal(false)}
+                className="d-flex flex-column "
+                dialogClassName={`${AppModule.dialog_width}`}
+                centered
+            >
+                <Modal.Header closeButton>
+                <Modal.Title>Upload Elevator Pitch</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <input
+                                ref={inputRef}
+                                type="file"
+                                onChange={handlePitchChange}
+                                accept=".mov,.mp4"
+                            />
+                </Modal.Body>
             </Modal>
         </div>
     )

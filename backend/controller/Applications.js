@@ -29,7 +29,7 @@ exports.getStatus = async (req,res) =>{
     })
     return;
   });
-  var mentorApp = await studentAppModel.find({'student_num':student_num})
+  var mentorApp = await mentorAppModel.find({'student_num':student_num})
   .catch((e)=>{
     res.status(400).json({
       "errors": e
