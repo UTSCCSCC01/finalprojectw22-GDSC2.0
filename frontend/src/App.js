@@ -27,6 +27,7 @@ import GeneralResources from "./components/General/GeneralResources/ResourceFilt
 import GeneralEvents from "./components/General/GeneralEvents/GeneralEvents";
 import GeneralProjects from "./components/General/GeneralProjects/GeneralProjects";
 import axios from "axios";
+import SetRoleState from "./context/setRole/SetRoleState";
 
 const App = () => {
   const [portalActive, setPortalActive] = useState(false);
@@ -37,6 +38,7 @@ const App = () => {
   }, []);
   return (
     <>
+    <SetRoleState>
       <DarkModeState>
         <Navbarmenu />
         <Router>
@@ -75,6 +77,7 @@ const App = () => {
         </Router>
         <Footer />
       </DarkModeState>
+      </SetRoleState>
     </>
   );
 };

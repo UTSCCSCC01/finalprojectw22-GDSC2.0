@@ -10,3 +10,17 @@
 .main {
     align-items: flex-start;
 }
+
+.edit-delete .edit {
+    color: green;
+    margin-right: 2rem;
+}
+
+.edit-delete .delete {
+    color: red;
+}
+
+.edit-delete .edit:hover,
+.edit-delete .delete:hover {
+    cursor: pointer;
+}

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Event from "./Event";
 import { Button, Row, Modal } from "react-bootstrap";
 import AppModule from "../../../css/admin/Application.module.css";
-
+import DarkModeContext from "../../../context/darkMode/DarkModeContext"
 const GeneralEvents = () => {
+  const {mode, toggleMode} = useContext(DarkModeContext)
   const initEventInfo = {
     id: "",
     name: "",
@@ -47,7 +48,8 @@ const GeneralEvents = () => {
 
   return (
     <>
-      <section className="py-4 container">
+      <div className={mode === true ? "dark" : ""}>
+        <section className="py-5 container">
         <div className="row justify-content-center">
           <h2>Upcoming Events</h2>
           <hr />
@@ -69,6 +71,7 @@ const GeneralEvents = () => {
         dialogClassName={`${AppModule.dialog_width}`}
         centered
       >
+        <div className={mode === true ? "dark": ""}>
         <Modal.Header closeButton>
           <Modal.Title>Event Information</Modal.Title>
         </Modal.Header>
@@ -92,7 +95,9 @@ const GeneralEvents = () => {
             </div>
           </Row>
         </Modal.Body>
+        </div>
       </Modal>
+      </div>
     </>
   );
 };
