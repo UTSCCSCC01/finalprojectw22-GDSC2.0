@@ -8,17 +8,13 @@
  */
 
 // required frameworks/modules
-require("dotenv").config({path: "../.env"});
+require("dotenv").config();
 const express = require("express");
 const connDB = require("./config/db");
-// const testModel = require("./models/testModel");
+const testModel = require("./models/testModel");
 const bodyParser = require("body-parser");
 const applicationRoute = require("./routes/applications");
 const auth = require("./middleware/auth");
-const resourcesRoute = require("./routes/resources");
-const teamRoute = require("./routes/team");
-const eventRoute = require("./routes/events");
-
 const app = express();
 const portalStatus = {
   active: true,
@@ -30,26 +26,19 @@ app.use(bodyParser.json());
 connDB();
 
 const loginRoute = require("./routes/login");
-
 const registerRoute = require("./routes/register");
 const sendMail = require("./routes/sendMail");
-const adminProjectRoute = require("./routes/adminPastProjects");
 const bugReport = require("./routes/bugReport");
-
 //const getAnsRoute = require("./routes/getAnswers");
 //const createAnsRoute = require("./routes/createAnswers");
 
 app.use("/login", loginRoute);
+app.use("/register", registerRoute);
 app.use("/mail", auth, sendMail);
 app.use("/bugReport", auth, bugReport);
-//app.use("/applications", auth, applicationRoute);
-app.use("/applications", applicationRoute);
-app.use("/register", registerRoute);
-app.use("/events", eventRoute);
-app.use("/resources", resourcesRoute);
-app.use("/teams", teamRoute);
-app.use("/portal", loginRoute);
-app.use("/admin/pastProjects", adminProjectRoute);
+//app.use("/getAnswers", getAnsRoute);
+//app.use("/createAnswers", createAnsRoute);
+app.use("/applications", auth, applicationRoute);
 
 app.get("/", (req, res) => {
   res.send("API IS RUNNING...");
@@ -79,7 +68,7 @@ app.post("/postPortalStatus", (req, res) => {
   res.send(portalStatus);
 });
 //End of endpoints
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 app.listen(port, console.log(`listening on port ${port}`));
 
 module.exports = app;
