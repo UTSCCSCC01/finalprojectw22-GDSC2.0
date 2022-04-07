@@ -60,7 +60,7 @@ const ResourceFilter = ({ resources }) => {
   return (
     <>
       <div className={mode === true ? "dark" : ""}>
-      <section className="py-4 container">
+      <section className="py-4 container" style={{height: "100vh"}}>
         <div className="row justify-content-center">
           <div className="col-12 mb-5">
             <div className="mb-3 col-4 mx-auto text-center">

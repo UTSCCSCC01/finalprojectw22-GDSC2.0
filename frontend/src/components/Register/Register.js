@@ -12,6 +12,9 @@ const Register = () => {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
+  const [showError, setShowError] = useState(false)
+
 
   const {mode, toggleMode} = useContext(DarkModeContext)
 
@@ -20,15 +23,15 @@ const Register = () => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value, uid});
   };
-
+  
   const handleSubmit = async (e) => {
+    e.preventDefault();
     setFormErrors(validate(e, formValues));
     setIsSubmit(true);
   };
 
   useEffect(async () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues)
       try {
         const res = await axios.post('/register', {
           data: {
@@ -44,9 +47,8 @@ const Register = () => {
           window.location.href="/portal"
         }
       }catch(err) {
-        window.location.href="/register"
-        console.log(err)
-
+        setErrorMessage(err.response.data.message)
+        setShowError(true)
       }
     }
   }, [formErrors])
@@ -89,13 +91,17 @@ const Register = () => {
       <div className="container my-5">
         <div className="row justify-content-center">
           <div className="col-lg-5 col-md-7 col-sm-12">
+          {showError && (<div class="alert alert-danger d-flex align-items-center justify-content-around">
+                  <p className="m-0"><strong>Error!</strong> {errorMessage}</p>
+                  <a href='#' style={{color: "black"}} onClick={() => setShowError(false)}>&times;</a>
+              </div>)}
             <div className="register-wrap p-5">
               <div className="user-icon text-center">
                 <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
               </div>
               <h3 className="my-2 text-center">Student/Mentor sign up</h3>
               <form className="mt-3" onSubmit={handleSubmit}>
-              <div className="form-group">
+              <div className="form-group"> 
                   <input
                     type="text"
                     name="firstName"
