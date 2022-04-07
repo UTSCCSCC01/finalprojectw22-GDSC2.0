@@ -5,8 +5,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 
-const NUM_DISPLAY = 20;
-
 const platformName = {
     aws: "AWS",
     google_cloud: "Google Cloud",
@@ -127,18 +125,17 @@ export default function Filter(props) {
     };
     const handleApply = (e) => {
       const req_body = filter;
-      req_body["num_page"] = 1;
-      req_body["num_display"] = NUM_DISPLAY;
       req_body.cgpa = parseFloat(req_body.cgpa);
       if (isNaN(req_body.cgpa)){
         alert("Invalid cgpa, set to minimum (1.8) by default")
         req_body.cgpa = 1.8;
       }
       if (req_body.role == "student") {
-          console.log("hello")
+          
         axios
           .post("/applications/filterStudentApp", req_body)
           .then((res) => {
+            console.log(res.data)
             let data = res.data.data;
             for (let i = 0; i < data.length; i++) {
               data[i]["role"] = "Student";

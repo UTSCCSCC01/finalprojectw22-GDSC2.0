@@ -8,11 +8,11 @@ const teamSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        required: true
+        required: false
     },
     pitch:{
         type:String,
-        required: true
+        required: false
     },
     creation_time:{
         type:Date,
