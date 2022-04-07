@@ -48,7 +48,7 @@ const GeneralEvents = () => {
 
   return (
     <>
-      <div className={mode === true ? "dark" : ""}>
+      <div className={mode === true ? "dark" : ""}style={{height:"100vh"}}>
         <section className="py-5 container">
         <div className="row justify-content-center">
           <h2>Upcoming Events</h2>

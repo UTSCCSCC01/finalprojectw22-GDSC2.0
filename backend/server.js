@@ -8,7 +8,7 @@
  */
 
 // required frameworks/modules
-require("dotenv").config({path: "../.env"});
+require("dotenv").config();
 const express = require("express");
 const connDB = require("./config/db");
 // const testModel = require("./models/testModel");

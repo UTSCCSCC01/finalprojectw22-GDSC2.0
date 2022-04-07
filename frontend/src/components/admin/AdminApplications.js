@@ -25,7 +25,7 @@ export default function AdminApplication() {
   };
   const [applications, setApplications] = useState([]);
   return (
-    <div className="d-flex flex-column">
+    <div className="d-flex flex-column"style={{height:"150vh"}}>
       <Card.Header className="d-flex">
         <div>Application</div>
         <div className="ms-auto me-2">

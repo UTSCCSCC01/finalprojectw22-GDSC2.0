@@ -140,7 +140,7 @@ function Events() {
 
   return (
     <>
-      <div className="text-center mt-4" style={{height: "100vh"}}>
+      <div className="text-center mt-4" style={{height:"100vh"}}>
         <Button
           size="lg"
           onClick={() => setAddResourceModal(true)}

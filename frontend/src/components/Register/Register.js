@@ -119,7 +119,7 @@ const Register = () => {
                     type="text"
                     name="lastName"
                     className="form-control rounded-left"
-                    placeholder="lastName"
+                    placeholder="Last Name"
                     value={formValues.lastName}
                     onChange={handleChange}
                   />

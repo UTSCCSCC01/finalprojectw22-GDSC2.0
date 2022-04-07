@@ -23,7 +23,7 @@ import shubh from "../../images/Shubh.png"
 const About = () => {
     const {mode, toggleMode} = useContext(DarkModeContext)
     return (
-        <div className={mode === true ? "main dark" : "main"}>
+        <div className={mode === true ? "main dark" : "main"}style={{height:"200vh"}}>
             <Col>
                 <Container>
                     <Row className='row'>
