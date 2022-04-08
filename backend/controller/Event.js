@@ -6,12 +6,12 @@ const eventModel = require("../models/events");
  * payload:{
  * }
  */
-exports.getAllEvents = (async (req,res)=>{
-    const events = await eventModel.find().sort({"event_date":-1})
-    res.status(200).json({
-        "events": events
-    })
-})
+exports.getAllEvents = async (req, res) => {
+  const events = await eventModel.find().sort({ event_date: -1 });
+  res.status(200).json({
+    events: events,
+  });
+};
 
 /**
  * payload:{
@@ -23,8 +23,12 @@ exports.getAllEvents = (async (req,res)=>{
  * }
  */
 exports.submitEvent = async (req, res) => {
+  console.log(req.body.event_date);
   eventModel
-    .create(req.body)
+    .create({
+      ...req.body,
+      event_date: new Date(req.body.event_date),
+    })
     .then((id) => {
       console.log(id);
     })
@@ -36,50 +40,52 @@ exports.submitEvent = async (req, res) => {
   });
 };
 
-
 /**
  * payload:{
  * }
  */
-exports.getPastEvents = async (req,res)=>{
-    const events = await eventModel.find({event_date: {$lte: new Date()}}).exec()
-    .catch((e)=>{
-        res.status(404).json({
-            "error": "past events do not exist"
-        })
+exports.getPastEvents = async (req, res) => {
+  const events = await eventModel
+    .find({ event_date: { $lte: new Date() } })
+    .exec()
+    .catch((e) => {
+      res.status(404).json({
+        error: "past events do not exist",
+      });
     })
-    .then((events)=>{
-        res.status(200).json({
-            'events':events
-        })
+    .then((events) => {
+      res.status(200).json({
+        events: events,
+      });
     })
-    .catch((e)=>{
-        res.status(400).json({
-            'error':"you should not get here"
-        })
-    })
+    .catch((e) => {
+      res.status(400).json({
+        error: "you should not get here",
+      });
+    });
 };
 
 /**
  * payload:{
  * }
  */
- exports.getUpcomingEvents = async (req,res)=>{
-    const events = await eventModel.find({event_date: {$gt: new Date()}}).exec()
-    .catch((e)=>{
-        res.status(404).json({
-            "error": "past events do not exist"
-        })
+exports.getUpcomingEvents = async (req, res) => {
+  const events = await eventModel
+    .find({ event_date: { $gt: new Date() } })
+    .exec()
+    .catch((e) => {
+      res.status(404).json({
+        error: "past events do not exist",
+      });
     })
-    .then((events)=>{
-        res.status(200).json({
-            'events':events
-        })
+    .then((events) => {
+      res.status(200).json({
+        events: events,
+      });
     })
-    .catch((e)=>{
-        res.status(400).json({
-            'error':"you should not get here"
-        })
-    })
+    .catch((e) => {
+      res.status(400).json({
+        error: "you should not get here",
+      });
+    });
 };
-

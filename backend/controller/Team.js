@@ -101,12 +101,14 @@ exports.getTeamInfo = (async (req,res)=>{
         res.status(400).json({
             errors:e
         })
+        return;
     })
     const members = await teamMemberModel.find({'team':req.body.team_id})
     .catch((e)=>{
         res.status(400).json({
             errors:e
         })
+        return;
     })
     var students = [];
     var mentors = [];
@@ -133,6 +135,7 @@ exports.getTeamInfo = (async (req,res)=>{
  * }
  */
 exports.createTeam = (async (req,res)=>{
+    
     const team = await teamModel.create({'team_name':req.body['team_name']})
     .catch((e)=>{
         res.status(400).json({
@@ -142,7 +145,7 @@ exports.createTeam = (async (req,res)=>{
     })
     res.status(201).json({
         "success": "create team success",
-        "team_name": team.team_name
+        "team_name": req.body['team_name']
     })
 })
 
@@ -272,7 +275,7 @@ exports.removeTeamMember = (async (req,res)=>{
         })
         return;
     })
-    await teamMemberModel.findOneAndDelete({
+    const role = await teamMemberModel.findOneAndDelete({
         "student_num":req.body['student_num'],
         "team": team.id
     }).catch((e)=>{
@@ -281,9 +284,15 @@ exports.removeTeamMember = (async (req,res)=>{
         })
         return;
     })
-    const student = await studentAppModel.findOne({
-        "student_num":req.body['student_num']
-    })
+    if (role.role === "studednt"){
+        var student = await studentAppModel.findOne({
+            "student_num":req.body['student_num']
+        })
+    }else{
+        var student = await mentorAppModel.findOne({
+            "student_num":req.body['student_num']
+        })
+    }
     student.status = 3;
     student.save();
     res.status(200).json({

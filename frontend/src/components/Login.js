@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle"
 import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faWindowRestore } from "@fortawesome/free-solid-svg-icons";
@@ -11,8 +12,10 @@ const Login = () => {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
+  const [showError, setShowError] = useState(false)
 
-  const {mode, toggleMode} = useContext(DarkModeContext)
+  const { mode, toggleMode } = useContext(DarkModeContext)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,16 +32,17 @@ const Login = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       axios.post("/login", {
         data: {
-           username: formValues.username,
-           email: formValues.email,
-           password: formValues.password,
-           mode: "user"
-        }, 
+          username: formValues.username,
+          email: formValues.email,
+          password: formValues.password,
+          mode: "user"
+        },
       }).then((res) => {
         window.location.href = "/"
         localStorage.setItem("token", res.data.token)
       }).catch((err) => {
-        console.log(err)
+        setErrorMessage(err.response.data.message)
+        setShowError(true)
       })
     }
   }, [formErrors])
@@ -67,6 +71,10 @@ const Login = () => {
       <div className="container my-5">
         <div className="row justify-content-center">
           <div className="col-lg-5 col-md-7 col-sm-12">
+              {showError && (<div class="alert alert-danger d-flex align-items-center justify-content-around">
+                  <p className="m-0"><strong>Error!</strong> {errorMessage}</p>
+                  <a href='#' style={{color: "black"}} onClick={() => setShowError(false)}>&times;</a>
+              </div>)}
             <div className="login-wrap p-5">
               <div className="user-icon text-center">
                 <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>

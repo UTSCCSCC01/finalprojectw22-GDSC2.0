@@ -9,46 +9,12 @@ import {
 } from "react-bootstrap";
 
 import AppModule from "../../css/admin/Application.module.css";
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import DarkModeContext from "../../context/darkMode/DarkModeContext";
 
 function AdminResources() {
-  //   let resource = {
-  //     section: "Recordings",
-  //     name: "workshop",
-  //     link: "www.google.com",
-  //     description: "random randomrandom randomrandom random",
-  //   };
-
-  //   let resource2 = {
-  //     section: "Files",
-  //     name: "sample react",
-  //     link: "www.google.com",
-  //     description: "some files",
-  //   };
-
-  //   let resource3 = {
-  //     section: "Graphics",
-  //     name: "sample react",
-  //     link: "www.google.com",
-  //     description: "some pictures",
-  //   };
-
-  // let sample_resources = [];
-  //   let resources2 = [];
-
-  // for (let i = 0; i < 5; i++) {
-  //   sample_resources.push({ ...resource, id: i });
-  // }
-  // for (let i = 5; i < 10; i++) {
-  //   sample_resources.push({ ...resource2, id: i });
-  // }
-
-  // for (let i = 10; i < 15; i++) {
-  //   sample_resources.push({ ...resource3, id: i });
-  // }
-
   const [resourcesState, setResourcesState] = useState([]);
 
   // list of resources to display
@@ -62,7 +28,8 @@ function AdminResources() {
     description: "",
   };
 
-  const [resourceInfo, setResourceInfo] = useState({});
+  const [resourceInfo, setResourceInfo] = useState({ initResourceInfo });
+  const { mode, toggleMode } = useContext(DarkModeContext);
 
   // show modal when state is true
   const [resourceModal, setResourceModal] = useState(false);
@@ -75,7 +42,10 @@ function AdminResources() {
 
   let getSections = () => {
     let sections = new Set(
-      resourcesState.map((r) => r.section.trim().toLowerCase())
+      resourcesState.map((r) => {
+        console.log(r);
+        return r.section.trim().toLowerCase();
+      })
     );
 
     console.log(sections);
@@ -84,6 +54,7 @@ function AdminResources() {
 
   let getResources = async () => {
     axios.get("/resources").then((res) => {
+      console.log(resourcesState);
       setResourcesState(res.data);
     });
   };
@@ -119,7 +90,7 @@ function AdminResources() {
     setFormValues({
       ...formValues,
       // Trimming any whitespace
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -141,17 +112,25 @@ function AdminResources() {
       return;
     }
 
-    let res = await axios.post("/resources", {
-      section: formValues.section.trim(),
-      name: formValues.name.trim(),
-      link: formValues.link.trim(),
-      description: formValues.description.trim(),
-    });
+    let res = await axios.post(
+      "/resources",
+      {
+        section: formValues.section.trim(),
+        name: formValues.name.trim(),
+        link: formValues.link.trim(),
+        description: formValues.description.trim(),
+      },
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+    );
 
     // getResources();
     setResourcesState((prev) => {
       console.log("hi");
-      console.log(res.data);
+      console.log(res);
       return [
         ...prev,
         {
@@ -199,84 +178,85 @@ function AdminResources() {
           className="d-flex flex=column "
           dialogClassName={`${AppModule.dialog_width}`}
         >
-          <Modal.Header closeButton>
-            <Modal.Title>Add Resource</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {formErrors && (
-              <h3 style={{ color: "red" }} className="text-center">
-                Missing Form Input
-              </h3>
-            )}
+          <div className={mode == true ? "dark" : ""}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Resource</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {formErrors && (
+                <h3 style={{ color: "red" }} className="text-center">
+                  Missing Form Input
+                </h3>
+              )}
 
-            <Form.Group as={Row} className="mb-3" controlId="section">
-              <Col>
-                <Form.Label column sm={10}>
-                  Section
-                </Form.Label>
-              </Col>
-              <Col sm={15}>
-                <Form.Control
-                  value={formValues.section}
-                  name="section"
-                  onChange={handleChange}
-                  type="text"
-                  maxLength="20"
-                  placeholder="Your answer"
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="name">
-              <Col>
-                <Form.Label column sm={10}>
-                  Name
-                </Form.Label>
-              </Col>
-              <Col sm={15}>
-                <Form.Control
-                  value={formValues.name}
-                  name="name"
-                  onChange={handleChange}
-                  maxLength="15"
-                  type="text"
-                  placeholder="Your answer"
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="link">
-              <Col>
-                <Form.Label column sm={10}>
-                  Link
-                </Form.Label>
-              </Col>
-              <Col sm={15}>
-                <Form.Control
-                  value={formValues.link}
-                  name="link"
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="Your answer"
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="desc">
-              <Col>
-                <Form.Label column sm={10}>
-                  Description
-                </Form.Label>
-              </Col>
-              <Col sm={15}>
-                <Form.Control
-                  value={formValues.description}
-                  name="description"
-                  as="textarea"
-                  maxLength="60"
-                  placeholder="Your answer"
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-            {/* <Row xs={1} md={1} className="g-4 ms-2">
+              <Form.Group as={Row} className="mb-3" controlId="section">
+                <Col>
+                  <Form.Label column sm={10}>
+                    Section
+                  </Form.Label>
+                </Col>
+                <Col sm={15}>
+                  <Form.Control
+                    value={formValues.section}
+                    name="section"
+                    onChange={handleChange}
+                    type="text"
+                    maxLength="20"
+                    placeholder="Your answer"
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="name">
+                <Col>
+                  <Form.Label column sm={10}>
+                    Name
+                  </Form.Label>
+                </Col>
+                <Col sm={15}>
+                  <Form.Control
+                    value={formValues.name}
+                    name="name"
+                    onChange={handleChange}
+                    maxLength="15"
+                    type="text"
+                    placeholder="Your answer"
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="link">
+                <Col>
+                  <Form.Label column sm={10}>
+                    Link
+                  </Form.Label>
+                </Col>
+                <Col sm={15}>
+                  <Form.Control
+                    value={formValues.link}
+                    name="link"
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="Your answer"
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="desc">
+                <Col>
+                  <Form.Label column sm={10}>
+                    Description
+                  </Form.Label>
+                </Col>
+                <Col sm={15}>
+                  <Form.Control
+                    value={formValues.description}
+                    name="description"
+                    as="textarea"
+                    maxLength="60"
+                    placeholder="Your answer"
+                    onChange={handleChange}
+                  />
+                </Col>
+              </Form.Group>
+              {/* <Row xs={1} md={1} className="g-4 ms-2">
               <div>
                 <b>Link :</b>{" "}
                 <input name="link" placeholder="Link" onChange={handleChange} />
@@ -290,7 +270,7 @@ function AdminResources() {
                 />
               </div>
             </Row> */}
-            {/* <Row className="g-4 ms-2 mt-1">
+              {/* <Row className="g-4 ms-2 mt-1">
               <div>
                 <b>UofT email :</b> {studentInfo.ut_email}
               </div>
@@ -298,19 +278,21 @@ function AdminResources() {
                 <b>Profile Link :</b> {studentInfo.profile_link}
               </div>
             </Row> */}
-          </Modal.Body>
-          <Modal.Footer>
-            <div className="text-center">
-              <Button variant="success" onClick={handleAddResource}>
-                Submit
-              </Button>
-            </div>
-          </Modal.Footer>
+            </Modal.Body>
+            <Modal.Footer>
+              <div className="text-center">
+                <Button variant="success" onClick={handleAddResource}>
+                  Submit
+                </Button>
+              </div>
+            </Modal.Footer>
+          </div>
         </Modal>
       </div>
 
       <Container fluid className="mt-3">
         {[...getSections()].map((section) => {
+          console.log(section);
           return (
             <div key={section}>
               <Row xs={1} md={1} className="g-4 mt-2">
@@ -320,10 +302,11 @@ function AdminResources() {
               <Row xs={1} md={3} className="g-4">
                 {resourcesState
                   .filter((r) => {
-                    // console.log(r.name);
+                    console.log(r.name);
                     return r.section.toLowerCase() === section;
                   })
                   .map((r) => {
+                    console.log("mapping");
                     return (
                       <Col
                         key={r._id}
@@ -368,28 +351,29 @@ function AdminResources() {
           className="d-flex flex=column "
           dialogClassName={`${AppModule.dialog_width}`}
         >
-          <Modal.Header closeButton>
-            <Modal.Title>Resource Information</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="d-flex w-100">
-              <h1 className="ms-2 mt-auto">{resourceInfo.section}</h1>
-              <h4
-                className={`ms-3 mt-auto mb-auto ${AppModule.role_text_color}`}
-              >
-                {resourceInfo.name}
-              </h4>
-            </div>
-            <hr></hr>
-            <Row xs={1} md={1} className="g-4 ms-2">
-              <div>
-                <b>Link :</b> {resourceInfo.link}
+          <div className={mode == true ? "dark" : ""}>
+            <Modal.Header closeButton>
+              <Modal.Title>Resource Information</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="d-flex w-100">
+                <h1 className="ms-2 mt-auto">{resourceInfo.section}</h1>
+                <h4
+                  className={`ms-3 mt-auto mb-auto ${AppModule.role_text_color}`}
+                >
+                  {resourceInfo.name}
+                </h4>
               </div>
-              <div>
-                <b>Description :</b> {resourceInfo.description}
-              </div>
-            </Row>
-            {/* <Row className="g-4 ms-2 mt-1">
+              <hr></hr>
+              <Row xs={1} md={1} className="g-4 ms-2">
+                <div>
+                  <b>Link :</b> {resourceInfo.link}
+                </div>
+                <div>
+                  <b>Description :</b> {resourceInfo.description}
+                </div>
+              </Row>
+              {/* <Row className="g-4 ms-2 mt-1">
               <div>
                 <b>UofT email :</b> {studentInfo.ut_email}
               </div>
@@ -397,15 +381,16 @@ function AdminResources() {
                 <b>Profile Link :</b> {studentInfo.profile_link}
               </div>
             </Row> */}
-          </Modal.Body>
-          <Modal.Footer>
-            {/* <Button variant="primary me-auto" onClick={handleShowModal}>
+            </Modal.Body>
+            <Modal.Footer>
+              {/* <Button variant="primary me-auto" onClick={handleShowModal}>
               Confirm
             </Button>
             <Button variant="secondary" onClick={handleShowModal}>
               Dont Save
             </Button> */}
-          </Modal.Footer>
+            </Modal.Footer>
+          </div>
         </Modal>
       </Container>
     </>

@@ -41,7 +41,7 @@ export default function AdminPage(props) {
   // main frame of admin interface
   // includes nav bar and designated area to show content.
   return (
-    <div className={mode === true ? "dark": ""}>
+    <div className={mode === true ? "dark": ""}style={{height:"500vh"}}>
       <div className={AdminStyle.admin_logo_box}>
         <h1>
           <img src={dsc_utm} alt="" className={AdminStyle.admin_logo}></img>

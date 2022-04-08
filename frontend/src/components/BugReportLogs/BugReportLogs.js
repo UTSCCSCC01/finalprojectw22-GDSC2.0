@@ -198,6 +198,7 @@ const BugReportLogs = () => {
           
         </div>
         <Modal show={isOpen} onHide={hideModal} >
+            <div className={mode == true ? "dark" : ""}>
                 <Modal.Header closeButton>
                     <ModalTitle>
                         Edit
@@ -291,6 +292,7 @@ const BugReportLogs = () => {
                         <button className="btn btn-success w-100" type="submit">Edit Bug</button>
                     </form>
                 </ModalBody>
+                </div>
             </Modal>
     </div>)
 }

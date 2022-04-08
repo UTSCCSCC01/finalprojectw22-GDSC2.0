@@ -24,3 +24,7 @@
 .dark .bug-form-wrap p {
   color: #fff;
 }
+
+.dark .bug-form-wrap .form-check input {
+  border-width: medium;
+}

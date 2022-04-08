@@ -87,8 +87,8 @@ const BugReportForm = () => {
     return (
         <div className={mode === true ? "main dark" : "main"}>
             <div className="container my-5">
-                <div className="row justify-content-center">
-                    <div className="col-lg-7 col-md-9 col-sm-12">
+                <div className="row justify-content-center mb-5">
+                    <div className="col-lg-5 col-md-9 col-sm-12">
                         <div className="bug-form-wrap p-5">
                             <h3 className="my-2 text-center text-danger">Bug Report</h3>
                             <form className="mt-3" onSubmit={handleSubmit}>
