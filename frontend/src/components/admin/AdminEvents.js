@@ -8,8 +8,8 @@ import {
   Form,
 } from "react-bootstrap";
 import AppModule from "../../css/admin/Application.module.css";
-import React, {useContext} from "react";
-import { useState } from "react";
+import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
@@ -50,11 +50,30 @@ function Events() {
     setResourceModal(true);
   };
 
+  let getDateFormat = (date) => {
+    // console.log(date);
+    let newDate = date.toLocaleString().split(",")[0];
+    // console.log(newDate);
+    return newDate;
+  };
+
+  let getResources = async () => {
+    axios.get("/events/eventGetAll").then((res) => {
+      setResourcesState(res.data.events);
+    });
+  };
+
+  useEffect(() => {
+    console.log("useeffect");
+    getResources();
+  }, []);
+
   let getSections = () => {
     let events = new Set();
 
     for (var i = 0; i < resourcesState.length; i++) {
-      events.add(resourcesState[i].event_date.trim().toLowerCase());
+      events.add(getDateFormat(new Date(resourcesState[i].event_date)));
+      // console.log(events);
     }
     return events;
   };
@@ -76,7 +95,7 @@ function Events() {
     setFormValues({
       ...formValues,
       // Trimming any whitespace
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -87,6 +106,7 @@ function Events() {
   const [id, setId] = useState(15);
 
   const handleAddResource = () => {
+    console.log(formValues);
     if (
       formValues.event_date === "" ||
       formValues.name === "" ||
@@ -96,19 +116,16 @@ function Events() {
     ) {
       setFormErrors(true);
       return;
-
     } else {
       axios
         .post(
-          "/eventSubmit",
+          "/events/eventSubmit",
           {
-            data: {
-              name: formValues.name,
-              event_date: formValues.event_date,
-              link: formValues.link,
-              description: formValues.description,
-              location: formValues.location,
-            },
+            name: formValues.name,
+            event_date: formValues.event_date,
+            link: formValues.link,
+            description: formValues.description,
+            location: formValues.location,
           },
           {
             headers: {
@@ -116,7 +133,9 @@ function Events() {
             },
           }
         )
-        .then(() => {})
+        .then(() => {
+          console.log("added event");
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -166,7 +185,7 @@ function Events() {
                 Missing Form
               </h3>
             )}
-            <Form.Group as={Row} className="mb-3" controlId="idea">
+            <Form.Group as={Row} className="mb-3" controlId="name">
               <Col>
                 <Form.Label for="name" column sm={10}>
                   Name
@@ -176,7 +195,6 @@ function Events() {
                 <Form.Control
                   value={formValues.name}
                   name="name"
-                  id="name"
                   onChange={handleChange}
                   maxLength="15"
                   type="text"
@@ -184,15 +202,14 @@ function Events() {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="idea">
+            <Form.Group as={Row} className="mb-3" controlId="event_date">
               <Col>
                 <Form.Label for="event_date" column sm={10}>
-                  Date
+                  Date (MM-DD-YYYY HH:MM)
                 </Form.Label>
               </Col>
               <Col sm={15}>
                 <Form.Control
-                  id="event_date"
                   value={formValues.event_date}
                   name="event_date"
                   type="text"
@@ -202,7 +219,7 @@ function Events() {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="idea">
+            <Form.Group as={Row} className="mb-3" controlId="link">
               <Col>
                 <Form.Label forcolumn sm={10}>
                   Link
@@ -218,7 +235,7 @@ function Events() {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="idea">
+            <Form.Group as={Row} className="mb-3" controlId="desc">
               <Col>
                 <Form.Label for="desc" column sm={10}>
                   Description
@@ -226,7 +243,6 @@ function Events() {
               </Col>
               <Col sm={15}>
                 <Form.Control
-                  id="desc"
                   value={formValues.description}
                   name="description"
                   as="textarea"
@@ -236,7 +252,7 @@ function Events() {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="idea">
+            <Form.Group as={Row} className="mb-3" controlId="location">
               <Col>
                 <Form.Label for="location" column sm={10}>
                   Location
@@ -244,7 +260,6 @@ function Events() {
               </Col>
               <Col sm={15}>
                 <Form.Control
-                  id="location"
                   value={formValues.location}
                   name="location"
                   as="textarea"
@@ -277,8 +292,8 @@ function Events() {
               <Row xs={1} md={3} className="g-4">
                 {resourcesState
                   .filter((r) => {
-                    console.log(r);
-                    return r.event_date.toLowerCase() === event_date;
+                    // console.log(r);
+                    return getDateFormat(new Date(r.event_date)) === event_date;
                   })
                   .map((r) => {
                     return (
@@ -294,7 +309,6 @@ function Events() {
                             {r.description.length > 15
                               ? r.description.substring(0, 15).concat("...")
                               : r.description}
-
                           </h6>
                           <div className="d-flex m-2 justify-content-around">
                             <Button
@@ -304,12 +318,12 @@ function Events() {
                               View
                             </Button>
 
-                            <Button
+                            {/* <Button
                               variant="danger"
                               onClick={() => handleDelete(r.id)}
                             >
                               Delete
-                            </Button>
+                            </Button> */}
                           </div>
                         </Card>
                       </Col>
@@ -331,7 +345,9 @@ function Events() {
           </Modal.Header>
           <Modal.Body>
             <div className="d-flex w-100">
-              <h1 className="ms-2 mt-auto">{resourceInfo.event_date}</h1>
+              <h1 className="ms-2 mt-auto">
+                {getDateFormat(new Date(resourceInfo.event_date))}
+              </h1>
               <h4
                 className={`ms-3 mt-auto mb-auto ${AppModule.role_text_color}`}
               >
@@ -340,6 +356,9 @@ function Events() {
             </div>
             <hr></hr>
             <Row xs={1} md={1} className="g-4 ms-2">
+              <div>
+                <b>Time :</b> {resourceInfo.event_date.substring(11, 16)}
+              </div>
               <div>
                 <b>Link :</b>{" "}
                 <a className="h6" variant="secondary" href={resourceInfo.link}>

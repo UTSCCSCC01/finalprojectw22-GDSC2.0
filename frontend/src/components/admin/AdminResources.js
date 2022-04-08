@@ -15,41 +15,6 @@ import axios from "axios";
 import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 function AdminResources() {
-  //   let resource = {
-  //     section: "Recordings",
-  //     name: "workshop",
-  //     link: "www.google.com",
-  //     description: "random randomrandom randomrandom random",
-  //   };
-
-  //   let resource2 = {
-  //     section: "Files",
-  //     name: "sample react",
-  //     link: "www.google.com",
-  //     description: "some files",
-  //   };
-
-  //   let resource3 = {
-  //     section: "Graphics",
-  //     name: "sample react",
-  //     link: "www.google.com",
-  //     description: "some pictures",
-  //   };
-
-  // let sample_resources = [];
-  //   let resources2 = [];
-
-  // for (let i = 0; i < 5; i++) {
-  //   sample_resources.push({ ...resource, id: i });
-  // }
-  // for (let i = 5; i < 10; i++) {
-  //   sample_resources.push({ ...resource2, id: i });
-  // }
-
-  // for (let i = 10; i < 15; i++) {
-  //   sample_resources.push({ ...resource3, id: i });
-  // }
-
   const [resourcesState, setResourcesState] = useState([]);
 
   // list of resources to display

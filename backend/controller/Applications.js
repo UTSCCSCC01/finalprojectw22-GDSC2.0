@@ -136,32 +136,8 @@ exports.filterStudentApp = async (req, res) => {
     .gte(req.body.cgpa)
     .find({ have_group: req.body.hasGroup })
     .sort({ creation_time: 1 });
-  length = filteredStudents.length;
-  var resStudents = null;
-  if (
-    (req.body.num_page - 1) * req.body.num_display > length ||
-    req.body.num_page < 1
-  ) {
-    res.status(400).json({
-      error: "Index of page out of range",
-    });
-  }
-  if (length > 0) {
-    const tail =
-      req.body.num_page * req.body.num_display > length
-        ? length
-        : req.body.num_page * req.body.num_display;
-    resStudents = filteredStudents.slice(
-      (req.body.num_page - 1) * req.body.num_display,
-      tail
-    );
-  }
-  if (resStudents === null){
-    resStudents = []
-  }
   res.send({
-    total: length,
-    data: resStudents,
+    data: filteredStudents,
   });
 };
 /** Mentor Endpoints */
@@ -210,7 +186,6 @@ exports.rejectMentorForm = async (req, res) => {
 
 exports.filterMentorApp = async (req, res) => {
   let query = buildQueryFitler(req.body);
-  let length = 0;
   const filteredMentors = await mentorAppModel
     .find(query)
     .where("year")
@@ -218,32 +193,8 @@ exports.filterMentorApp = async (req, res) => {
     .where("cgpa")
     .gte(req.body.cgpa)
     .sort({ creation_time: 1 });
-  length = filteredMentors.length;
-  let resMentors = null;
-  if (
-    (req.body.num_page - 1) * req.body.num_display > length ||
-    req.body.num_page < 1
-  ) {
-    res.status(400).json({
-      error: "Index of page out of range",
-    });
-  }
-  if (length > 0) {
-    const tail =
-      req.body.num_page * req.body.num_display > length
-        ? length
-        : req.body.num_page * req.body.num_display;
-        resMentors = filteredMentors.slice(
-      (req.body.num_page - 1) * req.body.num_display,
-      tail
-    );
-  }
-  if (resMentors === null){
-    resMentors = []
-  }
   res.send({
-    total: length,
-    data: resMentors,
+    data: filteredMentors,
   });
 };
 /** Validators */
@@ -436,8 +387,6 @@ exports.studentQueryValidator = [
     .isEmpty()
     .isBoolean(),
   body("cgpa", "Invalid cgpa").not().isEmpty().isFloat({ min: 0, max: 4 }),
-  body("num_display", "Invalid Num Display").not().isEmpty().isInt(),
-  body("num_page", "Invalid Num Pagee").not().isEmpty().isInt(),
   (req, res, next) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -463,8 +412,6 @@ exports.mentorQueryValidator = [
     .isEmpty()
     .isBoolean(),
   body("cgpa", "Invalid cgpa").not().isEmpty().isFloat({ min: 0, max: 4 }),
-  body("num_display", "Invalid Num Display").not().isEmpty().isInt(),
-  body("num_page", "Invalid Num Pagee").not().isEmpty().isInt(),
   (req, res, next) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
