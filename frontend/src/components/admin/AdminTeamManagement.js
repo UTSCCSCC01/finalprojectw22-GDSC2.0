@@ -70,6 +70,7 @@ const AdminTeamManagement = () =>{
             })
         }else if(confirmMethod.func === "add"){
             if (teamInfo){
+                console.log(confirmMethod.role);
                 axios.post("/teams/addTeamMember",{"team_name":teamInfo.team_name,"student_num":confirmMethod.student_num,'role':confirmMethod.role})
                 .then((res)=>{
                     axios.post("/teams/getTeamMembers",{"team_name":teamInfo.team_name})
