@@ -8,10 +8,9 @@ import {
   Form,
 } from "react-bootstrap";
 import AppModule from "../../css/admin/Application.module.css";
-import React from "react";
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import DarkModeContext from "../../context/darkMode/DarkModeContext"
+import DarkModeContext from "../../context/darkMode/DarkModeContext";
 
 function AdminEvents() {
   return (
@@ -26,7 +25,7 @@ function Events() {
   let sample_resources = [];
 
   const [resourcesState, setResourcesState] = useState([]);
-  const { mode, toggleMode } = useContext(DarkModeContext)
+  const { mode, toggleMode } = useContext(DarkModeContext);
   // useLocalStorage("id", sample_resources);
 
   const initResourceInfo = {
@@ -160,7 +159,7 @@ function Events() {
 
   return (
     <>
-      <div className="text-center mt-4" style={{height:"100vh"}}>
+      <div className="text-center mt-4">
         <Button
           size="lg"
           onClick={() => setAddResourceModal(true)}
@@ -176,107 +175,107 @@ function Events() {
           dialogClassName={`${AppModule.dialog_width}`}
         >
           <div className={mode == true ? "dark" : ""}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add Event</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {formErrors && (
-              <h3 style={{ color: "red" }} className="text-center">
-                Missing Form
-              </h3>
-            )}
-            <Form.Group as={Row} className="mb-3" controlId="name">
-              <Col>
-                <Form.Label for="name" column sm={10}>
-                  Name
-                </Form.Label>
-              </Col>
-              <Col sm={15}>
-                <Form.Control
-                  value={formValues.name}
-                  name="name"
-                  onChange={handleChange}
-                  maxLength="15"
-                  type="text"
-                  placeholder="Your answer"
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="event_date">
-              <Col>
-                <Form.Label for="event_date" column sm={10}>
-                  Date (MM-DD-YYYY HH:MM)
-                </Form.Label>
-              </Col>
-              <Col sm={15}>
-                <Form.Control
-                  value={formValues.event_date}
-                  name="event_date"
-                  type="text"
-                  maxLength="20"
-                  placeholder="Your answer"
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="link">
-              <Col>
-                <Form.Label forcolumn sm={10}>
-                  Link
-                </Form.Label>
-              </Col>
-              <Col sm={15}>
-                <Form.Control
-                  value={formValues.link}
-                  name="link"
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="Your answer"
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="desc">
-              <Col>
-                <Form.Label for="desc" column sm={10}>
-                  Description
-                </Form.Label>
-              </Col>
-              <Col sm={15}>
-                <Form.Control
-                  value={formValues.description}
-                  name="description"
-                  as="textarea"
-                  maxLength="60"
-                  placeholder="Your answer"
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="location">
-              <Col>
-                <Form.Label for="location" column sm={10}>
-                  Location
-                </Form.Label>
-              </Col>
-              <Col sm={15}>
-                <Form.Control
-                  value={formValues.location}
-                  name="location"
-                  as="textarea"
-                  maxLength="30"
-                  placeholder="Your answer"
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <div className="text-center">
-              <Button variant="success" onClick={handleAddResource}>
-                Submit
-              </Button>
-            </div>
-          </Modal.Footer>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Event</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {formErrors && (
+                <h3 style={{ color: "red" }} className="text-center">
+                  Missing Form
+                </h3>
+              )}
+              <Form.Group as={Row} className="mb-3" controlId="name">
+                <Col>
+                  <Form.Label for="name" column sm={10}>
+                    Name
+                  </Form.Label>
+                </Col>
+                <Col sm={15}>
+                  <Form.Control
+                    value={formValues.name}
+                    name="name"
+                    onChange={handleChange}
+                    maxLength="15"
+                    type="text"
+                    placeholder="Your answer"
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="event_date">
+                <Col>
+                  <Form.Label for="event_date" column sm={10}>
+                    Date (MM-DD-YYYY HH:MM)
+                  </Form.Label>
+                </Col>
+                <Col sm={15}>
+                  <Form.Control
+                    value={formValues.event_date}
+                    name="event_date"
+                    type="text"
+                    maxLength="20"
+                    placeholder="Your answer"
+                    onChange={handleChange}
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="link">
+                <Col>
+                  <Form.Label forcolumn sm={10}>
+                    Link
+                  </Form.Label>
+                </Col>
+                <Col sm={15}>
+                  <Form.Control
+                    value={formValues.link}
+                    name="link"
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="Your answer"
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="desc">
+                <Col>
+                  <Form.Label for="desc" column sm={10}>
+                    Description
+                  </Form.Label>
+                </Col>
+                <Col sm={15}>
+                  <Form.Control
+                    value={formValues.description}
+                    name="description"
+                    as="textarea"
+                    maxLength="60"
+                    placeholder="Your answer"
+                    onChange={handleChange}
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="location">
+                <Col>
+                  <Form.Label for="location" column sm={10}>
+                    Location
+                  </Form.Label>
+                </Col>
+                <Col sm={15}>
+                  <Form.Control
+                    value={formValues.location}
+                    name="location"
+                    as="textarea"
+                    maxLength="30"
+                    placeholder="Your answer"
+                    onChange={handleChange}
+                  />
+                </Col>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <div className="text-center">
+                <Button variant="success" onClick={handleAddResource}>
+                  Submit
+                </Button>
+              </div>
+            </Modal.Footer>
           </div>
         </Modal>
       </div>
