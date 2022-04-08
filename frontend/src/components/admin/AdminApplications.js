@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Filter from './AdminFilter';
 import Applicants from "./Applicants";
+
 
 const NUM_DISPLAY = 20;
 
@@ -24,6 +25,7 @@ export default function AdminApplication() {
     }
   };
   const [applications, setApplications] = useState([]);
+
   return (
     <div className="d-flex flex-column"style={{height:"150vh"}}>
       <Card.Header className="d-flex">

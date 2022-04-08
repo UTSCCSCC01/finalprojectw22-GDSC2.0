@@ -1,9 +1,10 @@
-import React, {useState,useEffect}from "react";
+import React, {useState,useEffect, useContext}from "react";
 import {Button, Form, Col, Modal, Row} from "react-bootstrap";
 import Card from "react-bootstrap/Card"
 import ProjectModule from "../../css/admin/AdminPastProject.module.css"
 import AppModule from "../../css/admin/Application.module.css"
 import axios from "axios";
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 export default function AdminPastProject(){
     const [projects,setProjects] = useState([])
@@ -14,7 +15,7 @@ export default function AdminPastProject(){
         "id": ''
     })
     const [projectForm,setProjectForm] = useState({})
-
+    
     const handleShowForm =()=>{
         setShowFromModal(false)
     }
@@ -76,9 +77,11 @@ export default function AdminPastProject(){
 }
 
 const DeleteModal = (props)=>{
+  const { mode, toggleMode } = useContext(DarkModeContext)
     return (
         <div>
             <Modal show={props.Modal.state.show} onHide={props.Modal.setter.cancel}>
+              <div className={mode == true ? "dark" : ""}>
                 <Modal.Body>
                     You want to delete {props.Modal.state.name} project.
                 </Modal.Body>
@@ -86,6 +89,7 @@ const DeleteModal = (props)=>{
                     <Button onClick={()=>props.Modal.setter.confirm(props.Modal.state.id)}> Confirm </Button>
                     <Button variant="danger" className="ms-auto" onClick={props.Modal.setter.cancel}> Cancel</Button>
                 </Modal.Footer>
+            </div>
             </Modal>
         </div>
     )
@@ -139,6 +143,7 @@ const FormModal = (props)=>{
           description: ''
       })
     }
+    const { mode, toggleMode } = useContext(DarkModeContext)
     return (
         <div>
           <Modal
@@ -147,6 +152,7 @@ const FormModal = (props)=>{
             className="d-flex flex=column "
             dialogClassName={`${AppModule.dialog_width}`}
           >
+            <div className={mode == true ? "dark" : ""}>
             <Modal.Header closeButton>
               <Modal.Title>Add Project</Modal.Title>
             </Modal.Header>
@@ -226,6 +232,7 @@ const FormModal = (props)=>{
                 </Button>
               </div>
             </Modal.Footer>
+            </div>
           </Modal>
         </div>
     )

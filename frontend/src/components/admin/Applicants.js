@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useContext} from "react";
 import AppModule from "../../css/admin/Application.module.css";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -7,6 +7,7 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
 import { BsDownload } from "react-icons/bs";
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
 import axios from "axios";
 // checks the or of the applicant, display message accordingly
 function GroupOrPEY(props) {
@@ -121,6 +122,7 @@ export default function Applicants(props) {
       }
       setShowModal(false);
     };
+    const { mode, toggleMode } = useContext(DarkModeContext)
     return (
       <Container fluid>
         {/* show all student info in the sample*/}
@@ -167,6 +169,7 @@ export default function Applicants(props) {
           className="d-flex flex=column "
           dialogClassName={`${AppModule.dialog_width}`}
         >
+          <div className={mode == true ? "dark" : ""}>
           <Modal.Header closeButton>
             <Modal.Title>Applicant Information</Modal.Title>
           </Modal.Header>
@@ -278,6 +281,7 @@ export default function Applicants(props) {
               Reject
             </Button>
           </Modal.Footer>
+          </div>
         </Modal>
       </Container>
     );
