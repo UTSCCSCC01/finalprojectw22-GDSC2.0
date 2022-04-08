@@ -86,7 +86,6 @@ exports.rejectStudentForm = async (req, res) => {
         })
       })
       .catch((e) => {
-        console.log(e);
         res.status(400).json({
           error: e,
         });
@@ -102,10 +101,8 @@ exports.submitStudentForm = async (req, res) => {
   await studentAppModel
     .create(req.body)
     .then((id) => {
-      console.log(id);
     })
     .catch((e) => {
-      console.log(e);
     });
   res.status(201).json({
     status: "success",
@@ -115,11 +112,11 @@ exports.submitStudentForm = async (req, res) => {
 exports.submitMentorForm = async (req, res) => {
   await mentorAppModel
     .create(req.body)
-    .then((id) => {
-      console.log(id);
-    })
     .catch((e) => {
-      console.log(e);
+      res.status(400).json({
+        status:"success"
+      })
+      return;
     });
   res.status(201).json({
     status: "success",
