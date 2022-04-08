@@ -1,7 +1,9 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useEffect, useContext} from "react";
 import {Button,Row,Col,Form,Modal,Nav} from "react-bootstrap";
 import TeamModule from "../../css/admin/AdminTeam.module.css";
 import axios from "axios";
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
+import "./admin.css"
 
 const AdminTeamManagement = () =>{
     const [modalMsg,setModalMsg] = useState("")
@@ -11,7 +13,9 @@ const AdminTeamManagement = () =>{
     const [teamInfo, setTeamInfo] = useState({})
     const [allTeam,setAllTeam] = useState([])
     const [students,setStudents] = useState([]);
+    const { mode, toggleMode } = useContext(DarkModeContext)
     const [infoState,setInfoState] = useState("");
+
     const handleConfirm = (e)=>{
         if (confirmMethod.func === "select"){
             axios.post("/teams/getTeamMembers",{"team_name":confirmMethod.team_name})
@@ -148,7 +152,7 @@ const AdminTeamManagement = () =>{
         "setShowModal" : setShowModal
     }
     return (
-        <div>
+        <div >
             <Row>
                 <Col sm={6} className="ps-2">
                     <SelectedTeam SelectedTeam={teamInfo} SetSelectedTeam={setTeamInfo} ModalFunc={modalFunc}/>
@@ -157,7 +161,8 @@ const AdminTeamManagement = () =>{
                     <InfoSection ModalFunc={modalFunc} AllTeams={allTeam} Students={students} Info={getInfo} InfoState={setInfoState}/>
                 </Col>
             </Row>
-            <Modal show={showModal} onHide={handleShowModal} className = "d-flex flex=column " dialogClassName="w-50 m-auto">
+            <Modal show={showModal} onHide={handleShowModal} className="d-flex flex=column" dialogClassName="w-50 m-auto">
+                <div className={mode === true ? "dark" : ""}>
                 <Modal.Header>
                     <strong>Please Confirm</strong>
                 </Modal.Header>
@@ -168,6 +173,7 @@ const AdminTeamManagement = () =>{
                     <Button onClick={handleConfirm}> Confirm </Button>
                     <Button variant="secondary" className="ms-auto" onClick={handleCancel}> Cancel </Button>
                 </Modal.Footer>
+                </div>
             </Modal>
         </div>
     )

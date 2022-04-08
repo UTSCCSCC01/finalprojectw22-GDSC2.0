@@ -9,9 +9,10 @@ import {
 } from "react-bootstrap";
 
 import AppModule from "../../css/admin/Application.module.css";
-import React from "react";
+import React, {useContext} from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 function AdminResources() {
   const [resourcesState, setResourcesState] = useState([]);
@@ -28,6 +29,7 @@ function AdminResources() {
   };
 
   const [resourceInfo, setResourceInfo] = useState({});
+  const { mode, toggleMode } = useContext(DarkModeContext)
 
   // show modal when state is true
   const [resourceModal, setResourceModal] = useState(false);
@@ -164,6 +166,7 @@ function AdminResources() {
           className="d-flex flex=column "
           dialogClassName={`${AppModule.dialog_width}`}
         >
+          <div className={mode == true ? "dark" : ""}>
           <Modal.Header closeButton>
             <Modal.Title>Add Resource</Modal.Title>
           </Modal.Header>
@@ -271,6 +274,7 @@ function AdminResources() {
               </Button>
             </div>
           </Modal.Footer>
+          </div>
         </Modal>
       </div>
 
@@ -333,6 +337,7 @@ function AdminResources() {
           className="d-flex flex=column "
           dialogClassName={`${AppModule.dialog_width}`}
         >
+          <div className={mode == true ? "dark" : ""}>
           <Modal.Header closeButton>
             <Modal.Title>Resource Information</Modal.Title>
           </Modal.Header>
@@ -371,6 +376,7 @@ function AdminResources() {
               Dont Save
             </Button> */}
           </Modal.Footer>
+          </div>
         </Modal>
       </Container>
     </>

@@ -19,6 +19,8 @@ export default function AdminLogin(){
     )
     const {mode, toggleMode} = useContext(DarkModeContext)
     const {isAdmin, changeRole} = useContext(SetRoleContext)
+    const [errorMessage, setErrorMessage] = useState("")
+    const [showError, setShowError] = useState(false)
     const submitButton=()=>{
         console.log(loginInfo);
             axios.post("/login", {
@@ -32,7 +34,8 @@ export default function AdminLogin(){
               window.location.href = "/"
               localStorage.setItem("token", res.data.token)
             }).catch((err) => {
-              console.log(err)
+                setErrorMessage(err.response.data.message)
+                setShowError(true)
             })
           
     }
@@ -59,6 +62,10 @@ export default function AdminLogin(){
                 </h1>
             </div>
             <div className="align-self-center">
+            {showError && (<div class="alert alert-danger d-flex align-items-center justify-content-around">
+                  <p className="m-0"><strong>Error!</strong> {errorMessage}</p>
+                  <a href='#' style={{color: "black"}} onClick={() => setShowError(false)}>&times;</a>
+              </div>)}
                 <Form className="d-flex flex-column" method="Post">
                     <Form.Group as={Row} className="mb-3">
                         <Col sm="10">
@@ -70,7 +77,7 @@ export default function AdminLogin(){
                         <Form.Control type="password" placeholder="Password" onChange = {e=>setLoginInfo({Password:e.target.value,AdminId:loginInfo.AdminId})}className={LoginStyle.input_box_length}/>
                         </Col>
                     </Form.Group>
-                    <Button action="submit" className="align-self-center mt-3" onClick={submitButton}>Sign In</Button>
+                    <Button action="submit" className="align-self-center mt-3 w-100" onClick={submitButton}>Sign In</Button>
                 </Form>
             </div>
         </div>

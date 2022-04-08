@@ -9,8 +9,9 @@ import {
 } from "react-bootstrap";
 import AppModule from "../../css/admin/Application.module.css";
 import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import DarkModeContext from "../../context/darkMode/DarkModeContext"
 
 function AdminEvents() {
   return (
@@ -25,6 +26,7 @@ function Events() {
   let sample_resources = [];
 
   const [resourcesState, setResourcesState] = useState([]);
+  const { mode, toggleMode } = useContext(DarkModeContext)
   // useLocalStorage("id", sample_resources);
 
   const initResourceInfo = {
@@ -158,7 +160,7 @@ function Events() {
 
   return (
     <>
-      <div className="text-center mt-4">
+      <div className="text-center mt-4" style={{height:"100vh"}}>
         <Button
           size="lg"
           onClick={() => setAddResourceModal(true)}
@@ -173,6 +175,7 @@ function Events() {
           className="d-flex flex=column "
           dialogClassName={`${AppModule.dialog_width}`}
         >
+          <div className={mode == true ? "dark" : ""}>
           <Modal.Header closeButton>
             <Modal.Title>Add Event</Modal.Title>
           </Modal.Header>
@@ -274,6 +277,7 @@ function Events() {
               </Button>
             </div>
           </Modal.Footer>
+          </div>
         </Modal>
       </div>
 
