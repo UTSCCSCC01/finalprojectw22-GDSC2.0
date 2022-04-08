@@ -4,11 +4,11 @@ import { Nav, Navbar, Container } from "react-bootstrap";
 import DarkMode from "../DarkMode/DarkMode";
 import "../DarkMode/DarkMode.css";
 import DarkModeContext from "../../context/darkMode/DarkModeContext";
-import SetRoleContext from "../../context/setRole/SetRoleContext"
+import SetRoleContext from "../../context/setRole/SetRoleContext";
 import "./Navbarmenu.css";
 const Navbarmenu = () => {
   const { mode, toggleMode } = useContext(DarkModeContext);
-  const { isAdmin, changeRole } = useContext(SetRoleContext)
+  const { isAdmin, changeRole } = useContext(SetRoleContext);
   const doesUserLoggedIn = localStorage.getItem("token");
   return (
     <Navbar
@@ -30,9 +30,7 @@ const Navbarmenu = () => {
             <Nav.Link href="/events">Events</Nav.Link>
             <Nav.Link href="/pastProjects">Past Projects</Nav.Link>
             <Nav.Link href="/admin/log">Admin</Nav.Link>
-            {isAdmin &&
-              <Nav.Link href="/admin/main">Admin Panel</Nav.Link>
-            }
+            {isAdmin && <Nav.Link href="/admin/main">Admin Panel</Nav.Link>}
             {doesUserLoggedIn && (
               <>
                 {/* <Nav.Link href="/adminProfiles">Admins</Nav.Link> */}
@@ -47,7 +45,7 @@ const Navbarmenu = () => {
           <Nav>
             {doesUserLoggedIn && (
               <>
-                <Nav.Link href="/myProfile">My Profile</Nav.Link>
+                {/* <Nav.Link href="/myProfile">My Profile</Nav.Link> */}
                 <Nav.Link href="/signOut">Sign Out</Nav.Link>
               </>
             )}
